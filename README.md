@@ -1,6 +1,8 @@
 # Leopoldo
 
-The expertise system for Claude that orchestrates, corrects, and evolves itself.
+The self-improving expertise system for Claude.
+
+*Orchestrates, corrects, and evolves itself. Scans your environment. Adapts to your tools. Gets better every week.*
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/leopoldo-ai/leopoldo?style=flat)](https://github.com/leopoldo-ai/leopoldo/stargazers)
