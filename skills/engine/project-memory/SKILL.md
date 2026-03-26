@@ -1,0 +1,371 @@
+---
+name: project-memory
+description: Meta-skill that maintains a living PROJECT_STATE.md by scanning the codebase and tracking schema, API routes, components, integrations, test coverage, PRD compliance, and architecture decisions. Use when starting a session ("/project-state"), after completing a task, before phase gates, or when you need to know the current state of the project. Triggers on "stato del progetto", "project state", "/project-state", "cosa abbiamo implementato?", "a che punto siamo?".
+---
+
+# Project Memory — Living Documentation
+
+Meta-skill che scansiona il codebase e mantiene `PROJECT_STATE.md` aggiornato — la fonte di verita' sullo stato reale del progetto.
+
+## Perche' esiste
+
+| Problema | Soluzione |
+|----------|-----------|
+| MEMORY.md e' manuale, degrada tra sessioni | PROJECT_STATE.md e' generato dal codice reale |
+| "Quali tabelle abbiamo?" → devo leggere 10 file | Scan automatico schema Drizzle |
+| "Quali API route esistono?" → devo esplorare | Scan automatico `app/api/` |
+| PRD dice X ma il codice fa Y | Cross-reference PRD ↔ implementazione |
+| Nuova sessione parte da zero | PROJECT_STATE.md da' contesto immediato |
+
+## Quando si attiva
+
+| Trigger | Comando | Azione |
+|---------|---------|--------|
+| **Inizio sessione** | `/project-state` | Scan completo, genera PROJECT_STATE.md |
+| **Dopo commit** | Automatico (da `git-workflow`) | Scan incrementale, aggiorna sezioni cambiate |
+| **Pre phase-gate** | Automatico (da `phase-completion-checklist`) | Scan + PRD compliance report |
+| **On demand** | "stato del progetto", "a che punto siamo?" | Scan completo con output a schermo |
+| **Pre-deploy** | Automatico (da `vercel-deploy`) | Scan + validazione completezza |
+| **Fine sessione** | Automatico (da `session-reporter`) | Includi stato nel report sessione |
+
+## Core Workflow
+
+### Fase 1: Scan Codebase
+
+Usa Glob + Grep + Read per scansionare i layer del progetto. Ogni layer ha pattern specifici.
+
+#### 1.1 Schema DB (Drizzle)
+
+```
+Scan: drizzle/schema/*.ts, src/db/schema/*.ts, lib/db/schema.ts
+Pattern: export const <tableName> = pgTable(
+Estrai: nome tabella, colonne (nome, tipo, constraints), relazioni, indici
+```
+
+```typescript
+// Esempio output
+{
+  tables: [
+    {
+      name: 'contacts',
+      file: 'drizzle/schema/contacts.ts',
+      columns: [
+        { name: 'id', type: 'serial', primaryKey: true },
+        { name: 'full_name', type: 'text', nullable: false },
+        { name: 'email', type: 'text', nullable: true },
+        // ...
+      ],
+      relations: ['→ organizations (organization_id)'],
+      indices: ['idx_contacts_email', 'idx_contacts_external_id'],
+      migration: '0003_add_enrichment_fields'
+    }
+  ]
+}
+```
+
+#### 1.2 API Routes (Next.js App Router)
+
+```
+Scan: app/api/**/route.ts, app/api/**/route.tsx
+Pattern: export async function (GET|POST|PATCH|PUT|DELETE)
+Estrai: path, metodi HTTP, auth (middleware), Zod schema se presente
+```
+
+```typescript
+// Esempio output
+{
+  routes: [
+    {
+      path: '/api/contacts',
+      methods: ['GET', 'POST'],
+      auth: true,
+      zodSchema: 'ContactsQuerySchema',
+      file: 'app/api/contacts/route.ts'
+    },
+    {
+      path: '/api/webhooks/external',
+      methods: ['POST'],
+      auth: 'signature',
+      zodSchema: 'WebhookPayloadSchema',
+      file: 'app/api/webhooks/external/route.ts'
+    }
+  ]
+}
+```
+
+#### 1.3 Componenti UI (Pages + Components)
+
+```
+Scan: app/(dashboard)/**/*.tsx, app/(auth)/**/*.tsx, components/**/*.tsx
+Pattern: export default function|export function|export const
+Estrai: nome pagina/componente, tipo (page|layout|component), "use client" flag
+```
+
+#### 1.4 Integrazioni Esterne
+
+```
+Scan: lib/integrations/*/, lib/services/*/
+Pattern: file esistenza + export functions
+Estrai: servizio, funzioni esportate, ultimo file modificato
+```
+
+#### 1.5 Configurazione & Env
+
+```
+Scan: .env.example, .env.local (solo nomi variabili, MAI valori), vercel.json, next.config.ts
+Estrai: variabili d'ambiente richieste, cron schedule, config speciali
+```
+
+#### 1.6 Test Coverage
+
+```
+Scan: __tests__/**/*.test.ts, e2e/**/*.spec.ts, *.test.ts
+Pattern: describe(, test(, it(
+Estrai: file testato, numero test, tipo (unit|integration|e2e)
+Cross-ref: moduli con test vs moduli senza test
+```
+
+#### 1.7 Migrazioni DB
+
+```
+Scan: drizzle/migrations/*, drizzle/*.sql
+Pattern: file ordine cronologico
+Estrai: lista migrazioni applicate, ultima migrazione
+```
+
+### Fase 2: PRD Compliance Check
+
+Cross-reference tra requisiti PRD e stato codebase:
+
+1. **Leggere PRD** — dal documento PRD del progetto o da CLAUDE.md sezione fasi
+2. **Mappare requisiti** — ogni requisito diventa un check:
+   - Tabella DB esiste? → scan schema
+   - API route esiste? → scan routes
+   - UI implementata? → scan components
+   - Test presenti? → scan tests
+3. **Stato per requisito**: ✅ Implementato | 🔄 In progress | ❌ Non iniziato
+
+### Fase 3: Genera PROJECT_STATE.md
+
+Scrivere il file in root del progetto:
+
+```markdown
+# Project State
+**Auto-generated by project-memory skill**
+**Scan date:** {YYYY-MM-DD HH:mm}
+**Codebase:** {total_files} files, {total_lines} lines
+
+---
+
+## 1. Schema DB (Drizzle/Neon)
+
+| Tabella | Colonne | FK | Indici | Migrazione | Note |
+|---------|---------|----|--------|------------|------|
+| contacts | {N} | → organizations | {N} | {nome} | {note} |
+| ... | | | | | |
+
+**Totale:** {N} tabelle, {N} colonne, {N} relazioni
+
+## 2. API Routes
+
+| Route | Methods | Auth | Zod | Test | Note |
+|-------|---------|------|-----|------|------|
+| /api/contacts | GET, POST | yes | ✅ | unit ✅ e2e ❌ | |
+| ... | | | | | |
+
+**Totale:** {N} routes, {N} con auth, {N} con Zod validation
+
+## 3. UI Pages & Components
+
+### Pages
+| Page | Path | Type | Client? | Note |
+|------|------|------|---------|------|
+| Dashboard | /dashboard | page | no | Server Component |
+| ... | | | | |
+
+### Components
+| Component | Path | Shared? | Note |
+|-----------|------|---------|------|
+| ContactsTable | components/contacts-table.tsx | yes | shadcn DataTable |
+| ... | | | |
+
+**Totale:** {N} pages, {N} components
+
+## 4. Integrazioni
+
+| Servizio | Modulo | Funzioni | Config | Stato |
+|----------|--------|----------|--------|-------|
+| [Service A] | lib/integrations/service-a/ | sync, webhook, client | ✅ API_KEY | ✅ Attivo |
+| [Service B] | lib/integrations/service-b/ | webhook, campaigns | ✅ API_KEY | 🔄 Parziale |
+| [Service C] | lib/integrations/service-c/ | enrich, search, validate | ❌ Manca | ❌ Non iniziato |
+
+## 5. Configurazione
+
+### Variabili d'ambiente richieste
+| Variabile | Servizio | Stato |
+|-----------|----------|-------|
+| DATABASE_URL | Neon | required |
+| [SERVICE]_API_KEY | [Service A] | required |
+| [SERVICE]_API_KEY | [Service B] | required |
+
+### Cron Jobs (vercel.json)
+| Path | Schedule | Descrizione |
+|------|----------|-------------|
+| /api/cron/sync-external | */5 * * * * | Sync contatti dal servizio esterno |
+| /api/cron/enrich-contacts | 0 */2 * * * | Enrichment contatti |
+
+## 6. Test Coverage
+
+| Modulo | Unit | Integration | E2E | Copertura |
+|--------|------|-------------|-----|-----------|
+| contacts | 12/12 ✅ | 3/3 ✅ | 2/5 🔄 | 85% |
+| sync-manatal | 8/8 ✅ | 0 ❌ | 0 ❌ | 40% |
+| ... | | | | |
+
+**Totale:** {N} test, {pass_rate}% passing
+
+## 7. PRD Compliance
+
+### Fase attuale: {N} — {nome_fase}
+
+| # | Requisito PRD | Stato | File/Modulo | Note |
+|---|--------------|-------|-------------|------|
+| 1 | Schema contacts | ✅ | drizzle/schema/contacts.ts | |
+| 2 | Chunked sync CRM | ✅ | lib/integrations/crm/sync.ts | 400/batch |
+| 3 | Webhook email service | 🔄 | app/api/webhooks/email/ | Manca firma |
+| 4 | Jobs sync bidirezionale | ❌ | — | v1.5 |
+| ... | | | | |
+
+**Compliance:** {N}/{total} requisiti implementati ({percentage}%)
+
+## 8. Decisioni Architetturali (ADR)
+
+| # | Data | Decisione | Rationale | Skill |
+|---|------|-----------|-----------|-------|
+| ADR-001 | 2026-02-XX | Server Components default | Performance large dataset | senior-architect |
+| ADR-002 | 2026-02-XX | Cursor pagination per sync | Stabilita' sync | api-designer |
+| ... | | | | |
+
+## 9. Cambiamenti dall'ultimo scan
+
+| Data | Tipo | Descrizione | File |
+|------|------|-------------|------|
+| {date} | schema | Aggiunta tabella meeting_reports | drizzle/schema/meetings.ts |
+| {date} | route | Nuovo endpoint /api/meetings/process | app/api/meetings/ |
+| ... | | | |
+```
+
+### Fase 4: Diff & Aggiornamento Incrementale
+
+Per scan incrementali (dopo commit):
+
+1. Leggere PROJECT_STATE.md esistente
+2. Controllare `git diff --name-only HEAD~1` per file cambiati
+3. Ri-scannare SOLO i layer toccati dai file cambiati
+4. Aggiornare le sezioni rilevanti
+5. Aggiungere entry in "Cambiamenti dall'ultimo scan"
+
+## Integrazione con altre skill
+
+### git-workflow
+Dopo ogni commit, `git-workflow` deve triggerare un aggiornamento incrementale:
+```
+commit → git-workflow → project-memory (scan incrementale) → PROJECT_STATE.md aggiornato
+```
+
+### phase-completion-checklist
+Prima di un gate di fase, leggere PROJECT_STATE.md sezione "PRD Compliance":
+```
+/complete-phase 3 → leggi PROJECT_STATE.md → verifica requisiti fase 3 → report
+```
+
+### session-reporter
+A fine sessione, includere lo stato corrente:
+```
+/session-report → leggi PROJECT_STATE.md → includi summary nel report
+```
+
+### product-closure-loop
+Durante il closure loop, usare "PRD Compliance" per scoring:
+```
+iteration N → leggi PROJECT_STATE.md compliance % → quality score
+```
+
+### sprint-planner
+Leggere "PRD Compliance" per sapere cosa resta da fare:
+```
+/sprint-plan → leggi requisiti ❌ da PROJECT_STATE.md → assegna a sprint
+```
+
+### coverage-analyzer
+PROJECT_STATE sezione "Test Coverage" come input:
+```
+/coverage → leggi test coverage da PROJECT_STATE.md → identifica gap
+```
+
+## Convenzioni
+
+### File output
+- **Path:** `PROJECT_STATE.md` (root del progetto)
+- **Encoding:** UTF-8
+- **Non committare** in git (aggiungere a `.gitignore`) — e' generato, non source of truth
+- Oppure committare come reference per il team (scelta utente)
+
+### ADR (Architecture Decision Records)
+- Opzionale: creare `docs/decisions/ADR-NNN.md` per decisioni importanti
+- PROJECT_STATE.md tiene solo il summary
+- Format ADR: data, contesto, decisione, conseguenze, skill coinvolta
+
+### Scan patterns
+
+```typescript
+const SCAN_PATTERNS = {
+  schema: [
+    'drizzle/schema/**/*.ts',
+    'src/db/schema/**/*.ts',
+    'lib/db/schema.ts',
+  ],
+  routes: [
+    'app/api/**/route.ts',
+    'app/api/**/route.tsx',
+  ],
+  pages: [
+    'app/(dashboard)/**/*.tsx',
+    'app/(auth)/**/*.tsx',
+    'app/(marketing)/**/*.tsx',
+  ],
+  components: [
+    'components/**/*.tsx',
+    'app/**/_components/**/*.tsx',
+  ],
+  integrations: [
+    'lib/integrations/**/*',
+    'lib/services/**/*',
+  ],
+  config: [
+    '.env.example',
+    'vercel.json',
+    'next.config.*',
+    'drizzle.config.*',
+  ],
+  tests: [
+    '**/*.test.ts',
+    '**/*.test.tsx',
+    '**/*.spec.ts',
+    'e2e/**/*',
+  ],
+  migrations: [
+    'drizzle/migrations/**/*',
+    'drizzle/*.sql',
+  ],
+};
+```
+
+## Anti-Patterns
+
+- **MAI** leggere valori da `.env` o `.env.local` — solo nomi variabili da `.env.example`
+- **MAI** includere secrets, token, o credenziali in PROJECT_STATE.md
+- **MAI** sovrascrivere PROJECT_STATE.md senza prima leggere la versione precedente (per diff)
+- **MAI** fare scan completo dopo ogni piccolo cambio — usare scan incrementale
+- **MAI** fidarsi solo di PROJECT_STATE.md — e' un supporto, non sostituisce leggere il codice
+- **MAI** tracciare file in `node_modules/`, `.next/`, o build artifacts

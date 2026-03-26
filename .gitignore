@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Node / Next.js
+node_modules/
+.next/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# MCP
+.mcp.json
+
+# Leopoldo state (machine-generated, not version-controlled)
+.state/
+
+# Imprint personal data (never committed)
+.leopoldo/imprint/observations.jsonl
+.leopoldo/imprint/profile.json
+
+# Claude local overrides
+.claude/settings.local.json
