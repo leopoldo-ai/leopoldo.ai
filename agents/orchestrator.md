@@ -64,8 +64,9 @@ Classify each request into the available domains:
 
 | Domain | Keyword Pattern | Workflow Agent |
 |--------|----------------|----------------|
-| Development, architecture, code | "build", "design", "architecture", "setup", "deploy" | `dev-setup` |
+| System setup, diagnostics, health | "setup", "health check", "what's installed", "broken" | `system-claw` |
 | Reports, documents, presentations | "report", "excel", "presentation", "document" | `reporting-output` |
+| Development, architecture, code | "build", "design", "architecture", "deploy" | Direct capability |
 | Strategy, research, decisions | "strategy", "research", "analysis", "decision" | Direct capability |
 
 **Premium agents (available with premium packs):**
