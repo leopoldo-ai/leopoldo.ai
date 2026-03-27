@@ -1,4 +1,4 @@
-# Leopoldo
+# Leopoldo.ai
 
 The self-improving expertise system for Claude.
 
