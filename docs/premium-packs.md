@@ -26,7 +26,7 @@ Every plugin ships the complete system, not just the expertise layer.
 | Quality gates | Phase gates, doc gates, security gates. Blocking, not advisory. |
 | Correction loop | Postmortem fires on every user correction. Root cause logged. |
 | Evolution cycle | Weekly improvement cycle with user-approved patches |
-| Auto-updates | New versions delivered automatically via GitHub Releases |
+| Auto-updates | New versions delivered automatically |
 
 Expertise is additive. The system is always included.
 

@@ -21,6 +21,8 @@ Every installation includes the full system:
 - **Agents**: Specialized workflow agents for multi-step processes. The open-source platform includes system-claw, reporting-output, and the evolution agent. Premium plugins add domain-specific agents (6 for finance, 4 for legal, 3 for consulting, 3 for competitive intelligence).
 - **Quality gates**: phase gates, doc gates, security gates. Blocking, not advisory.
 - **Correction loop**: every user correction triggers a postmortem before the fix
+- **Imprint**: adaptive learning layer. Observes corrections, builds a calibration profile, applies preferences at session start. You never repeat yourself.
+- **system-claw**: scans your MCP servers, CLI tools, and hooks on session start. Routing adapts to your actual environment.
 - **Evolution cycle**: weekly automated improvement, user-approved before applied
 
 ## Installing

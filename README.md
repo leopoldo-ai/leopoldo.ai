@@ -60,7 +60,11 @@ No patching over problems. Root cause or nothing.
 
 **Imprint.** The adaptive learning layer. Observes corrections, learns preferences, builds a profile. Outputs get more calibrated over time without being told twice.
 
-**Agents.** Specialized workflow agents handle multi-step processes. The open-source platform includes dev-setup (environment detection), reporting-output (professional documents), and the orchestrator. Premium plugins add domain-specific agents: 6 for finance, 4 for legal, 3 for consulting, 3 for competitive intelligence.
+**system-claw.** Environment scanning on every session start. Detects your MCP servers, CLI tools, and hooks. The system adapts to what you actually have installed. No manual configuration.
+
+**Agents.** Specialized workflow agents handle multi-step processes. The open-source platform includes system-claw (environment scanning), reporting-output (professional documents: docx, pptx, xlsx), and the evolution agent. Premium plugins add domain-specific agents: 6 for finance, 4 for legal, 3 for consulting, 3 for competitive intelligence.
+
+**Studio.** The production toolchain used to author and validate new capabilities. Structured templates, local testing, quality validation. The same toolchain that built Leopoldo is included.
 
 **Full Stack Pack.** Included with every install. Architecture design, testing strategy, CI/CD pipelines, security review, frontend patterns, and code review workflows.
 
@@ -122,11 +126,15 @@ Full system design, infrastructure map, and component breakdown: [ARCHITECTURE.m
 
 ---
 
-## Premium plugins and services
+## Services
 
-Enterprise setup, team deployment, and custom plugin configuration: [leopoldo.ai/services](https://leopoldo.ai/services)
+| Tier | For | What you get |
+|------|-----|-------------|
+| **Personal** | Professionals who want Claude to work harder | Premium plugin of your choice, Imprint, 30-minute setup call |
+| **Team** | Teams who need AI expertise across their workflow | Premium plugins, workflow calibration, team training session |
+| **Enterprise** | Organizations that need full deployment with SLA | Full system deployment, custom plugins, dedicated support |
 
-Contact [hello@leopoldo.ai](mailto:hello@leopoldo.ai)
+[leopoldo.ai/services](https://leopoldo.ai/services) or contact [hello@leopoldo.ai](mailto:hello@leopoldo.ai)
 
 ---
 
