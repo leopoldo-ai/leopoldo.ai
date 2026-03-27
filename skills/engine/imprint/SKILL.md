@@ -180,27 +180,36 @@ An empty profile (no observations yet) is stored as `{}`. Imprint never injects 
 
 ### Session Start
 
+The SessionStart hook (`session-start.sh`) handles Imprint deterministically:
+
 ```
-1. Check if .leopoldo/imprint/config.json exists
-   → If missing: first run. Create directory + default config.
+1. Hook reads .leopoldo/imprint/config.json
+   → If missing or enabled = false: skip Imprint entirely.
+
+2. Hook reads profile.json and injects FULL calibrations JSON via additionalContext
+   → Not flattened. The complete calibrations object is injected so Claude
+     can parse structured preferences (terminology maps, domain rules, etc.)
+
+3. Hook checks observations.jsonl for unprocessed observations from previous sessions
+   → If count > 0: instructs Claude to silently process them BEFORE handling
+     the user's request. This is the PRIMARY processing trigger.
+   → Processing is silent: the user sees no output about it.
+
+4. Claude (in-context) handles first-run check:
    → If first_run_shown = false: show opt-in prompt once. Set first_run_shown = true.
 
-2. If enabled = false: stop. Imprint is dormant.
-
-3. Load profile.json
-   → If empty or missing: no calibrations yet. Skip injection.
-   → If profile exists: inject calibrations into orchestrator context.
-
-4. Mode branch:
-   LOCAL: done. Profile already loaded.
+5. Mode branch:
+   LOCAL: done. Profile already loaded by hook.
    CLOUD: call GET {endpoint}/api/imprint/profile?client_id={client_id}
      → On success: merge with local profile (cloud wins on conflicts). Cache locally.
      → On failure: use local cache. Log warning.
-
-5. Check if processing is due:
-   → Count unprocessed lines in observations.jsonl
-   → If count >= process_every_n_observations: run Profile Processing flow
 ```
+
+**Why session start is the primary trigger:** The Stop hook fires only when Claude
+explicitly finishes. If the user closes the terminal or the session times out,
+Stop never fires and observations are never processed. By processing at session
+start, we guarantee observations are always eventually synthesized — on the next
+session, deterministically.
 
 ### Correction Detection
 
@@ -228,16 +237,24 @@ Fires when the user states a clear preference or directive (e.g., "always do X",
 
 ### Profile Processing
 
-Triggers when observation count reaches the threshold, or at session end if there are unprocessed observations, or when the user runs `/imprint process`.
+**Primary trigger:** SessionStart hook detects unprocessed observations from previous sessions and instructs Claude to process them silently before handling the user's request.
+
+**Secondary trigger:** Stop hook reminds Claude to process if possible (best-effort, may not fire if user closes terminal).
+
+**Manual trigger:** User runs `/imprint process`.
 
 ```
 1. Read all unprocessed lines from observations.jsonl
 2. Read current profile.json (or {} if missing)
 3. Apply Processing Template (see below) to synthesize updated calibrations
 4. Write updated profile.json
-5. Move processed observations from observations.jsonl to observations.processed.jsonl
-6. If cloud mode: schedule sync on session end
+5. Append processed observations to observations.processed.jsonl
+6. Clear observations.jsonl (write empty file)
+7. If cloud mode: schedule sync on session end
 ```
+
+**Important:** Processing must be silent. No output to the user. The user should
+only notice that outputs become more calibrated over time.
 
 ---
 

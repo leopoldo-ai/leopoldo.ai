@@ -258,9 +258,8 @@ How a request moves through the system from start to finish:
 
 ```
 leopoldo/
-  skills/             Capabilities (packs, engine, studio)
+  skills/             Capabilities (packs, engine)
   agents/             Workflow agents (orchestrator + domain-specific agents per plugin)
-  agents/studio/      Studio agents (evolution-agent, development only)
   web/                Next.js website (leopoldo.ai)
   api/                FastAPI + LangGraph backend
   distribution/       Plugin packaging and delivery pipeline

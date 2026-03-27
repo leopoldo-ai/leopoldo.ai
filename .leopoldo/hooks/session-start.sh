@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # session-start.sh — SessionStart hook for Leopoldo.
-# Initializes session state, resets gate counters, loads Imprint profile.
+# Initializes session state, resets gate counters, loads Imprint profile,
+# and triggers Imprint processing if there are pending observations.
 # Always exits 0. Never blocks session start.
 
 set -euo pipefail
@@ -70,20 +71,45 @@ if [[ -f "$STATE_FILE" ]] && _has_jq; then
   fi
 fi
 
-# Load Imprint profile if present
-IMPRINT_CONTEXT=""
-IMPRINT_FILE="$ROOT/.leopoldo/imprint/profile.json"
-if [[ -f "$IMPRINT_FILE" ]] && _has_jq; then
-  CALIBRATIONS="$(jq -r '.calibrations // {} | to_entries | map("\(.key): \(.value)") | join(", ")' "$IMPRINT_FILE" 2>/dev/null || echo "")"
-  if [[ -n "$CALIBRATIONS" ]]; then
-    IMPRINT_CONTEXT="Imprint active. Calibrations: $CALIBRATIONS"
-    CONTEXT="$CONTEXT $IMPRINT_CONTEXT"
-  fi
+# --- Imprint ---
+
+IMPRINT_CONFIG="$ROOT/.leopoldo/imprint/config.json"
+IMPRINT_PROFILE="$ROOT/.leopoldo/imprint/profile.json"
+IMPRINT_OBS="$ROOT/.leopoldo/imprint/observations.jsonl"
+
+# Check if Imprint is enabled
+IMPRINT_ENABLED=false
+if [[ -f "$IMPRINT_CONFIG" ]] && _has_jq; then
+  IMPRINT_ENABLED="$(jq -r '.enabled // false' "$IMPRINT_CONFIG" 2>/dev/null || echo "false")"
 fi
 
-# Output JSON for Claude Code
-cat <<EOF
-{"additionalContext": "$CONTEXT"}
-EOF
+if [[ "$IMPRINT_ENABLED" == "true" ]]; then
+
+  # FIX 1: Inject full profile JSON (not flattened string)
+  if [[ -f "$IMPRINT_PROFILE" ]] && _has_jq; then
+    PROFILE_CONTENT="$(jq -c '.calibrations // {}' "$IMPRINT_PROFILE" 2>/dev/null || echo "{}")"
+    if [[ "$PROFILE_CONTENT" != "{}" ]]; then
+      CONTEXT="$CONTEXT IMPRINT_ACTIVE. Apply these user calibrations to all outputs: $PROFILE_CONTENT"
+    fi
+  fi
+
+  # FIX 3: Check for unprocessed observations from previous sessions
+  if [[ -f "$IMPRINT_OBS" ]]; then
+    OBS_COUNT="$(wc -l < "$IMPRINT_OBS" | tr -d ' ')"
+    if [[ "$OBS_COUNT" -gt 0 ]]; then
+      CONTEXT="$CONTEXT IMPRINT_PROCESS_REQUIRED: $OBS_COUNT unprocessed observations from previous sessions. Before handling the user request, silently process them: read .leopoldo/imprint/observations.jsonl and .leopoldo/imprint/profile.json, synthesize updated calibrations following the Imprint Processing Template, write updated profile.json, append processed lines to observations.processed.jsonl, then clear observations.jsonl. Do this silently without mentioning it to the user."
+    fi
+  fi
+
+fi
+
+# Output JSON for Claude Code — use jq to properly escape the context string
+if _has_jq; then
+  jq -n --arg ctx "$CONTEXT" '{"additionalContext": $ctx}'
+else
+  # Fallback: basic escaping
+  ESCAPED_CONTEXT="$(echo "$CONTEXT" | sed 's/\\/\\\\/g; s/"/\\"/g; s/\t/\\t/g')"
+  echo "{\"additionalContext\": \"$ESCAPED_CONTEXT\"}"
+fi
 
 exit 0

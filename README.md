@@ -58,11 +58,9 @@ No patching over problems. Root cause or nothing.
 
 **Engine.** The system core. Orchestrator, quality gates, correction loop, lifecycle manager, and session automation. Runs on every request.
 
-**Studio.** The full toolchain used to build, test, and validate expertise for each plugin. Write a new capability, run it through the studio, ship it. The same toolchain that built Leopoldo is included.
+**Imprint.** The adaptive learning layer. Observes corrections, learns preferences, builds a profile. Outputs get more calibrated over time without being told twice.
 
-**Evolution.** A weekly cycle that reviews postmortems, scans the ecosystem for updates, and proposes patches. You approve. It ships. The system gets better every week without manual intervention.
-
-**Agents.** Specialized workflow agents handle multi-step processes. The open-source platform includes system-claw (setup and diagnostics), reporting-output (professional documents), and the evolution agent. Premium plugins add domain-specific agents: 6 for finance, 4 for legal, 3 for consulting, 3 for competitive intelligence.
+**Agents.** Specialized workflow agents handle multi-step processes. The open-source platform includes dev-setup (environment detection), reporting-output (professional documents), and the orchestrator. Premium plugins add domain-specific agents: 6 for finance, 4 for legal, 3 for consulting, 3 for competitive intelligence.
 
 **Full Stack Pack.** Included with every install. Architecture design, testing strategy, CI/CD pipelines, security review, frontend patterns, and code review workflows.
 
@@ -109,14 +107,6 @@ When you tell Leopoldo an output was wrong, it does not just fix it. It runs a p
 Once a week, the evolution agent reviews all postmortems, scans the Claude and ecosystem release feeds, and produces a set of proposed patches. You review. You approve. The patches ship.
 
 The system that handles your work today is not the system you will have in 30 days. It compounds.
-
----
-
-## Build your own
-
-Leopoldo includes the full studio toolchain used to create its domain expertise. Author a new capability, validate it against the quality framework, integrate it with the orchestrator.
-
-See [docs/studio.md](docs/studio.md) to get started.
 
 ---
 
