@@ -14,7 +14,7 @@
 |---|---|
 | Static prompt files | Self-evolving system |
 | No orchestration | Agents route, verify, correct |
-| Set and forget | Weekly auto-improvement |
+| Set and forget | Learns and adapts as you work |
 | Failures break silently | Quality gates block bad output |
 | You fix mistakes | Postmortem finds root cause |
 
@@ -72,7 +72,7 @@ Plus the full system: orchestrator, workflow agents, quality gates, and lifecycl
 
 **system-claw.** Environment scanning on every session start. Detects your MCP servers, CLI tools, and hooks. The system adapts to what you actually have installed. No manual configuration.
 
-**Agents.** 22 specialized workflow agents handle multi-step processes. The open-source platform includes reporting-output (professional documents: docx, pptx, xlsx) and the evolution agent (weekly auto-improvement). Premium domains add domain-specific agents: 6 for finance, 4 for legal, 3 for consulting, 3 for competitive intelligence.
+**Agents.** 22 specialized workflow agents handle multi-step processes. The open-source platform includes reporting-output (professional documents: docx, pptx, xlsx) and environment scanning. Premium domains add domain-specific agents: 6 for finance, 4 for legal, 3 for consulting, 3 for competitive intelligence.
 
 **Full Stack.** Included with every install. Architecture design, testing strategy, CI/CD pipelines, security review, frontend patterns, and code review workflows.
 
@@ -95,15 +95,13 @@ No prompt engineering. No retries. The system handles the routing and verificati
 
 ---
 
-## The evolution loop
+## Self-correction
 
-Every correction you make feeds the system.
+Every correction you make teaches the system.
 
-When you tell Leopoldo an output was wrong, it does not just fix it. It runs a postmortem first: what was the root cause, which capability was responsible, what rule was missing. The fix is applied, the finding is logged.
+When you tell Leopoldo an output was wrong, it does not just fix it. It runs a postmortem first: what was the root cause, which capability was responsible, what rule was missing. The fix is applied with the root cause in mind, and the finding is logged.
 
-Once a week, the evolution agent reviews all postmortems, scans the Claude and ecosystem release feeds, and produces a set of proposed patches. You review. You approve. The patches ship.
-
-The system that handles your work today is not the system you will have in 30 days. It compounds.
+Imprint picks up your preferences, terminology, and patterns over time. The more you use it, the fewer corrections you need. The system that handles your work today is not the system you will have in 30 days.
 
 ---
 
