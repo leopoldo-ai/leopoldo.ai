@@ -139,9 +139,9 @@ Available on request. Visit [leopoldo.ai](https://leopoldo.ai) or contact [hello
 
 | Tier | For | What you get |
 |------|-----|-------------|
-| **Personal** | Professionals who want Claude to work harder | Premium domain of your choice, Imprint, 30-minute setup call |
-| **Team** | Teams who need AI expertise across their workflow | Premium domains, workflow calibration, team training session |
-| **Enterprise** | Organizations that need full deployment with SLA | Full system deployment, custom domains, dedicated support |
+| **Personal** | Professionals who want Claude to work harder | Premium domain of your choice. Full system deployment, dedicated support |
+| **Team** | Teams who need AI expertise across their workflow | Premium domains, workflow calibration, team training session. Dedicated support |
+| **Enterprise** | Organizations that need full deployment with SLA | Premium and custom based domains, team training session. Dedicated support |
 
 [leopoldo.ai/services](https://leopoldo.ai/services) or contact [hello@leopoldo.ai](mailto:hello@leopoldo.ai)
 
