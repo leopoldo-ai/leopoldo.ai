@@ -1,12 +1,62 @@
-# Leopoldo
+<p align="center">
+  <img src=".github/banner.png" width="100%" alt="Leopoldo.ai">
+</p>
 
-The first autonomous expertise system for Claude.
+<p align="center">
+  <a href="https://leopoldo.ai"><img src="https://img.shields.io/badge/leopoldo.ai-website-1C1917?style=flat" alt="Website"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3A6B55" alt="MIT License"></a>
+  <a href="https://github.com/leopoldo-ai/leopoldo.ai/stargazers"><img src="https://img.shields.io/github/stars/leopoldo-ai/leopoldo.ai?style=flat" alt="GitHub Stars"></a>
+</p>
 
-Leopoldo is a complete system that orchestrates domain expertise, self-corrects through postmortems, and evolves automatically. The skills are content. The system is the product.
+---
 
-## What You Get
+| Other tools | Leopoldo |
+|---|---|
+| Static prompt files | Self-evolving system |
+| No orchestration | Agents route, verify, correct |
+| Set and forget | Weekly auto-improvement |
+| Failures break silently | Quality gates block bad output |
+| You fix mistakes | Postmortem finds root cause |
 
-This repository contains **148 capabilities** across three areas:
+---
+
+## Quick start
+
+```bash
+git clone https://github.com/leopoldo-ai/leopoldo.ai .leo && cp -r .leo/.claude . && rm -rf .leo
+```
+
+Open Claude Code. The system activates automatically.
+
+---
+
+## How it works
+
+```
+Request
+  -> Orchestrator (routes to the right agent)
+  -> Specialized agent (produces structured output)
+  -> Quality gate (verifies completeness and correctness)
+  -> Structured result
+```
+
+When something goes wrong:
+
+```
+Correction detected
+  -> Postmortem runs BEFORE fixing
+  -> Root cause identified and logged
+  -> Fix applied
+  -> Finding queued for next evolution cycle
+```
+
+No patching over problems. Root cause or nothing.
+
+---
+
+## What's inside
+
+**148 capabilities** across three areas:
 
 | Area | Capabilities | Description |
 |------|:------------:|-------------|
@@ -16,17 +66,46 @@ This repository contains **148 capabilities** across three areas:
 
 Plus the full system: orchestrator, workflow agents, quality gates, and lifecycle hooks.
 
-## Quick Start
+**Engine.** The system core. Orchestrator, quality gates, correction loop, lifecycle manager, and session automation. Runs on every request.
 
-1. Clone this repository into your project:
+**Imprint.** The adaptive learning layer. Observes corrections, learns preferences, builds a profile. Outputs get more calibrated over time without being told twice.
 
-```bash
-git clone https://github.com/leopoldo-ai/leopoldo.ai.git .leopoldo-system
-```
+**system-claw.** Environment scanning on every session start. Detects your MCP servers, CLI tools, and hooks. The system adapts to what you actually have installed. No manual configuration.
 
-2. Copy the contents into your project root (or use as a submodule)
+**Agents.** 22 specialized workflow agents handle multi-step processes. The open-source platform includes reporting-output (professional documents: docx, pptx, xlsx) and the evolution agent (weekly auto-improvement). Premium domains add domain-specific agents: 6 for finance, 4 for legal, 3 for consulting, 3 for competitive intelligence.
 
-3. Start Claude Code. Leopoldo activates automatically.
+**Full Stack.** Included with every install. Architecture design, testing strategy, CI/CD pipelines, security review, frontend patterns, and code review workflows.
+
+---
+
+## See it work
+
+Prompt:
+
+> "Design the architecture for a multi-tenant SaaS with Stripe billing"
+
+What happens:
+
+1. Orchestrator classifies the request, routes to the right agent
+2. Agent produces: system diagram, tech stack recommendation, database schema, API design, Stripe billing integration plan
+3. Quality gate verifies completeness against the architecture checklist
+4. Structured result delivered in about 45 seconds
+
+No prompt engineering. No retries. The system handles the routing and verification.
+
+---
+
+## The evolution loop
+
+Every correction you make feeds the system.
+
+When you tell Leopoldo an output was wrong, it does not just fix it. It runs a postmortem first: what was the root cause, which capability was responsible, what rule was missing. The fix is applied, the finding is logged.
+
+Once a week, the evolution agent reviews all postmortems, scans the Claude and ecosystem release feeds, and produces a set of proposed patches. You review. You approve. The patches ship.
+
+The system that handles your work today is not the system you will have in 30 days. It compounds.
+
+---
 
 ## Architecture
 
@@ -41,30 +120,33 @@ agents/               Workflow agents (orchestrator, system, reporting, environm
 .leopoldo/hooks/      Lifecycle hooks (session, logging, validation, gates)
 ```
 
-## The System
+---
 
-Leopoldo is not a collection of prompts. It is a system with five pillars:
+## Premium domains
 
-1. **Orchestrator**: routes every request to the right expertise
-2. **Workflow Agents**: handle complex multi-step tasks autonomously
-3. **Quality Gates**: block incomplete or undocumented work
-4. **Correction Loop**: postmortems before fixes, learning from every mistake
-5. **Auto-Evolution**: weekly self-improvement cycle
+| Domain | What you can do | Agents included |
+|---|---|---|
+| Finance | Due diligence, deal execution, fund management, advisory, trading | 6 specialized agents |
+| Legal | Contract lifecycle, corporate counsel, dispute resolution, legal ops | 4 specialized agents |
+| Consulting | Engagement management, market sizing, workshops, marketing, medical research | 3 specialized agents |
+| Competitive Intelligence | Market positioning, competitor profiling, people intelligence, market monitoring | 3 specialized agents |
 
-## More Domains
+Available on request. Visit [leopoldo.ai](https://leopoldo.ai) or contact [hello@leopoldo.ai](mailto:hello@leopoldo.ai)
 
-Premium domains are available for finance, consulting, legal, intelligence, and medical research. Each domain packages the full system with vertical expertise.
+---
 
-Visit [leopoldo.ai](https://leopoldo.ai) to explore all domains.
+## Services
 
-## Imprint
+| Tier | For | What you get |
+|------|-----|-------------|
+| **Personal** | Professionals who want Claude to work harder | Premium domain of your choice, Imprint, 30-minute setup call |
+| **Team** | Teams who need AI expertise across their workflow | Premium domains, workflow calibration, team training session |
+| **Enterprise** | Organizations that need full deployment with SLA | Full system deployment, custom domains, dedicated support |
 
-Every Leopoldo installation includes Imprint: a local learning engine that adapts to your style, preferences, and terminology as you work. Your data stays on your machine.
+[leopoldo.ai/services](https://leopoldo.ai/services) or contact [hello@leopoldo.ai](mailto:hello@leopoldo.ai)
+
+---
 
 ## License
 
-[MIT](./LICENSE)
-
-## Author
-
-Luca De Albertis. [leopoldo.ai](https://leopoldo.ai)
+MIT. See [LICENSE](LICENSE).
