@@ -3,22 +3,61 @@
 </p>
 
 <p align="center">
-  <a href="https://leopoldo.ai"><img src="https://img.shields.io/badge/leopoldo.ai-website-1C1917?style=flat" alt="Website"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3A6B55" alt="MIT License"></a>
+  <a href="https://leopoldo.ai"><img src="https://img.shields.io/badge/leopoldo.ai-website-1C1917?style=flat&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzNBNkI1NSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48L3N2Zz4=" alt="Website"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-3A6B55" alt="MIT License"></a>
   <a href="https://github.com/leopoldo-ai/leopoldo.ai/stargazers"><img src="https://img.shields.io/github/stars/leopoldo-ai/leopoldo.ai?style=flat" alt="GitHub Stars"></a>
 </p>
 
 ---
 
-| Other tools | Leopoldo |
-|---|---|
-| Static prompt files | Self-evolving system |
-| No orchestration | Agents route, verify, correct |
-| Set and forget | Learns and adapts as you work |
-| Failures break silently | Quality gates block bad output |
-| You fix mistakes | Postmortem finds root cause |
+An **expertise system for Claude** that orchestrates, corrects, and learns. The capabilities are content. The system is the product. Delivered as plugins for Claude Code and Cowork.
+
+**What makes it different:** traditional prompt collections give Claude answers. Leopoldo gives Claude a way to think. An orchestrator understands your intent, workflow agents coordinate multi-step processes, quality gates verify every output, and the system learns from its own mistakes.
 
 ---
+
+## How it works
+
+```
+You ask something
+  -> Orchestrator classifies intent
+    -> Routes to the right workflow agent
+      -> Agent coordinates domain capabilities
+        -> Quality gates verify the output
+          -> Correction loop learns from mistakes
+```
+
+Every plugin deploys the full system. You choose a domain. You get the complete engine.
+
+## The system
+
+| Layer | What it does |
+|-------|-------------|
+| **Orchestrator** | Understands intent, routes to the right agent, enforces gates |
+| **22 Workflow Agents** | Coordinate multi-step processes: due diligence, deal execution, advisory, clinical trials, consulting, legal |
+| **Quality Gates** | Verification, phase coverage, content integrity, documentation coherence |
+| **Correction Loop** | Detects when you correct an output, runs postmortem, prevents recurrence |
+| **Imprint** | The system learns your style, terminology, and preferences over time |
+
+## Domains
+
+Choose a domain. Get the full system with vertical expertise.
+
+| Domain | What you get | Tier |
+|--------|-------------|------|
+| **Full Stack** | Architecture, testing, CI/CD, code review, frontend | Free |
+| **Investment Core** | Due diligence, valuation, risk frameworks, portfolio analysis | On request |
+| **Deal Engine** | IC memos, LBO modeling, term sheets, exit planning | On request |
+| **Fund Suite** | NAV, investor reporting, UCITS/ELTIF compliance, fund ops | On request |
+| **Advisory Desk** | Pitch books, DCF, sell-side/buy-side, M&A advisory | On request |
+| **Markets Pro** | Trading research, portfolio optimization, macro analysis | On request |
+| **Senior Consultant** | Market sizing, stakeholder mapping, engagement management | On request |
+| **Competitive Intelligence** | Competitor analysis, positioning, market intelligence | On request |
+| **Marketing** | Brand strategy, campaign planning, content frameworks | On request |
+| **Medical Research** | Clinical trials, biostatistics, grant writing, regulatory, publishing | On request |
+| **Legal Suite** | 8 sub-domains: corporate, IP, labour, dispute, real estate, contracts, legal ops | On request |
+
+Each domain includes the orchestrator, workflow agents, quality gates, enforcement hooks, and the correction loop.
 
 ## Quick start
 
@@ -26,112 +65,92 @@
 git clone https://github.com/leopoldo-ai/leopoldo.ai .leo && cp -r .leo/.claude . && rm -rf .leo
 ```
 
-Open Claude Code. The system activates automatically.
+Open your project in Claude Code. The system activates automatically.
 
----
+**All other domains:** contact [hello@leopoldo.ai](mailto:hello@leopoldo.ai) or visit [leopoldo.ai/services](https://leopoldo.ai/services).
 
-## How it works
+## Quality gates
+
+Every output passes through a gate stack before reaching you:
+
+| Gate | What it checks | Threshold |
+|------|---------------|-----------|
+| **Verification** | Did the system actually run the verification commands? Evidence, not claims | 100% |
+| **Phase** | Were all relevant capabilities for this workflow phase used? | 80% (security: 100%) |
+| **Output Integrity** | Placeholder detection, numeric grounding, consistency, AI-slop patterns | Blockers: zero tolerance |
+| **Documentation** | Do project docs reflect the work just completed? | Must be current |
+
+Gates are blocking. Only you can override them.
+
+## Mechanical enforcement
+
+Quality processes are enforced by shell hooks, not LLM instructions. This is the difference between "please do X" (ignored under task pressure) and "exit 2" (physically unavoidable).
+
+| Hook | When | What it enforces |
+|------|------|-----------------|
+| **SessionStart** | Every session | Initialize state, load preferences, detect environment |
+| **UserPromptSubmit** | Every message | Detect corrections, set hard gate requiring postmortem before any fix |
+| **PreToolUse** | Before Edit/Write | Protect managed files and directories |
+| **PostToolUse** | After Edit/Write/Bash | Track progress, activate checkpoint gate at threshold |
+| **Stop** | Before response completes | Block if postmortem skipped, checkpoint overdue, or security gate pending |
+
+## Environment awareness
+
+On session start, Leopoldo detects your full environment:
 
 ```
-Request
-  -> Orchestrator (routes to the right agent)
-  -> Specialized agent (produces structured output)
-  -> Quality gate (verifies completeness and correctness)
-  -> Structured result
+CLIs:    vercel (auth), gh (auth), docker, psql, stripe (no auth)
+MCP:     postgres (connected), github (connected), sentry (connected)
+VS Code: copilot, tailwind, eslint
 ```
 
-When something goes wrong:
+The orchestrator reads this and adapts. If you have Vercel CLI authenticated, it deploys with Vercel. If you have a Postgres MCP server, it queries directly. No configuration needed.
 
-```
-Correction detected
-  -> Postmortem runs BEFORE fixing
-  -> Root cause identified and logged
-  -> Fix applied
-  -> Finding queued for next evolution cycle
-```
+## Self-correction and Imprint
 
-No patching over problems. Root cause or nothing.
+Leopoldo has two mechanisms that make it better the more you use it.
 
----
+**Correction loop (immediate)**
 
-## What's inside
+When you tell Leopoldo an output was wrong, it does not just fix it. It runs a postmortem first: what was the root cause, which capability was responsible, what rule was missing. The fix is applied with the root cause in mind, and the finding is logged. This means corrections make the system permanently better, not just the current output.
 
-**148 capabilities** across three areas:
+**Imprint (cumulative)**
 
-| Area | Capabilities | Description |
-|------|:------------:|-------------|
-| Full Stack | 84 | Architecture, testing, CI/CD, code review, frontend, backend |
-| Essentials | 38 | Strategy, reports, presentations, brand, design foundations |
-| Engine | 26 | Orchestration, lifecycle management, Imprint, system hooks |
+Once installed, Leopoldo observes your corrections and adapts locally: your terminology, your detail level, your formatting preferences. Every correction makes it more precise for you. The more you use it, the more it feels like yours.
 
-Plus the full system: orchestrator, workflow agents, quality gates, and lifecycle hooks.
+Privacy: opt-in, local by default, no data shared or used for training. You can delete your profile at any time.
 
-**Engine.** The system core. Orchestrator, quality gates, correction loop, lifecycle manager, and session automation. Runs on every request.
+**The result:** the system gets smarter about your work. You get fewer corrections over time.
 
-**Imprint.** The adaptive learning layer. Observes corrections, learns preferences, builds a profile. Outputs get more calibrated over time without being told twice.
+## Plugin lifecycle
 
-**system-claw.** Environment scanning on every session start. Detects your MCP servers, CLI tools, and hooks. The system adapts to what you actually have installed. No manual configuration.
+Managed by the built-in lifecycle manager:
 
-**Agents.** 22 specialized workflow agents handle multi-step processes. The open-source platform includes reporting-output (professional documents: docx, pptx, xlsx) and environment scanning. Premium domains add domain-specific agents: 6 for finance, 4 for legal, 3 for consulting, 3 for competitive intelligence.
+| Command | Purpose |
+|---------|---------|
+| `/leopoldo install [domain]` | First-time install |
+| `/leopoldo add [domain]` | Add another domain (shared capabilities deduplicated) |
+| `/leopoldo update` | Check for updates (explicit only, never automatic) |
+| `/leopoldo status` | Show installed domains, health, environment |
+| `/leopoldo repair` | Reinstall missing capabilities |
+| `/leopoldo rollback` | Restore previous version from snapshot |
+| `/leopoldo remove [domain]` | Remove one domain |
+| `/leopoldo uninstall` | Remove everything, restore originals |
 
-**Full Stack.** Included with every install. Architecture design, testing strategy, CI/CD pipelines, security review, frontend patterns, and code review workflows.
-
----
-
-## See it work
-
-Prompt:
-
-> "Design the architecture for a multi-tenant SaaS with Stripe billing"
-
-What happens:
-
-1. Orchestrator classifies the request, routes to the right agent
-2. Agent produces: system diagram, tech stack recommendation, database schema, API design, Stripe billing integration plan
-3. Quality gate verifies completeness against the architecture checklist
-4. Structured result delivered in about 45 seconds
-
-No prompt engineering. No retries. The system handles the routing and verification.
-
----
-
-## Self-correction
-
-Every correction you make teaches the system.
-
-When you tell Leopoldo an output was wrong, it does not just fix it. It runs a postmortem first: what was the root cause, which capability was responsible, what rule was missing. The fix is applied with the root cause in mind, and the finding is logged.
-
-Imprint picks up your preferences, terminology, and patterns over time. The more you use it, the fewer corrections you need. The system that handles your work today is not the system you will have in 30 days.
-
----
+User modifications are preserved. Snapshots are created before every update.
 
 ## Architecture
 
 ```
 skills/
-  engine/             System skills (orchestration, lifecycle, Imprint)
+  engine/               System capabilities (orchestrator, lifecycle, enforcement)
   packs/
-    common/           Essentials and design foundations (included in every domain)
-    dev/              Full Stack development expertise
-agents/               Workflow agents (orchestrator, system, reporting, environment)
-.claude/              Configuration (settings, symlinks, commands)
-.leopoldo/hooks/      Lifecycle hooks (session, logging, validation, gates)
+    common/             Essentials and design foundations (included in every domain)
+    dev/                Full Stack development expertise
+agents/                 Workflow agents (orchestrator, system, reporting, environment)
+.claude/                Configuration (settings, symlinks, commands)
+.leopoldo/hooks/        5 enforcement hooks (shell-based, mechanical)
 ```
-
----
-
-## Premium domains
-
-| Domain | What you can do | Agents included |
-|---|---|---|
-| Finance | Due diligence, deal execution, fund management, advisory, trading | 6 specialized agents |
-| Legal | Contract lifecycle, corporate counsel, dispute resolution, legal ops | 4 specialized agents |
-| Consulting | Engagement management, market sizing, workshops, marketing, medical research | 3 specialized agents |
-| Competitive Intelligence | Market positioning, competitor profiling, people intelligence, market monitoring | 3 specialized agents |
-
-Available on request. Visit [leopoldo.ai](https://leopoldo.ai) or contact [hello@leopoldo.ai](mailto:hello@leopoldo.ai)
-
----
 
 ## Services
 
@@ -143,8 +162,18 @@ Available on request. Visit [leopoldo.ai](https://leopoldo.ai) or contact [hello
 
 [leopoldo.ai/services](https://leopoldo.ai/services) or contact [hello@leopoldo.ai](mailto:hello@leopoldo.ai)
 
----
+## Community and support
+
+- **Website**: [leopoldo.ai](https://leopoldo.ai)
+- **Email**: [hello@leopoldo.ai](mailto:hello@leopoldo.ai)
+- **GitHub**: [leopoldo-ai](https://github.com/leopoldo-ai)
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE) for details.
+
+---
+
+<p align="center">
+  <sub>Built by Leopoldo. An autonomous system that orchestrates expertise for Claude.<br>The capabilities are content. The system is the product.</sub>
+</p>
