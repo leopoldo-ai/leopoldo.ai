@@ -73,37 +73,38 @@ if [[ "$TOOL_NAME" == "Bash" ]] && _has_jq && [[ -n "$GATE_STATE_RAW" ]]; then
 fi
 
 # ──────────────────────────────────────────────
-# CHECKPOINT TRACKING (Edit/Write operations)
+# CHECKPOINT TRACKING (Edit/Write + Agent operations)
+# Agent tool counts because subagents make edits that
+# hooks cannot see (separate processes). Each Agent
+# completion counts as 1 operation toward the checkpoint.
 # ──────────────────────────────────────────────
-if [[ "$TOOL_NAME" == "Edit" ]] || [[ "$TOOL_NAME" == "Write" ]]; then
-  # Count Edit/Write from journal (append-only, no race condition with parallel subagents)
-  # The gates.json counter is unreliable with subagents — journal is source of truth
+if [[ "$TOOL_NAME" == "Edit" ]] || [[ "$TOOL_NAME" == "Write" ]] || [[ "$TOOL_NAME" == "Agent" ]]; then
   TODAY="$(date +%Y-%m-%d)"
   JOURNAL_FILE="$ROOT/.state/journal/$TODAY.jsonl"
 
   if [[ -f "$JOURNAL_FILE" ]]; then
-    # Count Edit/Write events since last checkpoint.completed
+    # Count Edit/Write/Agent events since last checkpoint.completed
     LAST_CP_LINE="$(grep -n '"checkpoint\.passed"\|"checkpoint\.completed"' "$JOURNAL_FILE" 2>/dev/null | tail -1 | cut -d: -f1 || echo "0")"
 
     if [[ "$LAST_CP_LINE" -gt 0 ]]; then
-      EDIT_COUNT="$(tail -n +"$((LAST_CP_LINE + 1))" "$JOURNAL_FILE" | grep -c '"tool":"Edit"\|"tool":"Write"' 2>/dev/null || echo "0")"
+      OP_COUNT="$(tail -n +"$((LAST_CP_LINE + 1))" "$JOURNAL_FILE" | grep -c '"tool":"Edit"\|"tool":"Write"\|"tool":"Agent"' 2>/dev/null || echo "0")"
     else
-      EDIT_COUNT="$(grep -c '"tool":"Edit"\|"tool":"Write"' "$JOURNAL_FILE" 2>/dev/null || echo "0")"
+      OP_COUNT="$(grep -c '"tool":"Edit"\|"tool":"Write"\|"tool":"Agent"' "$JOURNAL_FILE" 2>/dev/null || echo "0")"
     fi
 
-    # Update counter in gates.json for visibility (best-effort, may be stale with subagents)
+    # Update counter in gates.json for visibility
     if _has_jq && [[ -n "$GATE_STATE_RAW" ]]; then
-      update_gate_field ".task_count_since_checkpoint = $EDIT_COUNT"
+      update_gate_field ".task_count_since_checkpoint = $OP_COUNT"
     fi
 
     # Activate checkpoint gate when threshold reached
     THRESHOLD="$GATE_CHECKPOINT_THRESHOLD"
-    if [[ "$EDIT_COUNT" -ge "$THRESHOLD" ]]; then
+    if [[ "$OP_COUNT" -ge "$THRESHOLD" ]]; then
       if _has_jq && [[ -n "$GATE_STATE_RAW" ]]; then
         CURRENT_STATUS="$(get_gate_status "checkpoint")"
         if [[ "$CURRENT_STATUS" == "clear" ]] || [[ "$CURRENT_STATUS" == "passed" ]]; then
           update_gate_field '.gates.checkpoint.status = "pending"'
-          journal_append "{\"event\":\"gate.activated\",\"gate\":\"checkpoint\",\"reason\":\"$EDIT_COUNT edits since last checkpoint (threshold: $THRESHOLD)\",\"session_id\":\"$GATE_SESSION_ID\",\"timestamp\":\"$TIMESTAMP\"}"
+          journal_append "{\"event\":\"gate.activated\",\"gate\":\"checkpoint\",\"reason\":\"$OP_COUNT operations since last checkpoint (threshold: $THRESHOLD)\",\"session_id\":\"$GATE_SESSION_ID\",\"timestamp\":\"$TIMESTAMP\"}"
         fi
       fi
     fi

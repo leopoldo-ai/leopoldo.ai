@@ -59,6 +59,52 @@ If `.leopoldo/imprint/config.json` exists and `enabled` is `true`:
 - Count pending observations in `.leopoldo/imprint/observations.jsonl`
 - If count >= `process_every_n_observations` OR session is ending: process silently
 
+### Imprint Processing (when triggered)
+
+Read all pending observations from `observations.jsonl` and current `profile.json`. Synthesize updated calibrations:
+
+**Calibration fields:** `output_format`, `detail_level`, `terminology`, `language`, `style_notes`, `domain_preferences`
+
+**Processing rules:**
+- Recent observations have higher priority than older ones
+- Explicit corrections override inferred preferences
+- Contradictions: most recent wins
+- Never exceed `profile_max_words` (from config.json, default 500)
+- Additive: preserve existing calibrations, update only what new observations change
+
+**Output:** Write updated `profile.json`, append processed lines to `observations.processed.jsonl`, clear `observations.jsonl`.
+
+**Observation format** (appended to `observations.jsonl`):
+```jsonl
+{"ts":"ISO-8601","type":"correction|preference|pattern","signal":"user's words","skill":"skill-name","context":"task description"}
+```
+
+**Profile format** (`profile.json`):
+```json
+{"output_format":"tables over prose","detail_level":"executive summary + detail on request","terminology":{"preferred":["deal","thesis"],"avoid":["synergy"]},"language":"mixed IT/EN","style_notes":"McKinsey-style, top-down","domain_preferences":{"investment":"DCF-first","consulting":"structured frameworks"}}
+```
+
+### Imprint Commands
+
+| Command | Action |
+|---------|--------|
+| `/imprint status` | Show config + profile + observation count |
+| `/imprint reset` | Clear profile.json and observations |
+| `/imprint export` | Output profile.json content |
+| `/imprint disable` | Set enabled=false in config.json |
+| `/imprint switch local/cloud` | Change mode |
+
+### Leopoldo Manager Commands
+
+| Command | Action |
+|---------|--------|
+| `/leopoldo status` | Show installed domains, skill count, health |
+| `/leopoldo update` | Check for updates via backend API (explicit-only, never automatic) |
+| `/leopoldo repair` | Reinstall missing/corrupted skills from manifest |
+| `/leopoldo rollback` | Restore previous version from snapshot |
+
+Manifest: `.leopoldo-manifest.json` tracks managed vs user skills. Updates only overwrite managed skills with unchanged hashes. User modifications are preserved.
+
 ## Conventions
 
 - Traffic lights: 🟢 on track | 🟡 needs attention | 🔴 critical

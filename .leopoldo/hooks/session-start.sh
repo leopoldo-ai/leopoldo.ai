@@ -12,6 +12,67 @@ source "$SCRIPT_DIR/core.sh"
 
 ROOT="$(find_project_root)"
 
+# ============================================================
+# LICENSE GATE (must be first — blocks everything if invalid)
+# ============================================================
+
+# Skip license check for free plugin (full-stack) or standalone use
+if [ ! -f "$ROOT/.leopoldo/leopoldo-client.json" ]; then
+  # No client config = free plugin or standalone use
+  LICENSE_STATUS="FREE"
+else
+  # Run cross-platform license verification
+  LICENSE_OUTPUT=$(cd "$ROOT" && python3 .leopoldo/hooks/verify-license.py 2>/dev/null || python .leopoldo/hooks/verify-license.py 2>/dev/null || echo "LICENSE_CHECK_ERROR")
+  LICENSE_STATUS=$(echo "$LICENSE_OUTPUT" | head -1)
+  LICENSE_INFO=$(echo "$LICENSE_OUTPUT" | tail -1)
+fi
+
+# Handle license status — early exit for non-valid states
+case "$LICENSE_STATUS" in
+  "LICENSE_VALID"|"FREE")
+    # Proceed normally
+    ;;
+  "ACTIVATION_REQUIRED")
+    if _has_jq; then
+      jq -n '{"additionalContext": "ACTIVATION_REQUIRED: This Leopoldo installation is not activated. All Leopoldo skills and agents are disabled. Run /leopoldo activate YOUR-ACTIVATION-KEY to activate. The activation key was sent in your welcome email."}'
+    else
+      echo '{"additionalContext": "ACTIVATION_REQUIRED: This Leopoldo installation is not activated. All Leopoldo skills and agents are disabled. Run /leopoldo activate YOUR-ACTIVATION-KEY to activate. The activation key was sent in your welcome email."}'
+    fi
+    exit 0
+    ;;
+  "LICENSE_INVALID")
+    if _has_jq; then
+      jq -n '{"additionalContext": "LICENSE_INVALID: Your license file is corrupted or tampered with. Run /leopoldo activate YOUR-KEY to re-activate, or contact hello@leopoldo.ai"}'
+    else
+      echo '{"additionalContext": "LICENSE_INVALID: Your license file is corrupted or tampered with. Run /leopoldo activate YOUR-KEY to re-activate, or contact hello@leopoldo.ai"}'
+    fi
+    exit 0
+    ;;
+  "LICENSE_WRONG_DEVICE")
+    if _has_jq; then
+      jq -n '{"additionalContext": "LICENSE_WRONG_DEVICE: This license belongs to another device. Run /leopoldo transfer on the original device first, or contact hello@leopoldo.ai"}'
+    else
+      echo '{"additionalContext": "LICENSE_WRONG_DEVICE: This license belongs to another device. Run /leopoldo transfer on the original device first, or contact hello@leopoldo.ai"}'
+    fi
+    exit 0
+    ;;
+  "LICENSE_EXPIRED")
+    if _has_jq; then
+      jq -n '{"additionalContext": "LICENSE_EXPIRED: Your Leopoldo license has expired. Contact hello@leopoldo.ai to renew."}'
+    else
+      echo '{"additionalContext": "LICENSE_EXPIRED: Your Leopoldo license has expired. Contact hello@leopoldo.ai to renew."}'
+    fi
+    exit 0
+    ;;
+  *)
+    # LICENSE_CHECK_ERROR or unknown — fail open (don't block Claude)
+    ;;
+esac
+
+# ============================================================
+# REST OF EXISTING SESSION-START LOGIC (unchanged)
+# ============================================================
+
 # Ensure .state directories exist
 mkdir -p "$ROOT/.state/journal"
 mkdir -p "$ROOT/.state/snapshots"
@@ -147,6 +208,32 @@ fi
 
 if $needs_env_scan; then
   CONTEXT="$CONTEXT ENV_SCAN_NEEDED: environment cache stale or missing. Dispatch environment-agent for quick MCP re-scan before handling user request."
+fi
+
+# ============================================================
+# WEEKLY HEARTBEAT (background, non-blocking)
+# ============================================================
+if [ "$LICENSE_STATUS" = "LICENSE_VALID" ] && [ -f "$ROOT/.leopoldo/leopoldo-client.json" ]; then
+  # Check if heartbeat is due (last heartbeat > 7 days ago)
+  LAST_HB_FILE="$ROOT/.leopoldo/.last-heartbeat"
+  SEND_HB="false"
+
+  if [ ! -f "$LAST_HB_FILE" ]; then
+    SEND_HB="true"
+  else
+    LAST_HB=$(cat "$LAST_HB_FILE" 2>/dev/null || echo "0")
+    NOW=$(date +%s)
+    DIFF=$(( NOW - LAST_HB ))
+    WEEK_SECONDS=604800
+    if [ "$DIFF" -ge "$WEEK_SECONDS" ]; then
+      SEND_HB="true"
+    fi
+  fi
+
+  if [ "$SEND_HB" = "true" ]; then
+    # Send heartbeat in background (non-blocking)
+    (cd "$ROOT" && python3 .leopoldo/hooks/heartbeat.py &>/dev/null &)
+  fi
 fi
 
 # Output JSON for Claude Code — use jq to properly escape the context string
