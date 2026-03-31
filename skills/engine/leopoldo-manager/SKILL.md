@@ -525,16 +525,18 @@ Hooks are system components that ship with every Leopoldo installation. Unlike s
 |--------|-----------|---------|
 | `core.sh` | (shared library) | Project root discovery, gate state, journal helpers |
 | `session-start.sh` | SessionStart | Initialize session, load Imprint, check evolution |
+| `compact-reinject.sh` | SessionStart (compact) | Re-inject Imprint and gate state after context compaction |
 | `correction-detector.sh` | UserPromptSubmit | Detect correction signals, set postmortem gate |
 | `gate-enforcer.sh` | Stop | Enforce pending gates, block if unresolved |
 | `pre-edit-validator.sh` | PreToolUse | Protect .state/ and .leopoldo/ from accidental writes |
 | `tool-logger.sh` | PostToolUse | Log tool usage, track checkpoint counter |
+| `subagent-tracker.sh` | SubagentStart/Stop | Track subagent lifecycle, parse transcripts for observability |
 
 ### Install Flow (hooks)
 
 During `/leopoldo install`:
 
-1. Copy `.leopoldo/hooks/` directory (6 scripts) from plugin package
+1. Copy `.leopoldo/hooks/` directory (8 scripts) from plugin package
 2. Make all scripts executable: `chmod +x .leopoldo/hooks/*.sh`
 3. Merge hooks into `.claude/settings.json` (see merge logic below)
 4. Record hook versions in manifest under `"hooks"` key
@@ -579,7 +581,7 @@ During `/leopoldo uninstall`:
   "hooks": {
     "version": "1.0.0",
     "hash": "<sha256 of all hook files concatenated>",
-    "scripts": ["core.sh", "session-start.sh", "correction-detector.sh", "gate-enforcer.sh", "pre-edit-validator.sh", "tool-logger.sh"],
+    "scripts": ["core.sh", "session-start.sh", "compact-reinject.sh", "correction-detector.sh", "gate-enforcer.sh", "pre-edit-validator.sh", "tool-logger.sh", "subagent-tracker.sh"],
     "settings_merged": true
   }
 }

@@ -149,7 +149,7 @@ When user says "health check", "something is broken", or "diagnose":
 2. **Hooks**
    ```bash
    # Check each hook exists and is executable
-   for hook in core.sh correction-detector.sh gate-enforcer.sh pre-edit-validator.sh session-start.sh tool-logger.sh; do
+   for hook in core.sh compact-reinject.sh correction-detector.sh gate-enforcer.sh pre-edit-validator.sh session-start.sh subagent-tracker.sh tool-logger.sh; do
      test -x ".leopoldo/hooks/$hook" && echo "$hook: OK" || echo "$hook: BROKEN"
    done
    ```

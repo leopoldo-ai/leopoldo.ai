@@ -73,6 +73,50 @@ if [[ "$TOOL_NAME" == "Bash" ]] && _has_jq && [[ -n "$GATE_STATE_RAW" ]]; then
 fi
 
 # ──────────────────────────────────────────────
+# WORKFLOW STEP COMPLETION DETECTION
+# Watches for workflow.step_completed events in journal
+# and marks current step as in_progress on Edit/Write.
+# ──────────────────────────────────────────────
+if _has_jq && [[ -n "$GATE_STATE_RAW" ]]; then
+  WL_STATUS_CHECK="$(echo "$GATE_STATE_RAW" | jq -r '.gates["workflow-loop"].status // "clear"' 2>/dev/null)"
+
+  if [[ "$WL_STATUS_CHECK" == "pending" ]]; then
+
+    # Detection 1: Bash tool wrote workflow.step_completed to journal
+    if [[ "$TOOL_NAME" == "Bash" ]]; then
+      WL_TODAY="$(date +%Y-%m-%d)"
+      WL_JOURNAL_FILE="$ROOT/.state/journal/$WL_TODAY.jsonl"
+      if [[ -f "$WL_JOURNAL_FILE" ]]; then
+        # Find the most recent workflow.step_completed event
+        WL_LAST_COMPLETED_ID="$(grep '"workflow.step_completed"' "$WL_JOURNAL_FILE" 2>/dev/null | tail -1 | jq -r '.step_id // empty' 2>/dev/null || echo "")"
+        if [[ -n "$WL_LAST_COMPLETED_ID" ]]; then
+          # Check if this step is still pending in gates.json
+          WL_STEP_STATUS="$(echo "$GATE_STATE_RAW" | jq -r ".gates[\"workflow-loop\"].steps[] | select(.id == \"$WL_LAST_COMPLETED_ID\") | .status" 2>/dev/null || echo "")"
+          if [[ "$WL_STEP_STATUS" == "pending" ]] || [[ "$WL_STEP_STATUS" == "in_progress" ]]; then
+            read_gate_state  # Refresh before update
+            update_step_status "$WL_LAST_COMPLETED_ID" "done"
+            journal_append "{\"event\":\"workflow.step_auto_completed\",\"step_id\":\"$WL_LAST_COMPLETED_ID\",\"detection\":\"journal_event\",\"session_id\":\"$GATE_SESSION_ID\",\"timestamp\":\"$TIMESTAMP\"}"
+          fi
+        fi
+      fi
+    fi
+
+    # Detection 2: Mark current step as in_progress on any Edit/Write
+    if [[ "$TOOL_NAME" == "Edit" ]] || [[ "$TOOL_NAME" == "Write" ]]; then
+      WL_CUR_IDX="$(echo "$GATE_STATE_RAW" | jq -r '.gates["workflow-loop"].current_step // 0' 2>/dev/null)"
+      WL_CUR_STATUS="$(echo "$GATE_STATE_RAW" | jq -r ".gates[\"workflow-loop\"].steps[$WL_CUR_IDX].status // \"pending\"" 2>/dev/null)"
+      if [[ "$WL_CUR_STATUS" == "pending" ]]; then
+        WL_CUR_ID="$(echo "$GATE_STATE_RAW" | jq -r ".gates[\"workflow-loop\"].steps[$WL_CUR_IDX].id // \"\"" 2>/dev/null)"
+        if [[ -n "$WL_CUR_ID" ]]; then
+          update_gate_field ".gates[\"workflow-loop\"].steps[$WL_CUR_IDX].status = \"in_progress\""
+        fi
+      fi
+    fi
+
+  fi
+fi
+
+# ──────────────────────────────────────────────
 # CHECKPOINT TRACKING (Edit/Write + Agent operations)
 # Agent tool counts because subagents make edits that
 # hooks cannot see (separate processes). Each Agent

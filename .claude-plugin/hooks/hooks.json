@@ -1,14 +1,4 @@
 {
-  "permissions": {
-    "allow": [
-      "Bash(bash .leopoldo/hooks/*)",
-      "Bash(jq *)",
-      "Bash(date *)",
-      "Bash(mkdir *)",
-      "Bash(curl -s *)"
-    ]
-  },
-  "agent": "orchestrator",
   "hooks": {
     "SessionStart": [
       {

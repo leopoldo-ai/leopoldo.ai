@@ -70,6 +70,57 @@ if [[ "$PM_REQUIRED" == "true" && "$PM_COMPLETED" != "true" ]]; then
 fi
 
 # ──────────────────────────────────────────────
+# WORKFLOW LOOP GATE (between postmortem and standard gates)
+# ──────────────────────────────────────────────
+if [[ "$BLOCKED" == "false" ]]; then
+  read_workflow_loop
+
+  if [[ "$WL_STATUS" == "pending" ]]; then
+    # Check for user override
+    if check_override "workflow-loop"; then
+      update_gate_field '
+        .gates["workflow-loop"].status = "clear"
+        | .gates["workflow-loop"].steps = []
+        | .gates["workflow-loop"].stall_count = 0
+        | .overrides = (.overrides | map(select(. != "workflow-loop")))
+      '
+      journal_append "{\"event\":\"workflow.overridden\",\"reason\":\"user_request\",\"steps_completed\":$WL_DONE,\"steps_total\":$WL_TOTAL,\"session_id\":\"$GATE_SESSION_ID\",\"timestamp\":\"$TIMESTAMP\"}"
+    elif [[ "$WL_DONE" -lt "$WL_TOTAL" ]]; then
+      # Steps remain — check for stall
+      if [[ "$WL_STALL_COUNT" -ge "$WL_MAX_STALL" ]]; then
+        # Anti-stall: suggest options, don't hard block
+        WL_CURRENT_TITLE="$(echo "$GATE_STATE_RAW" | jq -r ".gates[\"workflow-loop\"].steps[$WL_CURRENT_STEP].title // \"current step\"")"
+        BLOCK_MESSAGE="$(printf '⚠️ Step "%s" appears stuck (%d attempts)\n\n  Options:\n  a) Skip and continue → say "skip step"\n  b) Retry with a different approach\n  c) Stop here → say "stop" or "skip gate"\n\n  What do you prefer?' "$WL_CURRENT_TITLE" "$WL_STALL_COUNT")"
+        # Show warning but don't block — let Claude/user decide
+        echo "$BLOCK_MESSAGE" >&2
+        journal_append "{\"event\":\"workflow.stall_detected\",\"step\":\"$WL_CURRENT_TITLE\",\"stall_count\":$WL_STALL_COUNT,\"session_id\":\"$GATE_SESSION_ID\",\"timestamp\":\"$TIMESTAMP\"}"
+      else
+        # Normal block: show progress, increment stall
+        PROGRESS="$(build_progress_display)"
+        BLOCK_MESSAGE="$PROGRESS"
+        BLOCKED=true
+
+        # Increment stall counter
+        WL_NEW_STALL=$((WL_STALL_COUNT + 1))
+        update_gate_field ".gates[\"workflow-loop\"].stall_count = $WL_NEW_STALL"
+
+        journal_append "{\"event\":\"workflow.gate_blocked\",\"done\":$WL_DONE,\"total\":$WL_TOTAL,\"stall_count\":$WL_NEW_STALL,\"session_id\":\"$GATE_SESSION_ID\",\"timestamp\":\"$TIMESTAMP\"}"
+      fi
+    else
+      # All steps done — clear the gate and celebrate
+      update_gate_field '
+        .gates["workflow-loop"].status = "completed"
+        | .gates["workflow-loop"].stall_count = 0
+      '
+      journal_append "{\"event\":\"workflow.completed\",\"steps_completed\":$WL_DONE,\"steps_total\":$WL_TOTAL,\"source\":\"$WL_SOURCE\",\"session_id\":\"$GATE_SESSION_ID\",\"timestamp\":\"$TIMESTAMP\"}"
+
+      # Show completion feedback (non-blocking)
+      echo "✅ Workflow completed ($WL_TOTAL/$WL_TOTAL). All steps have been completed." >&2
+    fi
+  fi
+fi
+
+# ──────────────────────────────────────────────
 # STANDARD GATES (checkpoint, doc-gate, phase-gate, security-gate)
 # ──────────────────────────────────────────────
 if [[ "$BLOCKED" == "false" ]]; then

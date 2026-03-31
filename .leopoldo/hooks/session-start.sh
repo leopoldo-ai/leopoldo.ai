@@ -40,6 +40,14 @@ case "$LICENSE_STATUS" in
     fi
     exit 0
     ;;
+  "ACTIVATION_INCOMPLETE")
+    if _has_jq; then
+      jq -n '{"additionalContext": "ACTIVATION_INCOMPLETE: A previous activation was interrupted before completing. Run /leopoldo activate YOUR-ACTIVATION-KEY again to retry. If the problem persists, delete .leopoldo/.activation-in-progress and try again."}'
+    else
+      echo '{"additionalContext": "ACTIVATION_INCOMPLETE: A previous activation was interrupted before completing. Run /leopoldo activate YOUR-ACTIVATION-KEY again to retry."}'
+    fi
+    exit 0
+    ;;
   "LICENSE_INVALID")
     if _has_jq; then
       jq -n '{"additionalContext": "LICENSE_INVALID: Your license file is corrupted or tampered with. Run /leopoldo activate YOUR-KEY to re-activate, or contact hello@leopoldo.ai"}'
@@ -64,10 +72,38 @@ case "$LICENSE_STATUS" in
     fi
     exit 0
     ;;
+  "LICENSE_OFFLINE_TOO_LONG")
+    if _has_jq; then
+      jq -n '{"additionalContext": "LICENSE_OFFLINE_TOO_LONG: Your Leopoldo license requires periodic connectivity. Please connect to the internet and restart your session. If this persists, contact hello@leopoldo.ai"}'
+    else
+      echo '{"additionalContext": "LICENSE_OFFLINE_TOO_LONG: Your Leopoldo license requires periodic connectivity. Please connect to the internet and restart your session."}'
+    fi
+    exit 0
+    ;;
   *)
     # LICENSE_CHECK_ERROR or unknown — fail open (don't block Claude)
     ;;
 esac
+
+# ============================================================
+# PLATFORM MISMATCH DETECTION (Fix #6)
+# ============================================================
+
+if [[ -f "$ROOT/.leopoldo/leopoldo-client.json" ]] && _has_jq; then
+  EXPECTED_PLATFORM="$(jq -r '.platform // "claude-code"' "$ROOT/.leopoldo/leopoldo-client.json" 2>/dev/null || echo "claude-code")"
+
+  # Detect current platform: Claude Code has .claude/ dir, Cowork has different structure
+  CURRENT_PLATFORM="unknown"
+  if [[ -d "$ROOT/.claude" ]]; then
+    CURRENT_PLATFORM="claude-code"
+  elif [[ -f "$ROOT/.cowork/config.json" ]] || [[ -f "$ROOT/hooks/hooks.json" ]]; then
+    CURRENT_PLATFORM="cowork"
+  fi
+
+  if [[ "$CURRENT_PLATFORM" != "unknown" ]] && [[ "$EXPECTED_PLATFORM" != "$CURRENT_PLATFORM" ]] && [[ "$EXPECTED_PLATFORM" != "both" ]]; then
+    CONTEXT="PLATFORM_MISMATCH: This package was built for $EXPECTED_PLATFORM but you are using $CURRENT_PLATFORM. Some features may not work correctly. Contact hello@leopoldo.ai for the correct package format."
+  fi
+fi
 
 # ============================================================
 # REST OF EXISTING SESSION-START LOGIC (unchanged)
@@ -88,11 +124,18 @@ if [[ -f "$GATES_FILE" ]] && _has_jq && jq empty "$GATES_FILE" 2>/dev/null; then
   # Preserve enforcement levels, reset counters, ensure postmortem field exists
   UPDATED="$(jq \
     --arg sid "$SESSION_ID" \
-    '.session_id = $sid
-     | .checkpoint_threshold = 5
-     | .gates["doc-gate"].soft_warnings = 0
-     | .postmortem = {"required": false, "detected_at": null, "completed": false, "user_signal": null}
-     | .overrides = []' \
+    '
+    .session_id = $sid
+    | .checkpoint_threshold = 5
+    | .gates["doc-gate"].soft_warnings = 0
+    | .postmortem = {"required": false, "detected_at": null, "completed": false, "user_signal": null}
+    | .overrides = []
+    | if .gates["workflow-loop"].status == "pending" then
+        .
+      else
+        .gates["workflow-loop"] = {"status": "clear", "enforcement": "soft", "soft_warnings": 0, "source": null, "steps": [], "current_step": 0, "stall_count": 0, "max_stall": 3, "activated_at": null}
+      end
+    ' \
     "$GATES_FILE")"
   write_gate_state "$UPDATED"
 else
@@ -108,7 +151,8 @@ else
     "checkpoint": {"status": "clear", "enforcement": "soft", "soft_warnings": 0},
     "doc-gate": {"status": "clear", "enforcement": "soft", "soft_warnings": 0},
     "phase-gate": {"status": "clear", "enforcement": "hard", "skills_required": [], "skills_invoked": []},
-    "security-gate": {"status": "clear", "enforcement": "hard"}
+    "security-gate": {"status": "clear", "enforcement": "hard"},
+    "workflow-loop": {"status": "clear", "enforcement": "soft", "soft_warnings": 0, "source": null, "steps": [], "current_step": 0, "stall_count": 0, "max_stall": 3, "activated_at": null}
   },
   "postmortem": {
     "required": false,
@@ -135,6 +179,17 @@ if [[ -f "$STATE_FILE" ]] && _has_jq; then
   PENDING="$(jq -r '.evolution.pending_tasks // [] | length' "$STATE_FILE" 2>/dev/null || echo "0")"
   if [[ "$PENDING" -gt 0 ]]; then
     CONTEXT="$CONTEXT $PENDING pending evolution task(s)."
+  fi
+fi
+
+# Check for active workflow-loop
+if [[ -f "$GATES_FILE" ]] && _has_jq; then
+  WL_STATUS="$(jq -r '.gates["workflow-loop"].status // "clear"' "$GATES_FILE" 2>/dev/null || echo "clear")"
+  if [[ "$WL_STATUS" == "pending" ]]; then
+    WL_TOTAL="$(jq '.gates["workflow-loop"].steps | length' "$GATES_FILE" 2>/dev/null || echo "0")"
+    WL_DONE="$(jq '[.gates["workflow-loop"].steps[] | select(.status == "done" or .status == "skipped")] | length' "$GATES_FILE" 2>/dev/null || echo "0")"
+    WL_NEXT="$(jq -r '.gates["workflow-loop"].steps[.gates["workflow-loop"].current_step].title // "unknown"' "$GATES_FILE" 2>/dev/null || echo "unknown")"
+    CONTEXT="$CONTEXT WORKFLOW_ACTIVE: $WL_DONE/$WL_TOTAL steps completed. Next: $WL_NEXT. Resume with 'continue' or stop with 'stop workflow'."
   fi
 fi
 
@@ -211,29 +266,106 @@ if $needs_env_scan; then
 fi
 
 # ============================================================
-# WEEKLY HEARTBEAT (background, non-blocking)
+# WEEKLY HEARTBEAT (curl-based, non-blocking, replaces heartbeat.py)
 # ============================================================
-if [ "$LICENSE_STATUS" = "LICENSE_VALID" ] && [ -f "$ROOT/.leopoldo/leopoldo-client.json" ]; then
-  # Check if heartbeat is due (last heartbeat > 7 days ago)
+if [[ "$LICENSE_STATUS" == "LICENSE_VALID" ]] && [[ -f "$ROOT/.leopoldo/leopoldo-client.json" ]] && _has_jq; then
   LAST_HB_FILE="$ROOT/.leopoldo/.last-heartbeat"
   SEND_HB="false"
 
-  if [ ! -f "$LAST_HB_FILE" ]; then
+  if [[ ! -f "$LAST_HB_FILE" ]]; then
     SEND_HB="true"
   else
-    LAST_HB=$(cat "$LAST_HB_FILE" 2>/dev/null || echo "0")
-    NOW=$(date +%s)
+    LAST_HB="$(cat "$LAST_HB_FILE" 2>/dev/null || echo "0")"
+    NOW="$(date +%s)"
     DIFF=$(( NOW - LAST_HB ))
-    WEEK_SECONDS=604800
-    if [ "$DIFF" -ge "$WEEK_SECONDS" ]; then
+    if [[ "$DIFF" -ge 604800 ]]; then
       SEND_HB="true"
     fi
   fi
 
-  if [ "$SEND_HB" = "true" ]; then
-    # Send heartbeat in background (non-blocking)
-    (cd "$ROOT" && python3 .leopoldo/hooks/heartbeat.py &>/dev/null &)
+  if [[ "$SEND_HB" == "true" ]] && command -v curl &>/dev/null; then
+    HB_API_KEY="$(jq -r '.api_key // ""' "$ROOT/.leopoldo/leopoldo-client.json" 2>/dev/null || echo "")"
+    HB_API_URL="$(jq -r '.api_url // ""' "$ROOT/.leopoldo/leopoldo-client.json" 2>/dev/null | sed 's:/*$::' || echo "")"
+    HB_VERSION="$(jq -r '.version // "1.0.0"' "$ROOT/.leopoldo/leopoldo-client.json" 2>/dev/null || echo "1.0.0")"
+
+    if [[ -n "$HB_API_KEY" ]] && [[ -n "$HB_API_URL" ]]; then
+      # Get device fingerprint (same logic as verify-license.py)
+      HB_FINGERPRINT=""
+      if [[ "$(uname)" == "Darwin" ]]; then
+        HB_FINGERPRINT="$(ioreg -rd1 -c IOPlatformExpertDevice 2>/dev/null | grep IOPlatformUUID | sed 's/.*= "//;s/"//' || hostname)"
+      else
+        HB_FINGERPRINT="$(cat /etc/machine-id 2>/dev/null || cat /var/lib/dbus/machine-id 2>/dev/null || hostname)"
+      fi
+
+      # Extract current license info for renewal detection (mirrors old heartbeat.py)
+      HB_CURRENT_EXPIRES=""
+      HB_CURRENT_PRODUCTS=""
+      LICENSE_DAT="$ROOT/.leopoldo/license.dat"
+      if [[ -f "$LICENSE_DAT" ]]; then
+        LICENSE_RAW="$(python3 -c "import base64,json,sys; d=json.loads(base64.b64decode(open('$LICENSE_DAT').read().strip())); p=d.get('payload',{}); print(p.get('expires_at','')); print(','.join(p.get('products',[])))" 2>/dev/null || echo "")"
+        if [[ -n "$LICENSE_RAW" ]]; then
+          HB_CURRENT_EXPIRES="$(echo "$LICENSE_RAW" | head -1)"
+          HB_CURRENT_PRODUCTS="$(echo "$LICENSE_RAW" | tail -1)"
+        fi
+      fi
+
+      # Send heartbeat in background (non-blocking)
+      (
+        HB_BODY="{\"device_fingerprint\":\"$HB_FINGERPRINT\",\"version\":\"$HB_VERSION\""
+        if [[ -n "$HB_CURRENT_EXPIRES" ]]; then
+          HB_BODY="$HB_BODY,\"current_expires\":\"$HB_CURRENT_EXPIRES\""
+        fi
+        if [[ -n "$HB_CURRENT_PRODUCTS" ]]; then
+          HB_BODY="$HB_BODY,\"current_products\":\"$HB_CURRENT_PRODUCTS\""
+        fi
+        HB_BODY="$HB_BODY}"
+
+        HB_RESPONSE="$(curl -s -m 10 \
+          -X POST "$HB_API_URL/api/licenses/heartbeat" \
+          -H "Content-Type: application/json" \
+          -H "X-Api-Key: $HB_API_KEY" \
+          -d "$HB_BODY" \
+          2>/dev/null || echo "{}")"
+
+        # Handle renewed license
+        if echo "$HB_RESPONSE" | jq -e '.renewed_license' &>/dev/null; then
+          RENEWED="$(echo "$HB_RESPONSE" | jq -r '.renewed_license')"
+          echo "$RENEWED" > "$ROOT/.leopoldo/license.dat"
+        fi
+
+        # Handle revocation
+        if echo "$HB_RESPONSE" | jq -r '.status' 2>/dev/null | grep -q 'revoked'; then
+          rm -f "$ROOT/.leopoldo/license.dat"
+        fi
+
+        # Update last heartbeat timestamp
+        date +%s > "$LAST_HB_FILE"
+      ) &>/dev/null &
+    fi
   fi
+fi
+
+# ============================================================
+# PERSIST SESSION VARS via CLAUDE_ENV_FILE
+# Other hooks read these as env vars instead of re-parsing gates.json.
+# CLAUDE_ENV_FILE is only writable in SessionStart/CwdChanged/FileChanged.
+# ============================================================
+if [[ -n "${CLAUDE_ENV_FILE:-}" ]]; then
+  LEOPOLDO_API_KEY=""
+  LEOPOLDO_API_URL=""
+  if [[ -f "$ROOT/.leopoldo/leopoldo-client.json" ]] && _has_jq; then
+    LEOPOLDO_API_KEY="$(jq -r '.api_key // ""' "$ROOT/.leopoldo/leopoldo-client.json" 2>/dev/null || echo "")"
+    LEOPOLDO_API_URL="$(jq -r '.api_url // ""' "$ROOT/.leopoldo/leopoldo-client.json" 2>/dev/null | sed 's:/*$::' || echo "")"
+  fi
+
+  cat >> "$CLAUDE_ENV_FILE" <<ENVEOF
+LEOPOLDO_SESSION_ID=$SESSION_ID
+LEOPOLDO_LICENSE_STATUS=$LICENSE_STATUS
+LEOPOLDO_IMPRINT_ENABLED=$IMPRINT_ENABLED
+LEOPOLDO_ROOT=$ROOT
+LEOPOLDO_API_KEY=$LEOPOLDO_API_KEY
+LEOPOLDO_API_URL=$LEOPOLDO_API_URL
+ENVEOF
 fi
 
 # Output JSON for Claude Code — use jq to properly escape the context string
