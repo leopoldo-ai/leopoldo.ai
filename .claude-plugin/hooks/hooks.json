@@ -1,0 +1,134 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .leopoldo/hooks/session-start.sh",
+            "timeout": 10000,
+            "statusMessage": "Initializing Leopoldo session..."
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .leopoldo/hooks/compact-reinject.sh",
+            "timeout": 5000,
+            "statusMessage": "Re-injecting context after compaction..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .leopoldo/hooks/correction-detector.sh",
+            "timeout": 5000,
+            "statusMessage": "Analyzing your request..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .leopoldo/hooks/gate-enforcer.sh",
+            "timeout": 5000,
+            "statusMessage": "Checking quality gates..."
+          },
+          {
+            "type": "agent",
+            "prompt": "You are the Leopoldo checkpoint agent. Read .state/gates.json. Check task_count_since_checkpoint and gates.checkpoint.status. IF task_count_since_checkpoint >= 5 OR gates.checkpoint.status is 'pending': (1) Read CLAUDE.md — if code changes added new modules or endpoints, update the relevant section. (2) Read .state/state.json — if skill_count or plugins changed, update. (3) Append to today's journal in .state/journal/: {\"event\":\"checkpoint.completed\",\"summary\":\"<what you updated>\",\"timestamp\":\"<ISO-8601>\"}. If task_count < 5 and checkpoint not pending, do nothing. Work silently.",
+            "model": "haiku",
+            "timeout": 60,
+            "statusMessage": "Running documentation checkpoint..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .leopoldo/hooks/pre-edit-validator.sh",
+            "timeout": 3000,
+            "statusMessage": "Validating file access..."
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git push --force*)",
+            "command": "echo 'Force push blocked by Leopoldo.' >&2 && exit 2",
+            "timeout": 1000,
+            "statusMessage": "Checking command safety..."
+          },
+          {
+            "type": "command",
+            "if": "Bash(rm -rf .leopoldo*)",
+            "command": "echo 'Cannot remove .leopoldo/ directory.' >&2 && exit 2",
+            "timeout": 1000
+          },
+          {
+            "type": "command",
+            "if": "Bash(rm -rf .state*)",
+            "command": "echo 'Cannot remove .state/ directory.' >&2 && exit 2",
+            "timeout": 1000
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|Bash|Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .leopoldo/hooks/tool-logger.sh",
+            "timeout": 3000,
+            "async": true,
+            "statusMessage": "Logging operation..."
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .leopoldo/hooks/subagent-tracker.sh",
+            "timeout": 2000,
+            "async": true,
+            "statusMessage": "Tracking subagent..."
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .leopoldo/hooks/subagent-tracker.sh",
+            "timeout": 10000,
+            "statusMessage": "Analyzing subagent results..."
+          }
+        ]
+      }
+    ]
+  }
+}

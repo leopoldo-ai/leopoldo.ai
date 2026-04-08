@@ -1,0 +1,22 @@
+{
+  "name": "leopoldo-leopoldo",
+  "version": "1.0.0",
+  "description": "The first autonomous expertise system for Claude. Orchestrates, corrects, and evolves.",
+  "author": "Leopoldo AI",
+  "homepage": "https://leopoldo.ai",
+  "repository": "https://github.com/leopoldo-ai/leopoldo.ai",
+  "license": "MIT",
+  "keywords": [
+    "leopoldo",
+    "expertise-system",
+    "orchestration",
+    "claude-plugin"
+  ],
+  "claude_code_version": ">=2.1.0",
+  "capabilities": {
+    "skills": true,
+    "agents": true,
+    "hooks": true,
+    "mcp": false
+  }
+}
