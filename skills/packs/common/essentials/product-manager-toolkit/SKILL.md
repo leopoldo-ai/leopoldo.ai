@@ -1,6 +1,7 @@
 ---
 name: product-manager-toolkit
-description: Product management toolkit for prioritizing initiatives, managing backlogs, creating PRDs and roadmaps. Use when performing RICE scoring, prioritizing work sessions, defining MVPs, managing trade-offs between initiatives, or analyzing the impact of product decisions.
+description: Use when performing RICE scoring, prioritizing work sessions, defining MVPs, managing trade-offs between initiatives, analyzing the impact of product decisions, writing PRDs, or managing backlogs and roadmaps.
+type: pattern
 ---
 
 # Product Manager Toolkit

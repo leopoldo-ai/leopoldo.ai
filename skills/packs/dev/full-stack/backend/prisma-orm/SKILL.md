@@ -1,6 +1,7 @@
 ---
 name: prisma-orm
 description: "Use when working with Prisma ORM: schema design, migrations, queries, relations, and performance. OSS-first: Prisma is fully OSS. Use alongside postgres-pro for database optimization. Triggers on: Prisma, prisma schema, prisma migrate, prisma client, PrismaClient, findMany, findUnique, prisma studio."
+type: technique
 metadata:
   author: leopoldo
   source: custom

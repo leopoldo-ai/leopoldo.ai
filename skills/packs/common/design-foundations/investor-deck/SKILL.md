@@ -1,6 +1,7 @@
 ---
 name: investor-deck
-description: "Generate fund and family office investor communication presentations in .pptx format. 5 document variants: quarterly reports, LP meeting decks, capital call notices, annual letters, family office portfolio overviews."
+description: "Use when building fund and family office investor communication presentations in .pptx format. 5 document variants: quarterly reports, LP meeting decks, capital call notices, annual letters, family office portfolio overviews."
+type: technique
 version: 0.1.0
 layer: userland
 category: templates

@@ -1,21 +1,8 @@
 ---
 name: decision-toolkit
 version: 0.1.0
-description: "Universal quantitative decision framework. Use when comparing alternatives with weighted criteria, ROI analysis, make-vs-buy, cost-benefit analysis, or scenario modeling. For product/feature decisions with RICE use feature-impact-analyzer instead."
-skillos:
-  layer: userland
-  category: domain
-  pack: essentials
-  requires:
-    hard: []
-    soft: [data-visualization, strategy-advisor]
-  provides: [decision-matrix, roi-analysis, cost-benefit, scenario-model]
-  triggers:
-    - on: "task.category == 'decision-analysis'"
-      mode: suggest
-    - on: "task.category == 'make-vs-buy'"
-      mode: suggest
-  config: {}
+description: "Use when comparing alternatives with weighted criteria, running ROI analysis, make-vs-buy, cost-benefit analysis, or scenario modeling via a universal quantitative decision framework. For product/feature decisions with RICE use feature-impact-analyzer instead."
+type: pattern
 metadata:
   author: internal
   source: custom

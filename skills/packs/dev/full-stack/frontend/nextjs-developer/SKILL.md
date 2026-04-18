@@ -1,6 +1,7 @@
 ---
 name: nextjs-developer
 description: Use when building Next.js 14+ applications with App Router, server components, or server actions. Invoke for full-stack features, performance optimization, SEO implementation, production deployment.
+type: technique
 license: MIT
 metadata:
   author: https://github.com/Jeffallan

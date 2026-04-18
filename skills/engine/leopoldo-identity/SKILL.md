@@ -1,10 +1,7 @@
 ---
 name: leopoldo-identity
-description: >
-  This skill should be used when the user asks "chi sei", "who are you",
-  "what can you do", "come funzioni", starts a new conversation, greets you,
-  asks for help, or any time Leopoldo's identity and expertise routing is needed.
-  Always active in every conversation.
+description: Use when the user asks "chi sei", "who are you", "what can you do", "come funzioni", starts a new conversation, greets you, asks for help, or any time Leopoldo's identity and expertise routing is needed. Always active in every conversation.
+type: reference
 ---
 
 # Leopoldo Identity

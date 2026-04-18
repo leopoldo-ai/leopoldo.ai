@@ -1,7 +1,8 @@
 ---
 name: dashboard-builder
 version: 0.2.0
-description: Build full-stack dashboard applications using React/Next.js + shadcn/ui + Tailwind CSS + Recharts + Express with customizable data sources. Use when creating data visualization dashboards, business intelligence interfaces, monitoring systems, KPI displays, analytics platforms, or any project requiring data visualization with modern UI components and dynamic effects.
+description: "Use when building full-stack dashboard applications, data visualization dashboards, business intelligence interfaces, monitoring systems, KPI displays, analytics platforms, or any project requiring data visualization. Stack: React/Next.js + shadcn/ui + Tailwind CSS + Recharts + Express."
+type: technique
 ---
 
 # Dashboard Builder

@@ -1,7 +1,8 @@
 ---
 name: tdd-vertical-slicing
 version: 0.2.0
-description: Test-driven development with red-green-refactor loop. Use when user wants to build features or fix bugs using TDD, mentions "red-green-refactor", wants integration tests, or asks for test-first development.
+description: Use when building features or fixing bugs using TDD with red-green-refactor loop, implementing vertical slicing, writing integration tests, or practicing test-first development.
+type: technique
 license: MIT
 metadata:
   author: mattpocock

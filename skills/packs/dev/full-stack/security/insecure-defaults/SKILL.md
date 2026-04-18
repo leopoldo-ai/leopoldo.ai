@@ -1,7 +1,8 @@
 ---
 name: insecure-defaults
 version: 0.2.0
-description: "Detects fail-open insecure defaults (hardcoded secrets, weak auth, permissive security) that allow apps to run insecurely in production. Use when auditing security, reviewing config management, or analyzing environment variable handling."
+description: "Use when auditing security, reviewing config management, or analyzing environment variable handling for fail-open insecure defaults (hardcoded secrets, weak auth, permissive security) that let apps run insecurely in production."
+type: technique
 allowed-tools:
   - Read
   - Grep

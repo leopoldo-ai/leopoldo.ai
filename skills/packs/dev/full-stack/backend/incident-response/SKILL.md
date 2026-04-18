@@ -1,6 +1,7 @@
 ---
 name: incident-response
 description: "Use when handling production incidents: detection, triage, mitigation, communication, and postmortem. Covers structured incident response for engineering teams. Triggers on: incident, outage, downtime, postmortem, on-call, alert, production issue, degradation, RCA, root cause analysis."
+type: technique
 metadata:
   author: leopoldo
   source: custom

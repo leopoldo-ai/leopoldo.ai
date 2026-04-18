@@ -1,21 +1,8 @@
 ---
 name: doc-coauthoring
 version: 0.1.0
-description: "Iterative collaborative writing for complex documents. Use when co-writing proposals, specs, white papers, decision docs, or any document requiring multiple drafting passes and reader testing. For one-shot report generation use docx-reports instead."
-skillos:
-  layer: userland
-  category: domain
-  pack: essentials
-  requires:
-    hard: []
-    soft: [docx-reports, pptx, knowledge-base]
-  provides: [coauthored-document, iterative-draft, reader-test]
-  triggers:
-    - on: "task.category == 'document-writing'"
-      mode: suggest
-    - on: "task.category == 'collaborative-writing'"
-      mode: auto
-  config: {}
+description: "Use when co-writing proposals, specs, white papers, decision docs, or any document requiring multiple drafting passes and reader testing through iterative collaborative writing. For one-shot report generation use docx-reports instead."
+type: technique
 metadata:
   author: internal
   source: custom

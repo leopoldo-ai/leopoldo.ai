@@ -1,6 +1,7 @@
 ---
 name: motion-design
-description: "Animation and motion design patterns for web interfaces. Use when implementing transitions, micro-interactions, scroll animations, loading states, or any UI motion. 7 codified categories with accessibility (prefers-reduced-motion) and performance guardrails."
+description: "Use when implementing transitions, micro-interactions, scroll animations, loading states, or any UI motion on web interfaces. Covers animation and motion design patterns across 7 codified categories with accessibility (prefers-reduced-motion) and performance guardrails."
+type: technique
 version: 0.1.0
 layer: userland
 category: frontend

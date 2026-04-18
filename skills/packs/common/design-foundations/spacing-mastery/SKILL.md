@@ -1,6 +1,7 @@
 ---
 name: spacing-mastery
-description: "Spatial design system with 8pt grid, proximity rules, and optical adjustments. Use when generating any layout (web or document) to ensure professional spacing that distinguishes designed output from AI-assembled output."
+description: "Use when generating any layout (web or document) to ensure professional spacing with 8pt grid, proximity rules, and optical adjustments that distinguish designed output from AI-assembled output."
+type: technique
 version: 0.1.0
 layer: userland
 category: design

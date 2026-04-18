@@ -1,6 +1,7 @@
 ---
 name: supply-chain-security
-description: Dependency scanning, SBOM generation, dependency confusion prevention, license compliance, vulnerability management
+description: "Use when scanning dependencies, generating SBOM, preventing dependency confusion, checking license compliance, or managing third-party vulnerabilities."
+type: technique
 version: 0.2.0
 layer: userland
 category: security

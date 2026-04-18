@@ -1,6 +1,7 @@
 ---
 name: tanstack-ecosystem
 description: "Use when working with TanStack Router, TanStack Start, or TanStack Form. Covers type-safe routing, full-stack framework patterns, and form management within the TanStack ecosystem. Triggers on: TanStack Router, TanStack Start, TanStack Form, file-based routing, type-safe routes, createFileRoute, createRootRoute."
+type: technique
 metadata:
   author: leopoldo
   source: custom

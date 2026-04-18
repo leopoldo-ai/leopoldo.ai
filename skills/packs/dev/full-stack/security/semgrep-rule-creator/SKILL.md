@@ -1,10 +1,7 @@
 ---
 name: semgrep-rule-creator
-description: >
-  Creates custom Semgrep rules for detecting security vulnerabilities, bug patterns,
-  and code patterns. Follows test-first methodology with iterative refinement.
-  Prioritizes taint mode for data flow issues. Produces production-quality rules
-  with complete test coverage.
+description: "Use when writing custom Semgrep rules for security vulnerabilities, bug patterns, or code patterns. Follows test-first methodology with iterative refinement, prioritizes taint mode for data flow issues, produces production-quality rules with complete test coverage."
+type: technique
 version: 0.2.0
 layer: userland
 category: security

@@ -1,6 +1,7 @@
 ---
 name: supabase-patterns
 description: "Use when building with Supabase: database, auth, storage, realtime, and edge functions. OSS-first: Supabase is self-hostable. Triggers on: Supabase, supabase-js, Supabase Auth, Supabase Realtime, Supabase Storage, edge functions, RLS, row level security."
+type: technique
 metadata:
   author: leopoldo
   source: https://github.com/supabase/agent-skills

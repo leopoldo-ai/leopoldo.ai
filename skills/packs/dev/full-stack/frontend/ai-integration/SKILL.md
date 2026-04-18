@@ -1,6 +1,7 @@
 ---
 name: ai-integration
 description: "Use when adding AI/LLM features to web apps. Covers Vercel AI SDK, Claude API, streaming chat, structured output, and multi-provider patterns. OSS-first: Vercel AI SDK (OSS) and Claude API primary. Triggers on: AI, LLM, chat, streaming, Vercel AI SDK, Claude API, useChat, generateText, generateObject, chatbot, completions."
+type: technique
 metadata:
   author: leopoldo
   source: custom

@@ -1,7 +1,8 @@
 ---
 name: threat-modeler
 version: 0.2.0
-description: Generates threat models (STRIDE, attack trees) for the codebase by discovering security skills and mapping threats to available defenses. Scans skills/ to identify which security analyses can be run (path configurable via skill-orch.config.json), then produces a prioritized threat matrix with recommended skill invocations. Use before running audit-coordinator or when planning security for a new module.
+description: Use when planning security for a new module, building threat models (STRIDE, attack trees), or preparing to run audit-coordinator. Maps threats to available defenses, scans skills/ to identify which security analyses can run, and produces a prioritized threat matrix with recommended skill invocations.
+type: technique
 ---
 
 # Threat Modeler — STRIDE + Dynamic Skill Mapping

@@ -1,6 +1,7 @@
 ---
 name: vercel-deploy
-description: Deploy applications and websites to Vercel. Use this skill when the user requests deployment actions such as "Deploy my app", "Deploy this to production", "Create a preview deployment", "Deploy and give me the link", or "Push this live". No authentication required - returns preview URL and claimable deployment link.
+description: Use when deploying applications and websites to Vercel. Triggers on "Deploy my app", "Deploy this to production", "Create a preview deployment", "Deploy and give me the link", or "Push this live". No authentication required, returns preview URL and claimable deployment link.
+type: technique
 metadata:
   author: vercel-labs
   version: 0.2.0

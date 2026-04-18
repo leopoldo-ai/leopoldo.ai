@@ -1,6 +1,7 @@
 ---
 name: state-management
 description: "Use when choosing or implementing state management in React apps. Covers Zustand (global), TanStack Query (server), Jotai (atomic), URL state, and React Context. OSS-first: Zustand and TanStack Query primary, Redux as legacy fallback. Triggers on: state management, global state, Zustand, TanStack Query, Jotai, Redux, Context, prop drilling, caching, server state."
+type: technique
 metadata:
   author: leopoldo
   source: custom

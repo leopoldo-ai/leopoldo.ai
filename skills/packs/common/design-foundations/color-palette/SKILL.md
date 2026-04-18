@@ -1,6 +1,7 @@
 ---
 name: color-palette
-description: "Generate and validate color palettes with WCAG 2.1 AA/AAA compliance. Use when creating brand colors from a primary color, validating contrast ratios, generating semantic/dark mode palettes, or auditing existing color schemes."
+description: "Use when creating brand colors from a primary color, validating contrast ratios, generating semantic/dark mode palettes, or auditing existing color schemes for WCAG 2.1 AA/AAA compliance."
+type: technique
 version: 0.1.0
 layer: userland
 category: design

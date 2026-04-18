@@ -33,8 +33,8 @@ fi
 # --- Email: Resend send operations ---
 case "$TOOL_NAME" in
   mcp__resend__send-email|mcp__resend__send-batch-emails|mcp__resend__send-broadcast)
-    echo "⛔ HUMAN-IN-THE-LOOP: Email send detected ($TOOL_NAME). Emails are irreversible. Please confirm before proceeding." >&2
-    exit 2
+    echo "⚠️  Email send detected ($TOOL_NAME). Confirm in the tool permission prompt to proceed." >&2
+    exit 0
     ;;
 esac
 

@@ -1,7 +1,8 @@
 ---
 name: sharp-edges
 version: 0.2.0
-description: "Identifies error-prone APIs, dangerous configurations, and footgun designs that enable security mistakes. Use when reviewing API designs, configuration schemas, cryptographic library ergonomics, or evaluating whether code follows 'secure by default' and 'pit of success' principles. Triggers: footgun, misuse-resistant, secure defaults, API usability, dangerous configuration."
+description: "Use when reviewing API designs, configuration schemas, cryptographic library ergonomics, or evaluating whether code follows 'secure by default' and 'pit of success' principles, and when hunting for error-prone APIs, dangerous configurations, or footgun designs. Triggers: footgun, misuse-resistant, secure defaults, API usability, dangerous configuration."
+type: technique
 allowed-tools:
   - Read
   - Grep

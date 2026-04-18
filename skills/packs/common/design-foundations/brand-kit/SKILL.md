@@ -1,6 +1,7 @@
 ---
 name: brand-kit
-description: "Brand identity single source of truth. Defines and validates brand-kit.yaml schema (colors, typography, spacing, document settings). Provides 2 presets: corporate-finance and tech-startup. Use when setting up brand identity or when any skill needs brand context."
+description: "Use when setting up brand identity or when any skill needs brand context. Single source of truth that defines and validates brand-kit.yaml schema (colors, typography, spacing, document settings) with 2 presets: corporate-finance and tech-startup."
+type: technique
 version: 0.1.0
 layer: userland
 category: design

@@ -1,7 +1,8 @@
 ---
 name: granola-mcp
 version: 0.2.0
-description: Granola MCP integration skill. Connects Granola AI meeting transcription to a contact database via MCP (Model Context Protocol). Automates meeting→structured report→contact update pipeline. Covers 10 MCP tools, AI extraction prompts for scorecard/fields, participant matching, and auto-update patterns. Use when implementing meeting integration, building the meeting→contact pipeline, or configuring Granola MCP server.
+description: Use when implementing meeting integration with Granola AI, building the meeting to contact pipeline, or configuring the Granola MCP server. Connects Granola meeting transcription to a contact database via MCP. Covers 10 MCP tools, AI extraction prompts for scorecard/fields, participant matching, and auto-update patterns.
+type: technique
 license: Apache-2.0
 metadata:
   author: pedramamini

@@ -1,6 +1,7 @@
 ---
 name: visual-hierarchy
-description: "Visual hierarchy rules, advanced typography, and layout pattern selection. Use when generating any visual output to ensure clear reading order, proper type scale, and intentional layout composition."
+description: "Use when generating any visual output to ensure clear reading order, proper type scale, and intentional layout composition via visual hierarchy rules, advanced typography, and layout pattern selection."
+type: technique
 version: 0.1.0
 layer: userland
 category: design

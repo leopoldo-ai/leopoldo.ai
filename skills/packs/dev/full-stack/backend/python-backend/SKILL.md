@@ -1,6 +1,7 @@
 ---
 name: python-backend
 description: Use when building Python backend applications with FastAPI, Django, or Flask. Invoke for project structure, ORM patterns, authentication, async patterns, testing, middleware, configuration management, and deployment.
+type: technique
 version: 0.2.0
 layer: userland
 category: domain

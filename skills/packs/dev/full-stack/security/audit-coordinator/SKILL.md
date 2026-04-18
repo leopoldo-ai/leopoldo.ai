@@ -1,7 +1,8 @@
 ---
 name: audit-coordinator
 version: 0.2.0
-description: Orchestrates the full security audit pipeline by discovering and sequencing all installed security skills. Runs static analysis, config audit, API review, dynamic testing, and generates an aggregated security report. Use when running a complete security audit on the codebase or any module.
+description: Use when running a complete security audit on the codebase or any module. Orchestrates the full audit pipeline by discovering and sequencing all installed security skills, covering static analysis, config audit, API review, dynamic testing, and aggregated reporting.
+type: technique
 ---
 
 # Audit Coordinator — Security Pipeline Orchestrator

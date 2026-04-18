@@ -1,6 +1,7 @@
 ---
 name: api-designer
 description: Use when designing REST or GraphQL APIs, creating OpenAPI specifications, or planning API architecture. Invoke for resource modeling, versioning strategies, pagination patterns, error handling standards.
+type: technique
 license: MIT
 metadata:
   author: https://github.com/Jeffallan

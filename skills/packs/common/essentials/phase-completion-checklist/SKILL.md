@@ -1,6 +1,7 @@
 ---
 name: phase-completion-checklist
-description: Workflow meta-skill that guides through development phase completion by coordinating validation, testing, documentation, and review skills. Use when user requests "/complete-phase", "checklist fase X", "siamo pronti per la fase successiva?", or needs structured verification that all deliverables for a development phase are complete and working.
+description: Use when the user requests "/complete-phase", "checklist fase X", "siamo pronti per la fase successiva?", or needs structured verification that all deliverables for a development phase are complete and working. Coordinates validation, testing, documentation, and review skills.
+type: technique
 ---
 
 # Phase Completion Checklist

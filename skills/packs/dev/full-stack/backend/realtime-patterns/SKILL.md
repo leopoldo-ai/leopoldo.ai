@@ -1,6 +1,7 @@
 ---
 name: realtime-patterns
 description: "Use when building real-time features: WebSocket, Server-Sent Events, or Supabase Realtime. Covers chat, notifications, live updates, and presence. OSS-first: Socket.io and SSE primary. Triggers on: real-time, realtime, WebSocket, Socket.io, SSE, server-sent events, push, live updates, chat, notifications, presence."
+type: technique
 metadata:
   author: leopoldo
   source: custom

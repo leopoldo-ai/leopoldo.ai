@@ -1,6 +1,7 @@
 ---
 name: email-templates
 description: "Use when building transactional emails with React Email and sending via Resend or Nodemailer. Covers email template design, responsive layouts, and delivery. OSS-first: React Email + Nodemailer primary, Resend as simple alternative. Triggers on: email template, React Email, Resend, Nodemailer, transactional email, email design."
+type: reference
 metadata:
   author: leopoldo
   source: custom

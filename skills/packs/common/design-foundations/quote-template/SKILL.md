@@ -1,6 +1,7 @@
 ---
 name: quote-template
-description: "Generate professional branded quotes and estimates in .docx format. Use when creating price quotes, proposals, or estimates with company branding, pricing tiers, terms and conditions."
+description: "Use when creating price quotes, proposals, or estimates with company branding, pricing tiers, and terms and conditions in .docx format."
+type: technique
 version: 0.1.0
 layer: userland
 category: templates

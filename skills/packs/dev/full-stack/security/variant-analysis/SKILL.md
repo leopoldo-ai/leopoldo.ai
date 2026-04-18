@@ -1,9 +1,7 @@
 ---
 name: variant-analysis
-description: >
-  Find similar vulnerabilities and bugs across codebases using pattern-based analysis.
-  Uses iterative generalization from exact matches to semantic patterns. Supports
-  CodeQL, Semgrep, and ripgrep for multi-tool variant hunting after finding an initial issue.
+description: "Use when hunting similar vulnerabilities or bugs across codebases after finding an initial issue, running pattern-based variant analysis, iterating from exact matches to semantic patterns, or using CodeQL, Semgrep, and ripgrep for multi-tool variant hunting."
+type: technique
 version: 0.2.0
 layer: userland
 category: security

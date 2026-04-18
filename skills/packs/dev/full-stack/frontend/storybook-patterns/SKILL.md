@@ -1,6 +1,7 @@
 ---
 name: storybook-patterns
 description: "Use when building component libraries, design systems, or visual testing with Storybook. Covers Storybook 9+, component documentation, visual regression, interaction testing, and Vitest addon. Triggers on: Storybook, stories, component library, design system, visual testing, visual regression, Chromatic, component docs."
+type: technique
 metadata:
   author: leopoldo
   source: https://github.com/flight505/storybook-assistant

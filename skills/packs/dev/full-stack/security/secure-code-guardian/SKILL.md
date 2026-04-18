@@ -1,6 +1,7 @@
 ---
 name: secure-code-guardian
 description: Use when implementing authentication/authorization, securing user input, or preventing OWASP Top 10 vulnerabilities. Invoke for authentication, authorization, input validation, encryption, OWASP Top 10 prevention.
+type: technique
 license: MIT
 metadata:
   author: https://github.com/Jeffallan

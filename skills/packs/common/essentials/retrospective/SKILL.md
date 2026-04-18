@@ -1,21 +1,8 @@
 ---
 name: retrospective
 version: 0.1.0
-description: "Structured project/phase closure reflection. Use when running a retrospective at the end of a project, sprint, phase, or engagement. Multiple formats (Start/Stop/Continue, 4Ls, Mad/Sad/Glad, Sailboat). For continuous process improvement use kaizen instead."
-skillos:
-  layer: userland
-  category: domain
-  pack: essentials
-  requires:
-    hard: []
-    soft: [knowledge-base]
-  provides: [retrospective-report, action-items, pattern-analysis]
-  triggers:
-    - on: "task.category == 'retrospective'"
-      mode: suggest
-    - on: "task.category == 'lessons-learned'"
-      mode: suggest
-  config: {}
+description: "Use when running a retrospective at the end of a project, sprint, phase, or engagement for structured closure reflection. Multiple formats (Start/Stop/Continue, 4Ls, Mad/Sad/Glad, Sailboat). For continuous process improvement use kaizen instead."
+type: technique
 metadata:
   author: internal
   source: custom

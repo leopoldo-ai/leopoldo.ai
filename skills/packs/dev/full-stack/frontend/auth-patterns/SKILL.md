@@ -1,6 +1,7 @@
 ---
 name: auth-patterns
 description: "Use when adding authentication to web or mobile apps. Covers Auth.js v5, Lucia, OAuth, passkeys, RBAC, and session management. OSS-first: Auth.js and Lucia primary, Clerk and Supabase Auth as fallbacks. Triggers on: auth, login, signup, session, OAuth, NextAuth, Auth.js, Lucia, Clerk, passkey, RBAC."
+type: technique
 metadata:
   author: leopoldo
   source: custom

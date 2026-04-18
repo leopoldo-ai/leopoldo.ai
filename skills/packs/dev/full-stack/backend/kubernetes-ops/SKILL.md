@@ -1,6 +1,7 @@
 ---
 name: kubernetes-ops
 description: "Use when deploying and managing applications on Kubernetes. Covers deployments, services, ConfigMaps, Secrets, Helm, and troubleshooting. OSS-first: k8s is fully OSS. Triggers on: Kubernetes, k8s, kubectl, deployment, pod, service, Helm, container orchestration, cluster, namespace."
+type: technique
 metadata:
   author: leopoldo
   source: custom

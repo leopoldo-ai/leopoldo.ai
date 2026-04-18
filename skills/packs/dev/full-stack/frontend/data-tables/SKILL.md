@@ -1,6 +1,7 @@
 ---
 name: data-tables
 description: "Use when building data tables with sorting, filtering, pagination, and selection. Covers TanStack Table (OSS) with React and shadcn/ui DataTable. Triggers on: data table, TanStack Table, sorting, filtering, pagination, column visibility, row selection, DataTable, spreadsheet."
+type: technique
 metadata:
   author: leopoldo
   source: custom

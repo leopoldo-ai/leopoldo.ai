@@ -1,6 +1,7 @@
 ---
 name: vitest-testing
 description: "Use when writing unit or component tests, setting up test configuration, or migrating from Jest. Covers Vitest setup, React Testing Library, mocking, coverage, and CI integration. OSS-first: Vitest is the standard, Jest as legacy fallback. Triggers on: vitest, unit test, component test, testing, mock, coverage, vi.fn, vi.mock."
+type: technique
 metadata:
   author: leopoldo
   source: custom

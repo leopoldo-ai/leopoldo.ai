@@ -1,6 +1,7 @@
 ---
 name: brand-to-ui
-description: "Transform brand-kit.yaml into design tokens and code: Tailwind config, CSS custom properties, TypeScript constants, React ThemeProvider. Use when bootstrapping UI from brand identity or syncing brand changes to code."
+description: "Use when bootstrapping UI from brand identity or syncing brand changes to code, transforming brand-kit.yaml into design tokens: Tailwind config, CSS custom properties, TypeScript constants, React ThemeProvider."
+type: technique
 version: 0.1.0
 layer: userland
 category: frontend

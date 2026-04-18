@@ -1,6 +1,7 @@
 ---
 name: debugging-workflow
 description: "Use when debugging application issues: structured root cause analysis, reproduction, isolation, and fix verification. Covers systematic debugging methodology for frontend and backend. Triggers on: debug, bug, error, crash, not working, broken, investigate, root cause, reproduce, stack trace."
+type: technique
 metadata:
   author: leopoldo
   source: custom

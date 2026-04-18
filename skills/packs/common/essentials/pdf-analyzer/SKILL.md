@@ -2,20 +2,7 @@
 name: pdf-analyzer
 version: 0.2.0
 description: "Use when extracting data from prospectuses, annual reports, financial statements, or any PDF document for analysis."
-skillos:
-  layer: userland
-  category: domain
-  pack: investment-core
-  requires:
-    hard: []
-    soft: [data-visualization, xlsx-reports]
-  provides: [pdf-extraction, data-parsing, document-analysis]
-  triggers:
-    - on: "task.category == 'document-analysis'"
-      mode: suggest
-    - on: "task.category == 'pdf-extraction'"
-      mode: suggest
-  config: {}
+type: technique
 metadata:
   author: internal
   source: custom

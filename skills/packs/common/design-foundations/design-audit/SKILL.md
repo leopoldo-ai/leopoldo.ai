@@ -1,6 +1,7 @@
 ---
 name: design-audit
-description: "Design quality gate. Activates post-generation to verify spacing, hierarchy, and coherence. Blocks output with critical violations (score < 70). Use after any skill produces visual output."
+description: "Use when any skill has produced visual output and it needs a quality gate check. Verifies spacing, hierarchy, and coherence post-generation, blocking output with critical violations (score < 70)."
+type: technique
 version: 0.1.0
 layer: userland
 category: design

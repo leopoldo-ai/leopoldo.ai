@@ -1,6 +1,7 @@
 ---
 name: data-visualization
-description: Generate tabular outputs, dashboards, and data visualizations. Use when creating comparison tables, decision matrices, visual scorecards, graphic roadmaps, KPI dashboards, or any visually structured output.
+description: Use when creating comparison tables, decision matrices, visual scorecards, graphic roadmaps, KPI dashboards, tabular outputs, or any visually structured output.
+type: technique
 ---
 
 # Data Visualization

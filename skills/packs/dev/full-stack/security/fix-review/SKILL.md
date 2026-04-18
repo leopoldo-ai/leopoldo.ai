@@ -1,10 +1,7 @@
 ---
 name: fix-review
-description: >
-  Reviews security fixes for completeness, correctness, and regression safety. Verifies
-  that vulnerability patches actually close the attack vector, do not introduce new issues,
-  and cover all variant locations. Uses differential analysis, root cause verification,
-  and fix completeness checklists based on Trail of Bits audit methodology.
+description: "Use when reviewing security fixes for completeness, correctness, and regression safety, verifying that vulnerability patches close the attack vector, do not introduce new issues, and cover all variant locations. Uses differential analysis, root cause verification, and Trail of Bits audit methodology."
+type: technique
 version: 0.2.0
 layer: userland
 category: security

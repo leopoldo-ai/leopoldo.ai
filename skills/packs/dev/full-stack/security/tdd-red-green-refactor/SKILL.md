@@ -2,6 +2,7 @@
 name: tdd-red-green-refactor
 version: 0.2.0
 description: Use when implementing any feature or bugfix, before writing implementation code
+type: technique
 license: MIT
 metadata:
   author: obra
@@ -361,7 +362,7 @@ Never fix bugs without a test.
 
 ## Testing Anti-Patterns
 
-When adding mocks or test utilities, read @testing-anti-patterns.md to avoid common pitfalls:
+When adding mocks or test utilities, see `testing-anti-patterns.md` in this directory to avoid common pitfalls:
 - Testing mock behavior instead of real behavior
 - Adding test-only methods to production classes
 - Mocking without understanding dependencies

@@ -1,7 +1,8 @@
 ---
 name: amplemarket-api
 version: 0.2.0
-description: Amplemarket API reference skill. Covers all endpoints (contacts, people search/find, enrichment, companies, email validation, sequences, lead lists, tasks, calls), rate limits, cursor-based pagination, credit model, and enrichment workflow patterns. Use when implementing Amplemarket enrichment, building people search, managing sequences, or debugging API issues.
+description: Use when implementing Amplemarket enrichment, building people search, managing sequences, or debugging Amplemarket API issues. Covers all endpoints (contacts, people search/find, enrichment, companies, email validation, sequences, lead lists, tasks, calls), rate limits, cursor-based pagination, credit model, and enrichment workflow patterns.
+type: technique
 ---
 
 # Amplemarket API — Reference Skill

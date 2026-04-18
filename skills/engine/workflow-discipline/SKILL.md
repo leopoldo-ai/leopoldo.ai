@@ -1,108 +1,84 @@
 ---
 name: workflow-discipline
-description: Protocollo comportamentale universale che si applica a TUTTE le skill del progetto. Definisce le 4 fasi obbligatorie (Plan, Execute, Verify, Self-Improve) e i principi fondamentali. NON e' una skill invocabile direttamente — e' un contratto comportamentale referenziato da ogni skill e dichiarato in CLAUDE.md.
+description: Use for every skill invocation as universal behavioral protocol. The 4 mandatory phases (Plan, Execute, Verify, Self-Improve) and fundamental principles. Not directly invokable; referenced by every skill as a behavioral contract declared in CLAUDE.md.
+type: discipline
 ---
 
 # Workflow Discipline — Contratto Comportamentale Universale
 
-Protocollo che definisce il comportamento base di TUTTE le skill del sistema.
-**Non si invoca** — si applica automaticamente ad ogni attivita'.
-
-## Perche' esiste
-
-| Problema | Soluzione |
-|----------|-----------|
-| Skill che agiscono senza pianificare | Fase PLAN obbligatoria |
-| Fix dichiarati senza verifica | Fase VERIFY con evidenza |
-| Stessi errori ripetuti tra sessioni | Fase SELF-IMPROVE con documentazione |
-| Complessita' non richiesta | Principi fondamentali |
+Protocollo che definisce il comportamento base di TUTTE le skill. Non si invoca — si applica automaticamente.
 
 ## Le 4 Fasi Obbligatorie
 
 ### 1. PLAN — Pianificare prima di agire
 
 Per task non-triviali (multi-step, multi-file, decisioni architetturali):
+- Identificare obiettivo e risultato atteso
+- Valutare rischi, dipendenze, impatto
+- Scegliere l'approccio piu' semplice
+- 2 minuti di piano risparmiano 20 di rework
 
-- **Identificare** l'obiettivo e il risultato atteso
-- **Valutare** rischi, dipendenze, impatto su altri moduli
-- **Scegliere** l'approccio piu' semplice che soddisfa il requisito
-- **Non saltare** per "fretta" — 2 minuti di piano risparmiano 20 di rework
-
-> Per task triviali (typo, singola riga, rename): procedere direttamente a EXECUTE.
+> Task triviali (typo, singola riga): procedere direttamente a EXECUTE.
 
 ### 2. EXECUTE — Eseguire con autonomia
 
 - Procedere con confidenza dopo la pianificazione
-- Non chiedere conferma ad ogni micro-step — l'utente ha approvato l'approccio
-- Usare le skill appropriate (referenziate da `skill-router` o da CLAUDE.md)
-- Se bloccato: non forzare. Considerare alternative o chiedere all'utente
+- Non chiedere conferma ad ogni micro-step
+- Se bloccato: considerare alternative o chiedere
 
 ### 3. VERIFY — Evidenza prima delle dichiarazioni
 
-Prima di dichiarare qualsiasi risultato:
+1. Eseguire comando di verifica (test, build, lint)
+2. Leggere output completo
+3. Confrontare con risultato atteso
+4. Solo poi dichiarare il risultato
 
-1. **Eseguire** il comando di verifica (test, build, lint)
-2. **Leggere** l'output completo
-3. **Confrontare** output con risultato atteso
-4. **Solo poi** dichiarare il risultato
-
-> Per la meccanica dettagliata di verifica, vedi `verification-gate`.
-
-**Mai:**
-- "Dovrebbe funzionare" senza aver eseguito
-- "Probabilmente e' corretto" senza evidenza
-- Dichiarare successo basandosi su assunzioni
+**Mai:** "dovrebbe funzionare", "probabilmente corretto", successo basato su assunzioni.
 
 ### 4. SELF-IMPROVE — Imparare dai fallimenti
 
-Dopo ogni correzione dall'utente o fallimento significativo:
+Dopo correzione/fallimento: registrare cosa e perche' → identificare skill/regola mancante → documentare (skill-postmortem) → proporre modifica (skill-retrospective).
 
-1. **Registrare** cosa e' andato storto e perche'
-2. **Identificare** quale skill o regola avrebbe dovuto prevenirlo
-3. **Documentare** la lezione (tramite `skill-postmortem` per singoli fallimenti)
-4. **Proporre** modifica alla skill (tramite `skill-retrospective` a fine sessione)
-
-> Non nascondere i retry. I fallimenti documentati sono preziosi — quelli nascosti si ripetono.
+> Non nascondere i retry. Fallimenti documentati sono preziosi.
 
 ## Principi Fondamentali
 
-### Simplicity First
-La soluzione piu' semplice che funziona e' la migliore. Non aggiungere complessita' "per sicurezza", "per il futuro", o "per completezza". Tre righe simili sono meglio di un'astrazione prematura.
+| Principio | Significato |
+|---|---|
+| **Simplicity First** | Soluzione piu' semplice che funziona. Tre righe simili > astrazione prematura |
+| **Root Cause Focus** | Causa, non sintomo. No workaround. Vedi `systematic-debugging` |
+| **Minimal Footprint** | Minimo necessario. No refactoring "while I'm here" |
+| **Demand Elegance** | Pulito, non solo funzionante. Eleganza = chiarezza, non complessita' |
+| **Subagent Strategy** | Task paralleli → subagent. Task sequenziali → in serie |
 
-### Root Cause Focus
-Risolvere la causa, non il sintomo. Non applicare workaround che mascherano il problema. Per la metodologia: vedi `systematic-debugging`.
+## Applicazione per tipo
 
-### Minimal Footprint
-Cambiare il minimo necessario. Non toccare file non correlati. Non fare refactoring "while I'm here". Non aggiungere docstring a codice non modificato.
-
-### Demand Elegance
-Il codice deve essere pulito, non solo funzionante. Ma eleganza non e' complessita' — e' chiarezza, leggibilita', coerenza con i pattern del progetto.
-
-### Subagent Strategy
-Per task paralleli e indipendenti, delegare a subagent. Per task sequenziali con dipendenze, eseguire in serie. Non duplicare lavoro tra agente principale e subagent.
-
-## Applicazione per tipo di skill
-
-| Tipo skill | PLAN | EXECUTE | VERIFY | SELF-IMPROVE |
-|-----------|------|---------|--------|-------------|
-| **Dev** (nextjs, postgres, api) | Identificare file, pattern, impatto | Scrivere codice, test | `npm test`, `npm run build`, `npm run lint` | LESSONS_LEARNED se test falliscono |
-| **Meta** (board, closure-loop, task-decomposer) | Definire scope, iterazioni, soglie | Orchestrare skill, raccogliere output | Verificare output completo, coverage | Friction detection via retrospective |
-| **Strategy** (advisor, product-manager) | Chiarire domanda, framework, audience | Analizzare, produrre raccomandazioni | Cross-check con dati, coerenza interna | Feedback utente su utilita' output |
-| **Security** (semgrep, audit, guardian) | Scope dell'audit, aree critiche | Eseguire scan, analizzare finding | Nessun false negative su OWASP Top 10 | Aggiornare regole se nuova vulnerabilita' |
-| **Reporting** (session, xlsx, docx) | Raccogliere dati sessione/progetto | Formattare report professionale | Dati accurati, nessun finding inventato | Template migliorati se formato inadeguato |
+| Tipo | PLAN | VERIFY |
+|---|---|---|
+| Dev | File, pattern, impatto | `npm test`, `npm run build`, lint |
+| Meta | Scope, iterazioni, soglie | Output completo, coverage |
+| Strategy | Domanda, framework, audience | Cross-check dati, coerenza |
+| Security | Scope audit, aree critiche | No false negative OWASP Top 10 |
+| Reporting | Dati sessione/progetto | Dati accurati, nessun finding inventato |
 
 ## Anti-pattern
 
-- **Agire senza PLAN** per task non-triviali — "faccio prima cosi'"
-- **Dichiarare senza VERIFY** — "dovrebbe essere a posto"
-- **Ignorare le correzioni** — non documentare, non proporre fix alla skill
-- **Complessita' non richiesta** — helper, utility, astrazione per uso singolo
-- **"While I'm here"** — refactoring, docstring, type annotation su codice non toccato
-- **Forzare soluzioni** — retry dello stesso approccio invece di cambiare strategia
-- **Nascondere fallimenti** — retry silenti senza documentare cosa e' andato storto
+- Agire senza PLAN per task non-triviali
+- Dichiarare senza VERIFY
+- Ignorare correzioni senza documentare
+- Complessita' non richiesta (helper per uso singolo)
+- "While I'm here" refactoring
+- Forzare stesso approccio invece di cambiare strategia
+- Nascondere fallimenti con retry silenti
 
----
+## Rationalizations — STOP
 
-**Versione:** 1.0 (2026-03-01)
-**Tipo:** Protocollo comportamentale universale (non invocabile)
-**Referenzia:** verification-gate (VERIFY), systematic-debugging (Root Cause), skill-retrospective + skill-postmortem (SELF-IMPROVE)
+| Excuse | Reality |
+|---|---|
+| "È un task piccolo, salto PLAN" | Triviale = typo/1 riga. Tutto il resto richiede PLAN |
+| "Dovrebbe funzionare" | "Dovrebbe" = non hai VERIFICATO. Esegui il comando |
+| "Il test passa nell'IDE" | Esegui il comando nel terminale, leggi exit code |
+| "Fix ora, documento dopo" | SELF-IMPROVE al momento = SELF-IMPROVE mai |
+| "L'utente ha già capito" | Documenta comunque. Altri agenti leggeranno il journal |
+| "Solo stavolta skippo VERIFY" | "Solo stavolta" = sempre. Nessuna eccezione |
+| "Aggiungo questo refactor mentre ci sono" | Minimal footprint. Apri un task separato |

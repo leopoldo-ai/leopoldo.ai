@@ -1,23 +1,8 @@
 ---
 name: output-integrity
 version: 0.1.0
-description: Content quality gate for any generated output. Detects placeholder text, ungrounded numbers, internal inconsistencies, and AI-slop patterns. Use BEFORE delivering any document, report, paper, or analysis to the user. Complements verification-gate (process evidence) with content evidence.
-skillos:
-  layer: userland
-  category: meta
-  pack: essentials
-  requires:
-    hard: []
-    soft: [verification-gate]
-  provides: [content-verification, fabrication-detection, placeholder-detection, consistency-check]
-  triggers:
-    - on: "task.category == 'report-generation'"
-      mode: suggest
-    - on: "task.category == 'paper-writing'"
-      mode: suggest
-    - on: "task.category == 'document-delivery'"
-      mode: suggest
-  config: {}
+description: Use when about to deliver any document, report, paper, or analysis to the user. Content quality gate that detects placeholder text, ungrounded numbers, internal inconsistencies, and AI-slop patterns. Complements verification-gate (process evidence) with content evidence.
+type: discipline
 metadata:
   author: lucadealbertis
   source: local

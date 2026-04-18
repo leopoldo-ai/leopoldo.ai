@@ -1,6 +1,7 @@
 ---
 name: edge-serverless
 description: "Use when building edge-first applications with Cloudflare Workers, Hono, or serverless patterns. Covers Workers, D1, KV, Durable Objects, and Hono framework. OSS-first: Cloudflare Workers (generous free tier) and Hono (OSS). Triggers on: Cloudflare Workers, edge, serverless, Hono, D1, KV, Durable Objects, edge functions, Bun, Deno."
+type: technique
 metadata:
   author: leopoldo
   source: https://github.com/jezweb/claude-skills

@@ -1,9 +1,7 @@
 ---
 name: codeql
-description: >
-  Scans a codebase for security vulnerabilities using CodeQL's interprocedural data flow and
-  taint tracking analysis. Supports database building, data extension creation, and full
-  security scanning with multiple query packs. Handles "run all" and "important only" modes.
+description: "Use when scanning a codebase with CodeQL for security vulnerabilities, running interprocedural data flow and taint tracking analysis, building a CodeQL database, creating data extensions, or running multiple query packs. Supports 'run all' and 'important only' modes."
+type: technique
 version: 0.2.0
 layer: userland
 category: security

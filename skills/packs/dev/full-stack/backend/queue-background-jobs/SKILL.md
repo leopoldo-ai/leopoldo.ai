@@ -1,6 +1,7 @@
 ---
 name: queue-background-jobs
 description: "Use when implementing background jobs, task queues, or scheduled tasks. Covers BullMQ, Redis queues, retry patterns, and job scheduling. OSS-first: BullMQ + Redis primary. Triggers on: queue, background job, BullMQ, Redis, worker, scheduled task, cron job, retry, job processing."
+type: technique
 metadata:
   author: leopoldo
   source: custom

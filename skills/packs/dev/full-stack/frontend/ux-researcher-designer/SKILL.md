@@ -1,7 +1,8 @@
 ---
 name: ux-researcher-designer
 version: 0.2.0
-description: UX research and design toolkit for Senior UX Designer/Researcher including data-driven persona generation, journey mapping, usability testing frameworks, and research synthesis. Use for user research, persona creation, journey mapping, and design validation.
+description: Use for user research, persona creation, journey mapping, usability testing, design validation, or research synthesis. Toolkit for Senior UX Designer/Researcher with data-driven personas, journey maps, and usability testing frameworks.
+type: technique
 ---
 
 # UX Researcher & Designer

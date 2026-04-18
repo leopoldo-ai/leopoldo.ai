@@ -1,6 +1,7 @@
 ---
 name: file-storage
 description: "Use when handling file uploads, storage, and serving. Covers MinIO (S3-compatible OSS), uploadthing, presigned URLs, and image optimization. OSS-first: MinIO primary, S3/R2 as alternatives. Triggers on: file upload, storage, S3, MinIO, uploadthing, presigned URL, file serving, blob storage, image upload."
+type: technique
 metadata:
   author: leopoldo
   source: custom

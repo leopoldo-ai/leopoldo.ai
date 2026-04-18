@@ -1,10 +1,8 @@
 ---
 name: semgrep
 version: 0.2.0
-description: Run Semgrep static analysis scan on a codebase using parallel subagents. Automatically
-  detects and uses Semgrep Pro for cross-file analysis when available. Use when asked to scan
-  code for vulnerabilities, run a security audit with Semgrep, find bugs, or perform
-  static analysis. Spawns parallel workers for multi-language codebases and triage.
+description: "Use when scanning code for vulnerabilities with Semgrep, running a security audit, finding bugs, or performing static analysis. Uses parallel subagents, auto-detects Semgrep Pro for cross-file analysis, spawns parallel workers for multi-language codebases and triage."
+type: technique
 allowed-tools:
   - Bash
   - Read

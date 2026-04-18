@@ -1,6 +1,7 @@
 ---
 name: observability-patterns
 description: "Use when adding monitoring, logging, tracing, or error tracking to applications. Covers OpenTelemetry, structured logging, distributed tracing, and alerting. OSS-first: OpenTelemetry primary, Sentry/Datadog as aware-of. Triggers on: observability, monitoring, logging, tracing, OpenTelemetry, OTEL, Sentry, metrics, alerts, error tracking, APM."
+type: technique
 metadata:
   author: leopoldo
   source: https://github.com/getsentry/sentry-for-ai

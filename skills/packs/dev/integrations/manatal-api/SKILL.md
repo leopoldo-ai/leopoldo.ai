@@ -1,7 +1,8 @@
 ---
 name: manatal-api
 version: 0.2.0
-description: Manatal Open API v3 reference skill. Covers all endpoints (candidates, organizations, jobs, activities, webhooks), rate limits, pagination, payload structures, and chunked sync patterns for large contact databases. Use when implementing Manatal sync, building API client, handling webhooks, or debugging API issues.
+description: Use when implementing Manatal sync, building a Manatal API client, handling Manatal webhooks, or debugging Manatal Open API v3 issues. Covers all endpoints (candidates, organizations, jobs, activities, webhooks), rate limits, pagination, payload structures, and chunked sync patterns for large contact databases.
+type: technique
 ---
 
 # Manatal Open API v3 — Reference Skill

@@ -1,6 +1,7 @@
 ---
 name: react-native-expo
 description: "Use when building mobile apps with React Native and Expo. Covers project setup, Expo Router navigation, NativeWind styling, EAS Build/Submit, and cross-platform patterns. OSS-first: Expo (OSS) primary, bare React Native CLI as advanced fallback. Triggers on: React Native, Expo, mobile app, Expo Router, EAS, NativeWind, mobile development, iOS, Android."
+type: technique
 metadata:
   author: leopoldo
   source: https://github.com/expo/skills

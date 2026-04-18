@@ -1,6 +1,7 @@
 ---
 name: i18n-patterns
 description: "Use when adding internationalization to Next.js or React apps. Covers next-intl, i18next, locale routing, message extraction, and pluralization. OSS-first: next-intl and i18next primary. Triggers on: i18n, internationalization, localization, translation, locale, language, next-intl, i18next, multilingual."
+type: technique
 metadata:
   author: leopoldo
   source: custom

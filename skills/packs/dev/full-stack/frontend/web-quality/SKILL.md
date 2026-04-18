@@ -1,6 +1,7 @@
 ---
 name: web-quality
 description: "Use when optimizing web performance, accessibility, SEO, or Core Web Vitals. Covers Lighthouse audits, LCP/INP/CLS optimization, image optimization, font loading, and technical SEO. Triggers on: performance, Lighthouse, Core Web Vitals, LCP, INP, CLS, SEO, page speed, web vitals, optimization, meta tags, Open Graph, schema.org."
+type: technique
 metadata:
   author: leopoldo
   source: https://github.com/addyosmani/web-quality-skills

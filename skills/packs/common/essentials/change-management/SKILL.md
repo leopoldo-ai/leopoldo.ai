@@ -1,21 +1,8 @@
 ---
 name: change-management
 version: 0.1.0
-description: "Organizational change management framework. Use when planning, communicating, and tracking adoption of organizational changes (restructuring, process redesign, digital transformation, culture change). NOT technical change management — for release/deploy use release-manager."
-skillos:
-  layer: userland
-  category: domain
-  pack: essentials
-  requires:
-    hard: []
-    soft: [stakeholder-mapper, ceo-advisor, internal-comms]
-  provides: [change-plan, stakeholder-impact-analysis, adoption-tracker, communication-schedule]
-  triggers:
-    - on: "task.category == 'change-management'"
-      mode: suggest
-    - on: "task.category == 'transformation'"
-      mode: suggest
-  config: {}
+description: "Use when planning, communicating, and tracking adoption of organizational changes (restructuring, process redesign, digital transformation, culture change). NOT technical change management. For release/deploy use release-manager."
+type: technique
 metadata:
   author: internal
   source: custom

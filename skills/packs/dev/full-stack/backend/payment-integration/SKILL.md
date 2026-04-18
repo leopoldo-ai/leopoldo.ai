@@ -1,6 +1,7 @@
 ---
 name: payment-integration
 description: "Use when adding payments, subscriptions, or billing to apps. Covers Stripe, Polar (OSS), checkout flows, webhooks, and subscription management. OSS-first: Polar primary, Stripe as premium standard. Triggers on: payment, Stripe, billing, subscription, checkout, webhook, invoice, Polar, Lemon Squeezy."
+type: technique
 metadata:
   author: leopoldo
   source: custom

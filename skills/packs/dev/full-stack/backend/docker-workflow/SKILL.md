@@ -1,6 +1,7 @@
 ---
 name: docker-workflow
-description: Docker containerization, multi-stage builds, Docker Compose, security hardening, optimization
+description: "Use when working with Docker containerization, multi-stage builds, Docker Compose, security hardening, or container optimization."
+type: technique
 version: 0.2.0
 layer: userland
 category: infrastructure

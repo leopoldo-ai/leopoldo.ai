@@ -1,7 +1,8 @@
 ---
 name: shadcnblocks-components
 version: 0.2.0
-description: This skill should be used when the user asks to "build a frontend", "create a landing page", "add shadcn components", "install shadcn blocks", "set up shadcn", "add a hero section", "add pricing section", "build a UI with Tailwind", "use shadcnblocks", "add UI blocks", "add a contact form", "build a dashboard", "create an ecommerce page", "add a navbar", "add a footer", or is building any frontend that could leverage shadcn/ui components and Tailwind CSS. It provides knowledge of 1,338 premium blocks and 1,189 free components from ShadcnBlocks, enabling intelligent selection and installation of the right UI elements for any frontend task.
+description: Use when building a frontend, landing page, hero/pricing section, contact form, dashboard, ecommerce page, navbar, footer, installing shadcn components, shadcn blocks, or any UI with Tailwind CSS leveraging shadcn/ui. Covers 1,338 premium blocks and 1,189 free components from ShadcnBlocks.
+type: technique
 license: MIT
 metadata:
   author: masonjames

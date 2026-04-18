@@ -2,20 +2,7 @@
 name: stakeholder-mapper
 version: 0.1.0
 description: "Use when mapping stakeholders, building influence matrices, or designing communication plans. Produces Mendelow 2x2 matrix, RACI, and communication plan."
-skillos:
-  layer: userland
-  category: domain
-  pack: essentials
-  requires:
-    hard: []
-    soft: [people-intelligence, executive-briefing]
-  provides: [stakeholder-map, raci-matrix, communication-plan]
-  triggers:
-    - on: "task.category == 'stakeholder-analysis'"
-      mode: suggest
-    - on: "task.category == 'communication-planning'"
-      mode: suggest
-  config: {}
+type: pattern
 metadata:
   author: internal
   source: custom

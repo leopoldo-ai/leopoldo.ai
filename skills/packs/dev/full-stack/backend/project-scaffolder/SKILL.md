@@ -1,7 +1,8 @@
 ---
 name: project-scaffolder
 version: 0.2.0
-description: Initializes a complete Next.js 14+ project with App Router, Drizzle ORM, Neon PostgreSQL, shadcn/ui, Tremor, Tailwind CSS, TypeScript strict, and Zod. Use when starting a new project or bootstrapping a feature module. Triggers on scaffold, init project, setup, boilerplate, create project.
+description: Use when starting a new Next.js 14+ project, bootstrapping a feature module, or needing a scaffold with App Router, Drizzle ORM, Neon PostgreSQL, shadcn/ui, Tremor, Tailwind CSS, TypeScript strict, and Zod. Triggers on scaffold, init project, setup, boilerplate, create project.
+type: technique
 ---
 
 # Project Scaffolder — Next.js Full Stack

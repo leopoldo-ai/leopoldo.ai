@@ -1,9 +1,7 @@
 ---
 name: sarif-parsing
-description: >
-  Parses and processes SARIF files from static analysis tools like CodeQL, Semgrep, or other
-  scanners. Handles filtering, deduplication, format conversion, aggregation, and CI/CD
-  integration of SARIF data. Does NOT run scans — use the Semgrep or CodeQL skills for that.
+description: "Use when reading SARIF files from static analysis tools (CodeQL, Semgrep, other scanners), filtering, deduplicating, converting formats, aggregating, or integrating SARIF data into CI/CD. Does NOT run scans. For scans use Semgrep or CodeQL skills."
+type: technique
 version: 0.2.0
 layer: userland
 category: security

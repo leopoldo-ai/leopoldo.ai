@@ -1,6 +1,7 @@
 ---
 name: ci-cd-pipeline
-description: GitHub Actions CI/CD pipelines, automated testing, deployment workflows, security scanning
+description: "Use when setting up GitHub Actions CI/CD pipelines, automated testing, deployment workflows, or security scanning in CI."
+type: technique
 version: 0.2.0
 layer: userland
 category: infrastructure

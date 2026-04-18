@@ -1,6 +1,7 @@
 ---
 name: meta-frameworks
 description: "Use when choosing a React meta-framework or building with Astro, SvelteKit, or Remix. Provides decision framework for when to use Next.js vs alternatives. Awareness skill, not deep implementation. Triggers on: Astro, SvelteKit, Remix, framework choice, which framework, Next.js alternative, content site, static site."
+type: pattern
 metadata:
   author: leopoldo
   source: custom

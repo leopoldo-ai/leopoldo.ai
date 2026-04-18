@@ -1,17 +1,8 @@
 ---
 name: leopoldo-setup
 version: 5.0.0
-description: First-time setup for Leopoldo plugins. Detects format, creates manifest via leopoldo-manager, configures auto-updates. Delegates all installation logic to leopoldo-manager. Use with /setup or when first configuring Leopoldo.
-skillos:
-  layer: core
-  category: meta
-  pack: null
-  requires:
-    hard: ["leopoldo-manager"]
-    soft: ["update-checker"]
-  provides: ["leopoldo-config"]
-  triggers: []
-  config: {}
+description: Use when first configuring Leopoldo in a project, running /setup, initializing plugins for the first time, detecting install format, creating manifest via leopoldo-manager, or configuring auto-updates on initial setup.
+type: technique
 ---
 
 # Leopoldo Setup

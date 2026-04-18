@@ -1,6 +1,7 @@
 ---
 name: xlsx-reports
-description: Create professional reports and deliverables in Excel (.xlsx) format. Use when generating spreadsheets with RICE scoring, roadmaps, KPI dashboards, tabular comparisons, or any structured output for stakeholders in Excel format.
+description: Use when building spreadsheets in Excel (.xlsx) format for RICE scoring, roadmaps, KPI dashboards, tabular comparisons, or any structured output for stakeholders.
+type: technique
 user-invocable: true
 ---
 

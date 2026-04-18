@@ -1,6 +1,7 @@
 ---
 name: feature-impact-analyzer
-description: Decision meta-skill that evaluates the impact of new features from multiple perspectives (technical, product, financial, strategic, UX) using RICE scoring and decision matrix. Use when user requests "/feature-impact", "analizza impatto feature", "vale la pena implementare X?", or needs structured multi-perspective analysis before committing to a feature.
+description: Use when the user requests "/feature-impact", "analizza impatto feature", "vale la pena implementare X?", or needs structured multi-perspective analysis (technical, product, financial, strategic, UX) with RICE scoring and decision matrix before committing to a feature.
+type: technique
 ---
 
 # Feature Impact Analyzer

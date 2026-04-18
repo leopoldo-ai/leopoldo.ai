@@ -1,6 +1,7 @@
 ---
 name: terraform-iac
 description: "Use when managing infrastructure with Terraform or OpenTofu. Covers module design, state management, CI/CD, and cloud provider patterns. OSS-first: OpenTofu primary, Terraform as standard. Triggers on: Terraform, OpenTofu, infrastructure as code, IaC, HCL, tfstate, terraform plan, terraform apply, modules."
+type: technique
 metadata:
   author: leopoldo
   source: https://github.com/antonbabenko/terraform-skill

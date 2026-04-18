@@ -1,17 +1,8 @@
 ---
 name: clients
 version: 1.0.0
-description: Client CRM for Leopoldo. List, manage, communicate with, and monitor clients from Claude Code. Use with /clients command.
-skillos:
-  layer: core
-  category: meta
-  pack: null
-  requires:
-    hard: []
-    soft: []
-  provides: ["client-management", "crm"]
-  triggers: ["/clients"]
-  config: {}
+description: Use with the /clients command or when the user asks to list, manage, communicate with, or monitor Leopoldo clients from Claude Code. Client CRM access layer.
+type: technique
 ---
 
 # Leopoldo Client Manager

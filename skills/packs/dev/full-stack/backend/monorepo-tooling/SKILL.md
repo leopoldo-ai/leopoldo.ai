@@ -1,6 +1,7 @@
 ---
 name: monorepo-tooling
 description: "Use when setting up or managing monorepos with Turborepo, pnpm workspaces, or shared packages. Covers workspace structure, build pipelines, caching, and shared configs. OSS-first: Turborepo + pnpm primary. Triggers on: monorepo, Turborepo, pnpm workspace, workspace, shared packages, turbo.json."
+type: technique
 metadata:
   author: leopoldo
   source: custom

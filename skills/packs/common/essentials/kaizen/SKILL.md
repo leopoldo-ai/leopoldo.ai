@@ -1,21 +1,8 @@
 ---
 name: kaizen
 version: 0.1.0
-description: "Continuous improvement methodology for business processes. Use when analyzing process inefficiencies, performing root cause analysis (5 Whys, Ishikawa), running PDCA cycles, or planning Kaizen events. For code debugging use systematic-debugging. For discrete project reflection use retrospective."
-skillos:
-  layer: userland
-  category: domain
-  pack: essentials
-  requires:
-    hard: []
-    soft: [retrospective, data-visualization]
-  provides: [root-cause-analysis, pdca-cycle, improvement-plan, ishikawa-diagram]
-  triggers:
-    - on: "task.category == 'process-improvement'"
-      mode: suggest
-    - on: "task.category == 'root-cause-analysis'"
-      mode: suggest
-  config: {}
+description: "Use when analyzing process inefficiencies, performing root cause analysis (5 Whys, Ishikawa), running PDCA cycles, or planning Kaizen events for continuous improvement of business processes. For code debugging use systematic-debugging. For discrete project reflection use retrospective."
+type: technique
 metadata:
   author: internal
   source: custom

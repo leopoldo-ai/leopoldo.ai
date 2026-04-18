@@ -1,7 +1,8 @@
 ---
 name: neon-postgres-setup
 version: 0.2.0
-description: Guides and best practices for working with Neon Serverless Postgres. Covers getting started, local development with Neon, choosing a connection method, Neon features, authentication (@neondatabase/auth), PostgREST-style data API (@neondatabase/neon-js), Neon CLI, and Neon's Platform API/SDKs. Use for any Neon-related questions.
+description: "Use for any Neon Serverless Postgres question: connection methods, local development, Neon features, authentication (@neondatabase/auth), PostgREST-style data API (@neondatabase/neon-js), Neon CLI, Platform API/SDKs."
+type: technique
 license: Apache-2.0
 metadata:
   author: neondatabase

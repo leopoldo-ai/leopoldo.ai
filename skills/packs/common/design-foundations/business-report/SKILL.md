@@ -1,6 +1,7 @@
 ---
 name: business-report
-description: "Generate multi-section branded professional reports in .docx format with table of contents, headers/footers, and consistent styling. Use for annual reports, strategic reports, management reports, white papers."
+description: "Use for annual reports, strategic reports, management reports, or white papers. Builds multi-section branded professional reports in .docx format with table of contents, headers/footers, and consistent styling."
+type: technique
 version: 0.1.0
 layer: userland
 category: templates

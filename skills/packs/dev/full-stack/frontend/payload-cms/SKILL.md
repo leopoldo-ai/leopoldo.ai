@@ -1,6 +1,7 @@
 ---
 name: payload-cms
 description: "Use when building content-managed sites with Payload CMS. Covers collections, globals, access control, hooks, and Next.js integration. OSS-first: Payload (self-hostable) primary, Contentful and Sanity as premium alternatives. Triggers on: Payload, CMS, headless CMS, content management, collections, admin panel, Payload CMS."
+type: technique
 metadata:
   author: leopoldo
   source: custom

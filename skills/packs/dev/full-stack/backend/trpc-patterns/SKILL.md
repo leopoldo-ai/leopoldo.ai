@@ -1,6 +1,7 @@
 ---
 name: trpc-patterns
 description: "Use when building type-safe APIs with tRPC. Covers router setup, procedures, middleware, and React Query integration. OSS-first: tRPC is fully OSS. Triggers on: tRPC, type-safe API, router, procedure, createTRPCRouter, middleware, React Query, end-to-end type safety."
+type: technique
 metadata:
   author: leopoldo
   source: custom

@@ -1,21 +1,8 @@
 ---
 name: risk-assessment
 version: 0.1.0
-description: "Generic risk assessment framework. Use when identifying, evaluating, and mitigating risks for projects, operations, strategy, or reputation. Not finance-specific — for investment risk use risk-framework in investment-core."
-skillos:
-  layer: userland
-  category: domain
-  pack: essentials
-  requires:
-    hard: []
-    soft: [strategy-advisor, stakeholder-mapper]
-  provides: [risk-register, risk-matrix, mitigation-plan, risk-appetite-definition]
-  triggers:
-    - on: "task.category == 'risk-assessment'"
-      mode: suggest
-    - on: "task.category == 'risk-management'"
-      mode: suggest
-  config: {}
+description: "Use when identifying, evaluating, and mitigating risks for projects, operations, strategy, or reputation using a generic risk assessment framework. Not finance-specific. For investment risk use risk-framework in investment-core."
+type: technique
 metadata:
   author: internal
   source: custom

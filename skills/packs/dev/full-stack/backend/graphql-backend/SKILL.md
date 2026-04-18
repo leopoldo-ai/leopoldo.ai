@@ -1,6 +1,7 @@
 ---
 name: graphql-backend
 description: "Use when building GraphQL servers with Apollo Server, GraphQL Yoga, or implementing GraphQL Federation. Covers schema design, resolvers, dataloaders, auth, and subscriptions. OSS-first. Triggers on: Apollo Server, GraphQL Yoga, GraphQL server, schema, resolvers, dataloader, federation, supergraph."
+type: technique
 metadata:
   author: leopoldo
   source: https://github.com/apollographql/skills

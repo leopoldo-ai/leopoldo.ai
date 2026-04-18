@@ -1,6 +1,7 @@
 ---
 name: form-patterns
 description: "Use when building forms in React/Next.js. Covers React Hook Form, Zod validation, server actions, multi-step forms, and file uploads. OSS-first: React Hook Form + Zod primary. Triggers on: form, validation, React Hook Form, Zod, useForm, server action form, file upload, multi-step form."
+type: technique
 metadata:
   author: leopoldo
   source: custom

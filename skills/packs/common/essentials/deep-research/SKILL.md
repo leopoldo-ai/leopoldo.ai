@@ -1,21 +1,8 @@
 ---
 name: deep-research
 version: 0.1.0
-description: "Structured web research methodology. Use when performing deep research on a topic requiring multiple sources, source credibility evaluation, and synthesis with citations. For domain-specific research (finance, medical) use the relevant domain skill instead."
-skillos:
-  layer: userland
-  category: domain
-  pack: essentials
-  requires:
-    hard: []
-    soft: [knowledge-base]
-  provides: [research-report, source-evaluation, literature-synthesis]
-  triggers:
-    - on: "task.category == 'research'"
-      mode: suggest
-    - on: "task.category == 'deep-research'"
-      mode: auto
-  config: {}
+description: "Use when performing deep research on a topic requiring multiple sources, source credibility evaluation, and synthesis with citations via structured web research methodology. For domain-specific research (finance, medical) use the relevant domain skill instead."
+type: technique
 metadata:
   author: internal
   source: custom

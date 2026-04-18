@@ -1,3 +1,9 @@
+---
+name: orchestrator
+description: Use on every session start and for routing every user request. Leopoldo orchestration protocol that dispatches to domain skills based on environment context, enforces discipline, and coordinates core + drivers. Auto-generated, injected at session start.
+type: discipline
+---
+
 ## Orchestration Protocol (auto-generated from core + drivers)
 
 ### Environment Awareness

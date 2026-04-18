@@ -1,6 +1,7 @@
 ---
 name: font-pairing
-description: "Typography pairing rules and curated catalog. Use when selecting fonts for a brand, validating font combinations, calculating type scales, or optimizing text readability."
+description: "Use when selecting fonts for a brand, validating font combinations, calculating type scales, or optimizing text readability via typography pairing rules and curated catalog."
+type: technique
 version: 0.1.0
 layer: userland
 category: design

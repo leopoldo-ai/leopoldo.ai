@@ -1,6 +1,7 @@
 ---
 name: one-pager
-description: "Generate single-page marketing and sales documents in .docx format. 3 layout variants: product/service sheet, company overview, executive summary. Brand-kit styled."
+description: "Use when building single-page marketing and sales documents in .docx format. 3 layout variants: product/service sheet, company overview, executive summary. Brand-kit styled."
+type: technique
 version: 0.1.0
 layer: userland
 category: templates

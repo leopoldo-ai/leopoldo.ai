@@ -1,6 +1,7 @@
 ---
 name: graphql-patterns
 description: "Use when consuming GraphQL APIs in React/Next.js apps. Covers Apollo Client, urql, code generation, caching, mutations, and subscriptions. OSS-first: Apollo Client and urql primary. Triggers on: GraphQL, Apollo Client, urql, useQuery, useMutation, graphql-codegen, gql, schema, subscription."
+type: technique
 metadata:
   author: leopoldo
   source: https://github.com/apollographql/skills

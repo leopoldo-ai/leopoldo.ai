@@ -1,6 +1,7 @@
 ---
 name: wordpress-pro
-description: WordPress development completo — temi (classici + block), plugin, Gutenberg custom blocks, REST API, WP-CLI, security hardening, performance, multisite
+description: "Use when developing WordPress themes (classic + block), plugins, Gutenberg custom blocks, REST API integrations, WP-CLI workflows, security hardening, performance tuning, or multisite configurations."
+type: technique
 version: 0.2.0
 layer: userland
 category: domain
@@ -12,10 +13,6 @@ dependencies:
   soft:
     - secure-code-guardian
     - docker-workflow
-skillos:
-  layer: userland
-  category: domain
-  pack: full-stack
 metadata:
   author: internal
   source: custom

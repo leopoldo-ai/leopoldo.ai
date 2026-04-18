@@ -1,6 +1,7 @@
 ---
 name: docx-reports
-description: Create professional reports and deliverables in Word (.docx) format. Use when generating narrative documents like executive summaries, board reports, phase reports, change management plans, or any deliverable for leadership.
+description: Use when building narrative documents in Word (.docx) format like executive summaries, board reports, phase reports, change management plans, or any deliverable for leadership.
+type: technique
 user-invocable: true
 ---
 

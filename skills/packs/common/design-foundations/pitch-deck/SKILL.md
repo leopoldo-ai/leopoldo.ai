@@ -1,6 +1,7 @@
 ---
 name: pitch-deck
-description: "Generate investor-ready pitch deck presentations in .pptx format. Use when creating pitch decks for fundraising, partnerships, or business development. 12-slide framework with brand-kit styling."
+description: "Use when creating investor-ready pitch decks in .pptx format for fundraising, partnerships, or business development. 12-slide framework with brand-kit styling."
+type: technique
 version: 0.1.0
 layer: userland
 category: templates

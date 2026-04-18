@@ -1,7 +1,8 @@
 ---
 name: git-workflow
 version: 0.2.0
-description: Manages git workflow for autonomous development loops. Handles conventional commits, feature branching, atomic commits after each completed task, and PR creation. Use when committing code, creating branches, managing PRs, or running autonomous build loops that need version control. Triggers on commit, branch, PR, git workflow, version control.
+description: Use when committing code, creating branches, managing PRs, running git workflows for autonomous development loops, or needing conventional commits, feature branching, or atomic commits per task. Triggers on commit, branch, PR, git workflow, version control.
+type: technique
 ---
 
 # Git Workflow — Autonomous Build Loop

@@ -1,6 +1,7 @@
 ---
 name: pwa-offline
 description: "Use when building Progressive Web Apps with offline support. Covers service workers, caching strategies, install prompts, and push notifications. OSS-first: Serwist and Workbox primary. Triggers on: PWA, progressive web app, offline, service worker, cache, install prompt, push notifications, Serwist, Workbox."
+type: technique
 metadata:
   author: leopoldo
   source: custom

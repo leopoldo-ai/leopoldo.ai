@@ -1,6 +1,7 @@
 ---
 name: tech-debt-management
 description: "Use when assessing, prioritizing, or addressing technical debt. Covers debt categorization, prioritization frameworks, refactoring strategies, and team communication. Triggers on: tech debt, technical debt, refactor, code quality, legacy code, migration, upgrade, deprecation."
+type: technique
 metadata:
   author: leopoldo
   source: custom

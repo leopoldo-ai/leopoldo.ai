@@ -1,6 +1,7 @@
 ---
 name: task-decomposer
-description: Decomposes PRDs, feature specs, or user stories into ordered task graphs with dependencies. Use when breaking down a project, planning a sprint, creating a build plan from a PRD, or preparing tasks for autonomous development loops. Triggers on task breakdown, decompose, sprint planning, build plan, task graph.
+description: Use when breaking down a project, planning a sprint, creating a build plan from a PRD, decomposing user stories or feature specs, or preparing tasks for autonomous development loops. Produces ordered task graphs with dependencies. Triggers on task breakdown, decompose, sprint planning, build plan, task graph.
+type: technique
 ---
 
 # Task Decomposer — PRD to Task Graph

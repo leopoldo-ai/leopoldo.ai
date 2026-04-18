@@ -1,7 +1,8 @@
 ---
 name: tremor-design-system
 version: 0.2.0
-description: Build dashboards, analytics interfaces, and data-rich UIs using the Tremor design system (React + Tailwind CSS + Recharts). Use when the user asks to create dashboard components, KPI cards, charts, data tables, analytics pages, monitoring interfaces, or any data visualization UI that should use Tremor. Triggers include mentions of "Tremor", "tremor.so", "@tremor/react", requests for dashboard UIs with charts and tables, or when the user's project already uses Tremor components. Supports both Tremor Raw (copy-and-paste, tremor.so) and Tremor NPM (@tremor/react) versions. Do NOT use for general frontend work unrelated to dashboards or data visualization, or when the user explicitly requests a different component library.
+description: Use when the user asks to build dashboards, analytics interfaces, KPI cards, charts, data tables, analytics pages, monitoring interfaces, or any data-rich UI that should use Tremor (React + Tailwind CSS + Recharts). Triggers on "Tremor", "tremor.so", "@tremor/react", or projects already using Tremor. Supports Tremor Raw (tremor.so) and Tremor NPM (@tremor/react). Do NOT use for general frontend work unrelated to dashboards.
+type: technique
 ---
 
 # Tremor Design System

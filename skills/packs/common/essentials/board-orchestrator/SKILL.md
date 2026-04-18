@@ -1,6 +1,7 @@
 ---
 name: board-orchestrator
-description: Orchestrates virtual board meetings where specialized skills act as board members (CTO, CFO, CPO, Strategy Director, etc.) to provide multi-perspective analysis on complex decisions. Use ONLY when user explicitly requests "/board" or "fare un board" for strategic decisions, project reviews, problem solving, planning, or feature evaluation requiring multiple expert perspectives (technical, financial, product, strategic). Do NOT auto-trigger.
+description: Use when the user explicitly requests "/board" or "fare un board" for strategic decisions, project reviews, problem solving, planning, or feature evaluation requiring multiple expert perspectives (technical, financial, product, strategic). Orchestrates virtual board meetings with specialized skills as board members (CTO, CFO, CPO, Strategy Director). Do NOT auto-trigger.
+type: technique
 ---
 
 # Virtual Board Meeting Orchestrator

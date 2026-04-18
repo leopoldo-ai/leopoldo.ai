@@ -1,6 +1,7 @@
 ---
 name: postgres-pro
 description: Use when optimizing PostgreSQL queries, configuring replication, or implementing advanced database features. Invoke for EXPLAIN analysis, JSONB operations, extension usage, VACUUM tuning, performance monitoring.
+type: technique
 license: MIT
 metadata:
   author: https://github.com/Jeffallan

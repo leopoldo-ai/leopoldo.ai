@@ -1,6 +1,7 @@
 ---
 name: rag-architect
 description: Use when building RAG systems, vector databases, or knowledge-grounded AI applications requiring semantic search, document retrieval, or context augmentation.
+type: technique
 license: MIT
 metadata:
   author: https://github.com/Jeffallan

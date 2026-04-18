@@ -1,6 +1,7 @@
 ---
 name: search-patterns
 description: "Use when implementing search functionality with Meilisearch, Typesense, or full-text search. Covers indexing, faceted search, typo tolerance, and instant search UI. OSS-first: Meilisearch and Typesense primary, Algolia as premium aware. Triggers on: search, Meilisearch, Typesense, Algolia, full-text search, instant search, faceted search, indexing."
+type: technique
 metadata:
   author: leopoldo
   source: custom

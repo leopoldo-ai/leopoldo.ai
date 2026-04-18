@@ -2,20 +2,7 @@
 name: meeting-intelligence
 version: 0.2.0
 description: "Use when preparing IC memos, capturing meeting minutes, tracking action items, or managing follow-up workflows."
-skillos:
-  layer: userland
-  category: domain
-  pack: investment-core
-  requires:
-    hard: []
-    soft: [data-visualization, docx-reports]
-  provides: [ic-memo, meeting-minutes, action-items, follow-up-tracker]
-  triggers:
-    - on: "task.category == 'meeting'"
-      mode: suggest
-    - on: "task.category == 'investment-committee'"
-      mode: suggest
-  config: {}
+type: technique
 metadata:
   author: internal
   source: custom

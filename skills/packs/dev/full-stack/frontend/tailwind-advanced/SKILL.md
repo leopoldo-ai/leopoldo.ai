@@ -1,6 +1,7 @@
 ---
 name: tailwind-advanced
 description: "Use when working with advanced Tailwind CSS patterns: v4 features, custom plugins, design tokens, dark mode, responsive design, and animation. Triggers on: Tailwind v4, custom plugin, design tokens, CSS variables, dark mode, responsive, container queries, @apply, theme."
+type: technique
 metadata:
   author: leopoldo
   source: custom

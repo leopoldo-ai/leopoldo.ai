@@ -2,20 +2,7 @@
 name: knowledge-base
 version: 0.1.0
 description: "Use when capturing project knowledge for reuse. Produces case studies, lessons learned, and reusable playbooks from completed projects and engagements."
-skillos:
-  layer: userland
-  category: domain
-  pack: essentials
-  requires:
-    hard: []
-    soft: [engagement-manager]
-  provides: [case-study, lessons-learned, consulting-playbook]
-  triggers:
-    - on: "task.category == 'knowledge-capture'"
-      mode: suggest
-    - on: "task.category == 'engagement-closure'"
-      mode: suggest
-  config: {}
+type: technique
 metadata:
   author: internal
   source: custom

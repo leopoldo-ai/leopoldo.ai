@@ -1,6 +1,7 @@
 ---
 name: code-reviewer
 description: Use when reviewing pull requests, conducting code quality audits, or identifying security vulnerabilities. Invoke for PR reviews, code quality checks, refactoring suggestions.
+type: technique
 license: MIT
 allowed-tools: Read, Grep, Glob
 metadata:

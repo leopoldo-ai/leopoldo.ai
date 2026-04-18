@@ -2,20 +2,7 @@
 name: contract-reviewer
 version: 0.2.0
 description: "Use when reviewing NDAs, term sheets, SPAs, subscription agreements, or any legal document for red flags and negotiation points."
-skillos:
-  layer: userland
-  category: domain
-  pack: essentials
-  requires:
-    hard: []
-    soft: [due-diligence-framework, compliance-engine]
-  provides: [contract-review, red-flag-detection, negotiation-points, term-comparison, playbook-review, redline-suggestions]
-  triggers:
-    - on: "task.category == 'contract-review'"
-      mode: suggest
-    - on: "task.category == 'legal-review'"
-      mode: suggest
-  config: {}
+type: technique
 metadata:
   author: internal
   source: custom

@@ -1,6 +1,7 @@
 ---
 name: invoice-template
-description: "Generate professional branded invoices in .docx format. Use when creating invoices with company branding, line items, tax calculations, payment terms. Reads brand-kit.yaml for consistent styling."
+description: "Use when creating invoices in .docx format with company branding, line items, tax calculations, and payment terms. Reads brand-kit.yaml for consistent styling."
+type: technique
 version: 0.1.0
 layer: userland
 category: templates

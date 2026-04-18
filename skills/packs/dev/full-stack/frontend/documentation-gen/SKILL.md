@@ -1,6 +1,7 @@
 ---
 name: documentation-gen
 description: "Use when generating code documentation, API docs, or project wikis. Covers TypeDoc, TSDoc comments, Storybook Docs, and README generation. OSS-first: TypeDoc and TSDoc primary. Triggers on: documentation, TypeDoc, TSDoc, API docs, JSDoc, README, code docs, doc generation."
+type: technique
 metadata:
   author: leopoldo
   source: custom
