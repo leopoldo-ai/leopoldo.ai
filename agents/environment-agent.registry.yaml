@@ -1,0 +1,146 @@
+# Environment Registry — Unified catalog of detectable tools, servers, and extensions
+# Used by the environment-agent for detection and capability mapping.
+#
+# Structure:
+#   cli_tools:    CLI commands detectable via shell (Layer 1)
+#   mcp_servers:  Known MCP servers with capability mapping (Layer 2)
+#   plugins:      VS Code extensions and external skills (Layer 3)
+
+# --- Layer 1: CLI Tools ---
+cli_tools:
+
+  # Deployment & Hosting
+  - name: vercel
+    check: "vercel --version"
+    auth_check: "vercel whoami"
+    domain: [dev, consulting]
+    capabilities: [deploy, domains, env-vars, logs]
+
+  - name: netlify
+    check: "netlify --version"
+    auth_check: "netlify status"
+    domain: [dev]
+    capabilities: [deploy, forms, functions]
+
+  - name: railway
+    check: "railway --version"
+    auth_check: "railway whoami"
+    domain: [dev]
+    capabilities: [deploy, logs, env-vars, databases]
+
+  - name: fly
+    check: "fly version"
+    auth_check: "fly auth whoami"
+    domain: [dev]
+    capabilities: [deploy, scale, volumes, secrets]
+
+  # Cloud Providers
+  - name: aws
+    check: "aws --version"
+    auth_check: "aws sts get-caller-identity"
+    domain: [dev, finance, consulting]
+    capabilities: [compute, storage, iam, lambda, s3]
+
+  - name: gcloud
+    check: "gcloud --version"
+    auth_check: "gcloud auth print-identity-token"
+    domain: [dev, consulting]
+    capabilities: [compute, storage, functions, bigquery]
+
+  - name: az
+    check: "az --version"
+    auth_check: "az account show"
+    domain: [dev, consulting]
+    capabilities: [compute, storage, functions, cosmos]
+
+  # Payments & Finance
+  - name: stripe
+    check: "stripe --version"
+    auth_check: "stripe config --list"
+    domain: [dev, finance]
+    capabilities: [payments, subscriptions, webhooks, invoices]
+
+  # Infrastructure
+  - name: terraform
+    check: "terraform --version"
+    domain: [dev]
+    capabilities: [plan, apply, state, modules]
+
+  - name: pulumi
+    check: "pulumi version"
+    domain: [dev]
+    capabilities: [up, preview, stack, config]
+
+  # Containers & Orchestration
+  - name: docker
+    check: "docker --version"
+    domain: [dev]
+    capabilities: [build, run, compose, push]
+
+  - name: kubectl
+    check: "kubectl version --client"
+    domain: [dev]
+    capabilities: [pods, services, deploy, logs]
+
+  # Version Control & CI
+  - name: gh
+    check: "gh --version"
+    auth_check: "gh auth status"
+    domain: [dev, all]
+    capabilities: [repos, issues, prs, releases, actions]
+
+  # Databases
+  - name: psql
+    check: "psql --version"
+    domain: [dev, finance]
+    capabilities: [query, dump, restore]
+
+  - name: redis-cli
+    check: "redis-cli --version"
+    domain: [dev]
+    capabilities: [get, set, monitor]
+
+  - name: mongosh
+    check: "mongosh --version"
+    domain: [dev]
+    capabilities: [query, aggregate, indexes]
+
+  # Package Managers
+  - name: npm
+    check: "npm --version"
+    domain: [dev]
+    capabilities: [install, publish, scripts]
+
+  - name: pnpm
+    check: "pnpm --version"
+    domain: [dev]
+    capabilities: [install, publish, scripts]
+
+  - name: bun
+    check: "bun --version"
+    domain: [dev]
+    capabilities: [install, run, build, test]
+
+  - name: uv
+    check: "uv --version"
+    domain: [dev]
+    capabilities: [venv, pip, run, tool]
+
+  # Monitoring
+  - name: sentry-cli
+    check: "sentry-cli --version"
+    auth_check: "sentry-cli info"
+    domain: [dev]
+    capabilities: [releases, sourcemaps, deploys]
+
+  # AI & ML
+  - name: huggingface-cli
+    check: "huggingface-cli version"
+    domain: [dev]
+    capabilities: [download, upload, repos]
+
+  # Research (relevant for med-research)
+  - name: researchclaw
+    check: "researchclaw --help"
+    domain: [medical]
+    capabilities: [research-pipeline, paper-generation, citation-verification]
