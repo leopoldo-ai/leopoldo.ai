@@ -3,6 +3,9 @@ name: doc-gate
 version: 1.0.0
 description: "Use before starting the next task, as POST hook on verification-gate, or after every 3 tasks when plan, MEMORY.md, and project docs must be verified fresh relative to completed work. Documentation freshness gate: blocks next task if docs are stale."
 type: discipline
+applies_to: [STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Doc Gate — Documentation Freshness Enforcement

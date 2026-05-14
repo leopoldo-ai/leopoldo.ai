@@ -1,0 +1,178 @@
+# Sector-to-skills mapping for onboarding Phase 3
+# Maps each user-declared sector to the top-5 most likely first-use skills
+# Used by leopoldo-onboarding to render a personalized capability summary
+# Edit freely; this is a config file
+
+version: 1.0
+default_top_n: 5
+
+sectors:
+
+  PE:
+    label: "Private Equity"
+    top_skills:
+      - skill: ic-memo-builder
+        purpose: "IC memo, PE-standard structure"
+      - skill: lbo-modeler
+        purpose: "LBO models with scenario sensitivity"
+      - skill: due-diligence-framework
+        purpose: "Comprehensive DD framework"
+      - skill: valuation-toolkit
+        purpose: "DCF, comps, precedent transactions"
+      - skill: exit-planner
+        purpose: "Exit strategies and timeline"
+
+  VC:
+    label: "Venture Capital"
+    top_skills:
+      - skill: deal-screener
+        purpose: "Systematic deal flow screening"
+      - skill: startup-scorer
+        purpose: "Multi-dimensional startup scoring"
+      - skill: term-sheet-builder
+        purpose: "Term sheet drafting with standard clauses"
+      - skill: cap-table-modeler
+        purpose: "Cap table modeling and dilution analysis"
+      - skill: sector-thesis
+        purpose: "Sector-specific investment thesis"
+
+  "M&A advisory":
+    label: "M&A Advisory / Investment Banking"
+    top_skills:
+      - skill: pitch-book-builder
+        purpose: "Structured pitch books for mandates"
+      - skill: dcf-builder
+        purpose: "DCF model with sensitivity"
+      - skill: trading-comps
+        purpose: "Trading comparables analysis"
+      - skill: precedent-transactions
+        purpose: "Precedent transactions analysis"
+      - skill: cim-builder
+        purpose: "Confidential Information Memorandum"
+
+  "Family office":
+    label: "Family Office"
+    top_skills:
+      - skill: ips-builder
+        purpose: "Investment Policy Statement"
+      - skill: wealth-structuring
+        purpose: "Wealth structuring multi-jurisdiction"
+      - skill: succession-planner
+        purpose: "Succession planning framework"
+      - skill: cash-flow-planner
+        purpose: "Cash flow planning HNWI"
+      - skill: philanthropy-advisor
+        purpose: "Philanthropy and charitable giving"
+
+  "Asset management":
+    label: "Asset Management"
+    top_skills:
+      - skill: nav-calculator
+        purpose: "Multi-asset NAV calculation"
+      - skill: portfolio-monitor
+        purpose: "Continuous portfolio monitoring"
+      - skill: attribution-engine
+        purpose: "Performance attribution analysis"
+      - skill: regulatory-filing
+        purpose: "Regulatory filing automation"
+      - skill: investor-onboarding
+        purpose: "Investor subscription workflow"
+
+  Consulting:
+    label: "Strategic Consulting"
+    top_skills:
+      - skill: client-proposal-builder
+        purpose: "MBB-style client proposals"
+      - skill: market-sizing
+        purpose: "TAM/SAM/SOM market sizing"
+      - skill: strategy-advisor
+        purpose: "SWOT, Porter, scenario planning"
+      - skill: workshop-designer
+        purpose: "Strategic workshop design and facilitation"
+      - skill: implementation-roadmap
+        purpose: "Multi-phase implementation roadmap"
+
+  Legal:
+    label: "Legal Services"
+    top_skills:
+      - skill: contract-reviewer
+        purpose: "NDA, term sheet, SPA review"
+      - skill: corporate-counsel
+        purpose: "Corporate law and governance"
+      - skill: dispute-engine
+        purpose: "Litigation and arbitration support"
+      - skill: legal-ops-flow
+        purpose: "Legal operations and spend optimization"
+      - skill: regulatory-radar
+        purpose: "Regulatory monitoring and compliance"
+
+  "Medical research":
+    label: "Medical Research"
+    top_skills:
+      - skill: clinical-trials
+        purpose: "Protocol design ICH-E6"
+      - skill: grant-writing
+        purpose: "Grant proposal NIH/Horizon/ERC"
+      - skill: biostatistics
+        purpose: "Sample size, survival analysis"
+      - skill: scientific-publishing
+        purpose: "Paper writing IMRAD + peer review"
+      - skill: regulatory-compliance
+        purpose: "FDA, EMA, ICH, GCP compliance"
+
+  Recruiting:
+    label: "Executive Search / Recruiting"
+    top_skills:
+      - skill: candidate-search
+        purpose: "Boolean search Manatal ATS"
+      - skill: linkedin-sourcer
+        purpose: "LinkedIn sourcing rate-limited"
+      - skill: candidate-profile-builder
+        purpose: "Candidate description from CV + interview"
+      - skill: search-report
+        purpose: "Post-search client report"
+      - skill: market-mapper
+        purpose: "Talent market analysis"
+
+  Other:
+    label: "Generic Business"
+    top_skills:
+      - skill: executive-briefing
+        purpose: "C-level executive briefs and board memos"
+      - skill: business-report
+        purpose: "Multi-section professional reports"
+      - skill: market-sizing
+        purpose: "Market sizing TAM/SAM/SOM"
+      - skill: strategy-advisor
+        purpose: "Strategic analysis frameworks"
+      - skill: decision-toolkit
+        purpose: "Quantitative decision framework"
+
+  default:
+    label: "Default fallback"
+    top_skills:
+      - skill: executive-briefing
+        purpose: "Executive briefs and board memos"
+      - skill: business-report
+        purpose: "Multi-section reports"
+      - skill: one-pager
+        purpose: "Single-page deliverables"
+      - skill: pitch-deck
+        purpose: "Pitch deck presentations"
+      - skill: decision-toolkit
+        purpose: "Decision frameworks"
+
+# Notes:
+# - Each skill must exist in skills/packs/ to be valid (verified 2026-05-09: all 50 skill
+#   references resolve to existing SKILL.md files in this repo).
+# - At CLIENT BUILD TIME, only skills in the client's installed packs are present.
+#   Example: lbo-modeler exists in deal-engine pack only; clients without
+#   deal-engine in their products will not have it.
+# - Runtime filter in leopoldo-onboarding Phase 3: orchestrator must Glob
+#   `skills/packs/**/SKILL.md` AND check the deployed skill index, NOT just this YAML.
+#   If <5 sector skills are installed, fall forward to entries from `default` to reach 5.
+# - Validator (recommended pre-build, not yet automated):
+#   `python -m api.builder.cli validate --check-refs --strict` should also resolve
+#   sector-skills.yaml entries against skills/packs/ at build time.
+# - Purpose strings should be one short sentence (max 60 chars)
+# - Add new sectors here as new client segments emerge

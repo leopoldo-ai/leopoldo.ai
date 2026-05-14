@@ -11,6 +11,8 @@ metadata:
   forge_sources:
     - "Inspired by evolsb/claude-legal-skill CUAD risk detection methodology (MIT)"
     - "Inspired by duraninci/openclaw-legal-skills contract-review-anthropic playbook methodology (Apache-2.0)"
+tier: essentials
+status: ga
 ---
 
 # Contract Reviewer

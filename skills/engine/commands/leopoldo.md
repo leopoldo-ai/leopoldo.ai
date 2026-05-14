@@ -32,6 +32,20 @@ List each detected plugin with its slash command:
 
 Only show rows for plugins that are actually installed.
 
+## Lifecycle Commands
+
+| Command | Purpose |
+| ------- | ------- |
+| `/leopoldo install [slug]` | First-time install of a plugin |
+| `/leopoldo add [slug]` | Add another plugin |
+| `/leopoldo update` | Check for updates and apply them (prompts for orphan removal) |
+| `/leopoldo repair` | Reinstall missing or corrupted managed skills |
+| `/leopoldo repair --prune` | Repair + remove orphan managed skills no longer shipped in current version |
+| `/leopoldo status` | Show installed plugins, skill counts, health |
+| `/leopoldo rollback` | Restore previous version from snapshot |
+| `/leopoldo remove [slug]` | Remove one plugin |
+| `/leopoldo uninstall` | Remove all Leopoldo skills |
+
 ## Quick Start
 
 Pick any command above to see detailed capabilities and example prompts.

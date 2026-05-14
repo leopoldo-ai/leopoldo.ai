@@ -2,6 +2,9 @@
 name: skill-postmortem
 description: Use when significant test failures, build breaks, wrong output, or user corrections require a per-skill post-mortem. Auto-documents significant skill failures with root cause analysis, proposes patches to the involved skill, updates LESSONS_LEARNED.md in its directory. Complements skill-retrospective (session-wide) with per-skill analysis.
 type: discipline
+applies_to: [STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Skill Post-Mortem — Analisi e Documentazione dei Fallimenti

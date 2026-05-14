@@ -31,7 +31,7 @@ Phase 1 — Pre-flight:
   Coherence:         [🟢 | 🔴 block]
 
 Phase 2 — Build:
-  Plugin repos:      [🟢 11/11 | 🔴]
+  Plugin repos:      [🟢 13/13 | 🔴]
   Public monorepo:   [🟢 | 🔴 path not found]
 
 Phase 3 — Version & Tag:

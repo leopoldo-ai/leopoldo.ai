@@ -9,6 +9,8 @@ metadata:
   license: proprietary
   forge_strategy: build
   forge_sources: ["CFA Institute — Financial Reporting and Analysis (CFA Program Curriculum)", "IFRS Foundation — IFRS Standards and Annual Report Disclosure Requirements", "SEC — EDGAR Filing Standards and Prospectus Disclosure Requirements (Regulation S-K)", "Fridson & Alvarez — Financial Statement Analysis: A Practitioner's Guide (Wiley Finance, 5th ed.)"]
+tier: essentials
+status: ga
 ---
 
 # PDF Analyzer

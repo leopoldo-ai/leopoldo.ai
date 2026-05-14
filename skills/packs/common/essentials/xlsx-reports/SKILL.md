@@ -3,6 +3,8 @@ name: xlsx-reports
 description: Use when building spreadsheets in Excel (.xlsx) format for RICE scoring, roadmaps, KPI dashboards, tabular comparisons, or any structured output for stakeholders.
 type: technique
 user-invocable: true
+tier: essentials
+status: ga
 ---
 
 # Excel Reports

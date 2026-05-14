@@ -21,6 +21,8 @@ metadata:
   output-format: css
   related-skills: brand-kit,visual-hierarchy,design-audit,frontend-design
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # Spacing Mastery — Systematic Spatial Design

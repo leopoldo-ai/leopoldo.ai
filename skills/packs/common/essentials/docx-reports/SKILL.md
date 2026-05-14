@@ -3,6 +3,8 @@ name: docx-reports
 description: Use when building narrative documents in Word (.docx) format like executive summaries, board reports, phase reports, change management plans, or any deliverable for leadership.
 type: technique
 user-invocable: true
+tier: essentials
+status: ga
 ---
 
 # Word Reports

@@ -2,6 +2,8 @@
 name: ceo-advisor
 description: "Use when preparing board meetings, designing governance structures, organizational design, stakeholder management, capital allocation, executive KPIs, crisis leadership, or operating rhythm for C-level executive advisory. For strategic analysis frameworks (SWOT, Porter, Ansoff, Blue Ocean, scenario planning) use strategy-advisor instead."
 type: pattern
+tier: essentials
+status: ga
 ---
 
 # CEO Advisor

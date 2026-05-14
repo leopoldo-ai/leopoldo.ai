@@ -2,6 +2,8 @@
 name: data-visualization
 description: Use when creating comparison tables, decision matrices, visual scorecards, graphic roadmaps, KPI dashboards, tabular outputs, or any visually structured output.
 type: technique
+tier: essentials
+status: ga
 ---
 
 # Data Visualization

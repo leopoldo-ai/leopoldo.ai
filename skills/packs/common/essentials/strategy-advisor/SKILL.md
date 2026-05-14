@@ -2,6 +2,8 @@
 name: strategy-advisor
 description: "Use when performing SWOT, Porter's Five Forces, scenario planning, competitive positioning, market entry analysis, growth strategy (Ansoff), or Blue Ocean strategy via strategic analysis frameworks. For board preparation, governance, stakeholder management, and capital allocation use ceo-advisor instead."
 type: pattern
+tier: essentials
+status: ga
 ---
 
 # Strategy Advisor

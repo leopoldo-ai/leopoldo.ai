@@ -1,0 +1,160 @@
+# Leopoldo Value Attribution Inventory
+# Single source of truth for what counts as a Leopoldo-only capability and its weight.
+# Edit weights here to tune the contribution score.
+# Used by value-attribution skill (skills/engine/value-attribution/SKILL.md).
+
+version: 1.0
+last_updated: 2026-05-09
+
+# Scoring config
+scoring:
+  total_weight_cap: 100              # Score never exceeds this
+  display_threshold: 50              # Below this percent, Form A is skipped (honesty rule)
+  default_form: "A"                  # Form A footer is default for >500-word deliverables
+  domain_specific_weights: false     # v1: same weights all domains. v1.1: per-domain overrides.
+
+# Capabilities catalog
+capabilities:
+
+  orchestrator:
+    label: "Multi-skill orchestration"
+    weight: 15
+    vanilla_claude_equivalent: false
+    description: "Routing across domain-specific skills and workflow agents with quality gates. Always present when the orchestrator runs."
+    # Note: do NOT cite specific numbers (skill counts, agent counts) in description.
+    # web-brand.md bans skill counts in user-facing copy. The description appears
+    # in Form B output which IS user-facing.
+    always_active: true               # Always counted, since the orchestrator is always running
+
+  skill_invocation:
+    label: "Domain-vertical skill: {skill_name}"
+    weight_per_skill: 7              # Reduced from 8 (2026-05-09 retro: avoid saturation)
+    weight_cap: 30                    # Reduced from 40: leaves margin for full-loaded scoring discrimination
+    vanilla_claude_equivalent: false
+    description: "Pre-built domain expertise with structured output disciplines (out-of-scope, citation discipline, two-artifact rule)"
+
+  workflow_agent:
+    label: "Workflow agent: {agent_name}"
+    weight_per_agent: 12
+    weight_cap: 30
+    vanilla_claude_equivalent: false
+    description: "Multi-step workflow orchestration with stop-and-surface checkpoints"
+
+  quality_agent:
+    label: "Automated quality gate"
+    weight: 8
+    vanilla_claude_equivalent: false
+    description: "Executive summary check, structure check, actionability check, filler removal"
+
+  safety_agent:
+    label: "Automated safety gate (BUSINESS-{domain})"
+    weight: 10
+    vanilla_claude_equivalent: false
+    description: "Source flagging, numeric consistency cross-table, regulatory freshness, citation discipline, hallucination markers, output structural integrity"
+
+  audit_signing:
+    label: "Audit signing (witness marker)"
+    weight: 12
+    vanilla_claude_equivalent: false
+    description: "Ed25519-signed witness marker, third-party verifiable on trust.leopoldo.ai. Procurement-ready."
+
+  brand_kit_application:
+    label: "Brand-kit applied to deliverable"
+    weight: 6
+    vanilla_claude_equivalent: false
+    description: "brand-kit.yaml-driven document styling: cover, headers, palette, typography, logo"
+    requires:                         # Only counted if brand-kit.yaml exists AND was applied
+      - brand_kit_present_in_project
+
+  citation_discipline:
+    label: "Source labeling [UNSOURCED]/[ESTIMATED]/[CRM]"
+    weight: 8
+    vanilla_claude_equivalent: false
+    description: "Mandatory citation discipline that blocks delivery if numbers lack source attribution"
+    detect_in_deliverable: true       # Counted only if labels appear in output text
+
+  preference_memory:
+    label: "Preference learning across sessions"
+    weight: 5
+    vanilla_claude_equivalent: false
+    description: "Native memory captures user style preferences (currency, language, format) and applies them automatically"
+    requires:
+      - user_preferences_loaded
+
+  out_of_scope_discipline:
+    label: "Out-of-scope discipline"
+    weight: 4
+    vanilla_claude_equivalent: false
+    description: "Skills declare what they do NOT do, preventing scope creep at runtime"
+    requires:
+      - skill_with_out_of_scope_section_invoked
+
+  stop_and_surface:
+    label: "Stop and surface checkpoints"
+    weight: 4
+    vanilla_claude_equivalent: false
+    description: "Mandatory pause before irreversible output (regulator, LP, auditor send)"
+    requires:
+      - skill_with_stop_and_surface_invoked
+
+  two_artifact_pattern:
+    label: "Two-artifact pattern (deliverable + governance companion)"
+    weight: 5
+    vanilla_claude_equivalent: false
+    description: "Every regulated-finance deliverable ships paired: the artifact for use + the audit-trail companion"
+    requires:
+      - skill_producing_two_artifacts_invoked
+
+  narrative_content:
+    label: "Narrative content generation (also vanilla Claude)"
+    weight: 13                        # Reserved for narrative; total above + this <= 100
+    vanilla_claude_equivalent: true
+    description: "Base capability of any LLM. Always counted but does NOT differentiate from vanilla Claude."
+    always_active: true
+
+# Tuning notes (calibrazione 2026-05-09 con pesi rivisti: skill 8→7, cap 40→30)
+# =============================================================================
+#
+# Reference scenario calibration (recomputed):
+#
+# IC memo full-loaded (everything firing):
+#   orchestrator (15) + 2 skills (14) + 1 workflow agent (12) + Quality Agent (8) +
+#   Safety Agent (10) + audit signing (12) + brand-kit (6) + citation discipline (8) +
+#   preference memory (5) + narrative (13) = 103 → capped at 100. Score: 100%.
+#
+# IC memo without preference (citation present):
+#   15 + 14 + 12 + 8 + 10 + 12 + 6 + 8 + 0 + 13 = 98. Score: 98%.
+#
+# IC memo without citation (preference present):
+#   15 + 14 + 12 + 8 + 10 + 12 + 6 + 0 + 5 + 13 = 95. Score: 95%.
+#
+# IC memo without citation OR preference:
+#   15 + 14 + 12 + 8 + 10 + 12 + 6 + 0 + 0 + 13 = 90. Score: 90%.
+#
+# Standard report (no agent, no audit, 1 skill):
+#   orchestrator (15) + 1 skill (7) + Quality Agent (8) + brand-kit (6) +
+#   narrative (13) = 49. Score: 49% — just below threshold (50). Form A skipped.
+#   This is intentionally borderline: anything richer than this gets attribution.
+#
+# Casual chat (no skill, no gate):
+#   orchestrator (15) + narrative (13) = 28. Score: 28% — well below threshold,
+#   no Form A surfaced. Honest signal.
+#
+# Pure preference adjustment (no deliverable):
+#   orchestrator (15) + preference memory (5) + narrative (13) = 33. Below threshold.
+#
+# Saturation behavior (KNOWN LIMITATION, by design):
+# - Full deliverables (with citation+preference) score 100% via cap, not via natural sum.
+# - Discrimination at top end: 4 levels (90, 95, 98, 100) covering full/no-pref/no-citation/no-both.
+# - Below 90% the math is fully linear, no cap interference.
+# - Top-end saturation is ACCEPTED: a full-loaded deliverable IS the maximum value,
+#   no need to differentiate further. If ever required, raise total_weight_cap to 110.
+#
+# Tuning recommendations:
+# - Audit-heavy clients (regulated finance): increase audit_signing to 15, citation_discipline to 10
+# - Design-heavy clients (consulting decks): increase brand_kit_application to 10
+# - Volume clients (many quick outputs): keep current weights, threshold filters thin outputs
+#
+# Edit cadence: review quarterly with sample of 10 real-world deliverables, adjust weights
+# if scores systematically diverge from perceived value. Revisit cap if top-end discrimination
+# becomes commercially relevant (e.g. competing with vendors that cite specific numbers).

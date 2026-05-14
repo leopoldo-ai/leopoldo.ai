@@ -2,6 +2,9 @@
 name: product-manager-toolkit
 description: Use when performing RICE scoring, prioritizing work sessions, defining MVPs, managing trade-offs between initiatives, analyzing the impact of product decisions, writing PRDs, or managing backlogs and roadmaps.
 type: pattern
+applies_to: [DEV, STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Product Manager Toolkit

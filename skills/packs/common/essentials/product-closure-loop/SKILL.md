@@ -2,6 +2,9 @@
 name: product-closure-loop
 description: Use when finalizing a PRD, closing a product spec, optimizing a feature set, or running autonomous improvement cycles. Iteratively evaluates and improves a PRD until production-ready, using board-orchestrator for multi-perspective evaluation, task-decomposer for gap identification, and domain skills for execution.
 type: technique
+applies_to: [STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Product Closure Loop — Autonomous PRD & Product Refinement

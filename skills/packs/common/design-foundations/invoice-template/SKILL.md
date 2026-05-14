@@ -22,6 +22,8 @@ metadata:
   output-format: docx
   related-skills: brand-kit,quote-template,docx-reports
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # Invoice Template — Professional Branded Invoices

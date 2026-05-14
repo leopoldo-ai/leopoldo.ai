@@ -11,6 +11,8 @@ metadata:
   forge_sources:
     - "Inspired by 199-biotechnologies/claude-deep-research-skill pipeline methodology (no license — BUILD, not ADAPT)"
   created: 2026-03-13
+tier: essentials
+status: ga
 ---
 
 # Deep Research

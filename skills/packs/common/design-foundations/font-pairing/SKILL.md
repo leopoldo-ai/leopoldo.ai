@@ -22,6 +22,8 @@ metadata:
   output-format: yaml
   related-skills: brand-kit,color-palette,frontend-design
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # Font Pairing — Theory-Driven Typography Selection

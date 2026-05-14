@@ -9,6 +9,8 @@ metadata:
   license: proprietary
   inspiration: "AutoResearchClaw paper_verifier.py, quality.py, verified_registry.py patterns"
   created: 2026-03-25
+tier: essentials
+status: deprecated
 ---
 
 # Output Integrity — Content Quality Gate

@@ -22,6 +22,8 @@ metadata:
   output-format: yaml
   related-skills: brand-kit,font-pairing,accessibility
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # Color Palette — Theory-Driven, Accessibility-First Color Generation

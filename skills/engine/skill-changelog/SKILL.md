@@ -2,6 +2,9 @@
 name: skill-changelog
 description: Use for periodic compliance audits, after bulk skill changes, when tracking new installations/updates/removals of skills, or when an audit trail of skill changes is needed. Scans skills/ and compares with a stored snapshot to detect changes, maintaining the audit trail in docs/.
 type: technique
+applies_to: [STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Skill Changelog — Audit Trail & Change Tracking

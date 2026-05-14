@@ -2,6 +2,8 @@
 name: pptx
 description: "Use when working with presentations (.pptx files): creating new presentations, modifying or editing content, working with layouts, adding comments or speaker notes, or any other presentation task."
 type: technique
+tier: essentials
+status: ga
 ---
 
 # PPTX Creation, Editing, and Analysis

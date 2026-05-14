@@ -252,6 +252,23 @@ if [ -d "$PLAYBOOKS_DIR" ]; then
   fi
 fi
 
+# --- Conversation History Storage Disclosure (Track A2 day 5) ---
+# When the client tier is regulated_finance, surface a STORAGE_MODE
+# signal so the orchestrator can display the disclosure on the first
+# message of the session. Spec:
+# docs/specs/2026-05-04-conversation-history-tiered-default.md §2.6.
+#
+# Reads tier from leopoldo-client.json (which the build-leopoldo-full
+# pipeline embeds at install time). If absent, falls back to no
+# disclosure. Cowork uses prompt-only equivalent in agents/orchestrator.md.
+
+if [[ -f "$ROOT/.leopoldo/leopoldo-client.json" ]] && _has_jq; then
+  CLIENT_TIER="$(jq -r '.tier // ""' "$ROOT/.leopoldo/leopoldo-client.json" 2>/dev/null || echo "")"
+  if [[ "$CLIENT_TIER" == "regulated_finance" ]]; then
+    CONTEXT="$CONTEXT STORAGE_MODE: metadata-only. TIER: regulated_finance. The orchestrator MUST display the storage disclosure on the first message of this session and offer per-session opt-in to full storage."
+  fi
+fi
+
 # --- Environment Quick Check (conditional) ---
 # Only scan when cache is stale (>24h) or MCP config changed since last scan.
 # Sets ENV_SCAN_NEEDED flag for orchestrator to dispatch environment-agent.

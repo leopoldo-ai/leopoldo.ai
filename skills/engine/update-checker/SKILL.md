@@ -83,6 +83,39 @@ Plugin works normally when expired (100% offline). `/leopoldo update` shows expi
 | 404 No version | Skip that plugin |
 | Old format (github_token) | "Older format. Contact hello@leopoldo.ai for upgrade." |
 
+## Orphan detection on update
+
+After fetching v(new) from backend, before applying the update, compute:
+
+`orphans = managed_in_current_manifest - managed_in_new_manifest`
+
+These are skills that were part of the plugin in the previous version but are no longer shipped (removed from essentials, moved to Studio-only, or deprecated entirely).
+
+**Never delete without prompting.** Present the user an explicit choice:
+
+> Update v(old) → v(new) ready.
+> - N new managed skills to install
+> - M orphan managed skills detected (were in v(old), not in v(new)):
+>   [list the first 5, then "... and K more" if more than 5]
+>
+> Options:
+>   [y] Remove orphan skills (recommended)
+>   [k] Keep them (safe default)
+>   [l] Show full list
+>   [c] Cancel update
+>
+> Choice [y/k/l/c]:
+
+Default: `k` (keep). If the user picks `y`:
+- For each orphan, only remove if the manifest entry status is exactly `managed` (not `modified`, not `preserved`, not `replaced`)
+- Remove the file from disk
+- Remove the entry from `.leopoldo-manifest.json`
+- Log the removal to `.state/journal/` (if journal available) with event `orphan.removed`
+
+If status is `modified`: keep the file, downgrade manifest entry to `preserved` (user edits are now theirs), log `orphan.demoted`.
+
+After removal, rewrite the manifest with the final state. Idempotent: running update again with the same manifest should produce zero further changes.
+
 ## Rules
 
 - NEVER check for updates on session start (only integrity check, offline)
@@ -90,6 +123,6 @@ Plugin works normally when expired (100% offline). `/leopoldo update` shows expi
 - Only data sent: `api_key` in header. No file contents, no telemetry
 - Manifest is source of truth for all install state
 - Never overwrite modified skills unless `--force`
-- Never delete skills automatically
+- Never delete managed skills without explicit user confirmation during update or repair --prune
 - Always snapshot before updates
 - Idempotent: running twice = same result

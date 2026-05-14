@@ -13,6 +13,9 @@ metadata:
   scope: design
   output-format: document
   related-skills: test-master
+applies_to: [STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Prompt Engineer

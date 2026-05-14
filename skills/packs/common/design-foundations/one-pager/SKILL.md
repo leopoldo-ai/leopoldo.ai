@@ -22,6 +22,8 @@ metadata:
   output-format: docx
   related-skills: brand-kit,business-report,docx-reports,executive-briefing,client-proposal-builder,pitch-deck
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # One-Pager — Single-Page Marketing & Sales Documents

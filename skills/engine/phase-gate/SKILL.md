@@ -3,6 +3,9 @@ name: phase-gate
 version: 2.0.0
 description: "Use at the end of any development phase, on phase.complete events, or when verifying all relevant skills for a workflow phase were actually invoked. Dynamic phase completion gate: scans skills/ at runtime, maps skills to phases, reports coverage gaps. Registered as blocking hook via event-dispatcher."
 type: discipline
+applies_to: [STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Phase Gate — Dynamic Completion Verification

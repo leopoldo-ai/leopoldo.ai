@@ -2,6 +2,9 @@
 name: phase-completion-checklist
 description: Use when the user requests "/complete-phase", "checklist fase X", "siamo pronti per la fase successiva?", or needs structured verification that all deliverables for a development phase are complete and working. Coordinates validation, testing, documentation, and review skills.
 type: technique
+applies_to: [STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Phase Completion Checklist

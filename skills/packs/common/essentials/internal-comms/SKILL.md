@@ -3,6 +3,8 @@ name: internal-comms
 description: Use when writing any internal communication (status reports, leadership updates, 3P updates, company newsletters, FAQs, incident reports, project updates), using the formats the company prefers.
 type: technique
 license: Complete terms in LICENSE.txt
+tier: essentials
+status: ga
 ---
 
 ## When to use this skill

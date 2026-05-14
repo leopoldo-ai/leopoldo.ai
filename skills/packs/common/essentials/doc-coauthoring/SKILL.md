@@ -11,6 +11,8 @@ metadata:
   forge_sources:
     - "Inspired by Anthropic doc-coauthoring workflow methodology (source-available — BUILD, not ADAPT)"
   created: 2026-03-13
+tier: essentials
+status: ga
 ---
 
 # Doc Co-Authoring

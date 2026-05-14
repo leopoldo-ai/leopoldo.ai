@@ -1,7 +1,10 @@
 ---
 name: skill-retrospective
-description: Use at end of session, after complex multi-step tasks, or when the user says "retrospective", "session review", "migliorare skill", "improve skills", "cosa possiamo migliorare", "friction analysis". Identifies friction points, maps them to responsible skills, proposes patches for user approval.
+description: Use at end of session, after complex multi-skill tasks, or when the user says "retrospective", "session review", "migliorare skill", "improve skills", "cosa possiamo migliorare", "friction analysis". Identifies friction points, maps them to responsible skills, proposes patches for user approval.
 type: technique
+applies_to: [STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Skill Retrospective — Autonomous Skill Improvement Loop

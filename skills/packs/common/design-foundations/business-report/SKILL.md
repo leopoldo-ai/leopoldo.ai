@@ -22,6 +22,8 @@ metadata:
   output-format: docx
   related-skills: brand-kit,docx-reports,one-pager,executive-briefing
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # Business Report — Multi-Section Branded Professional Reports

@@ -22,6 +22,8 @@ metadata:
   output-format: css
   related-skills: spacing-mastery,font-pairing,design-audit,frontend-design
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # Visual Hierarchy — Systematic Reading Order and Emphasis

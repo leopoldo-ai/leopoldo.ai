@@ -9,6 +9,8 @@ metadata:
   license: proprietary
   forge_strategy: build
   forge_sources: ["Harvard Business Review — Making Every Meeting Matter (HBR Meeting Best Practices Collection)", "Schwarz — The Skilled Facilitator: A Comprehensive Resource for Consultants, Facilitators, Coaches (Jossey-Bass, 3rd ed.)", "CFA Institute — Investment Committee Best Practices (CFA Institute Research Foundation)", "Rogelberg — The Surprising Science of Meetings: How You Can Lead Your Team to Peak Performance (Oxford UP)"]
+tier: essentials
+status: ga
 ---
 
 # Meeting Intelligence

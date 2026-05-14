@@ -2,6 +2,9 @@
 name: feature-impact-analyzer
 description: Use when the user requests "/feature-impact", "analizza impatto feature", "vale la pena implementare X?", or needs structured multi-perspective analysis (technical, product, financial, strategic, UX) with RICE scoring and decision matrix before committing to a feature.
 type: technique
+applies_to: [DEV, STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Feature Impact Analyzer

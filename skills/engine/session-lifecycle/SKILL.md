@@ -3,6 +3,9 @@ name: session-lifecycle
 version: 1.1.0
 description: Use when opening or closing Leopoldo sessions, loading system.md at start, proposing system.md updates at end, journaling events, creating checkpoints, or restoring from a checkpoint. Manages `.state/` and `.leopoldo/system.md`.
 type: technique
+applies_to: [STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Session Lifecycle

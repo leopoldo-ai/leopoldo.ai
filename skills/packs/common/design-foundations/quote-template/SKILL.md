@@ -22,6 +22,8 @@ metadata:
   output-format: docx
   related-skills: brand-kit,invoice-template,docx-reports,client-proposal-builder
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # Quote Template — Professional Branded Quotes & Estimates

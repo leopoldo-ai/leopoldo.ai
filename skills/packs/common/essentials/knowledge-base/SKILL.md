@@ -10,6 +10,8 @@ metadata:
   forge_strategy: build
   forge_sources: []
   created: 2026-03-11
+tier: essentials
+status: ga
 ---
 
 # Knowledge Base

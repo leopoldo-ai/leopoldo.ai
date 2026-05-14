@@ -27,6 +27,8 @@ metadata:
   output-format: pptx
   related-skills: brand-kit,pitch-deck,pptx,investor-letter,lp-reporting,nav-calculator,attribution-engine,portfolio-monitor
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # Investor Deck — Fund & Family Office Communication Presentations

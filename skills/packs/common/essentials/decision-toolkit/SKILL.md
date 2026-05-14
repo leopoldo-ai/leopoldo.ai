@@ -11,6 +11,8 @@ metadata:
   forge_sources:
     - "Inspired by lyndonkl/claude decision-matrix methodology (no license — BUILD, not ADAPT)"
   created: 2026-03-13
+tier: essentials
+status: ga
 ---
 
 # Decision Toolkit

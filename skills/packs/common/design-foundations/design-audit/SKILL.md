@@ -25,6 +25,8 @@ metadata:
   output-format: report
   related-skills: spacing-mastery,visual-hierarchy,brand-kit,font-pairing,color-palette
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # Design Audit — Post-Generation Quality Gate

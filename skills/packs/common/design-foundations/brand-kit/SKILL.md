@@ -27,6 +27,8 @@ metadata:
   output-format: yaml
   related-skills: color-palette,font-pairing,docx-reports,pptx,xlsx-reports,internal-comms,brand-to-ui
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # Brand Kit — Single Source of Truth for Brand Identity

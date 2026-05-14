@@ -2,6 +2,9 @@
 name: sprint-planner
 description: Use before starting a build loop or sprint, when planning development sprints, or auto-assigning skills to tasks from a task list (task-decomposer output or manual input). Scans skills/ to find the best skill per task, returning a sprint plan with skill assignments, dependencies, and estimated complexity.
 type: technique
+applies_to: [DEV, STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Sprint Planner — Dynamic Skill Assignment

@@ -80,11 +80,21 @@ Precondition: manifest exists.
 | Command | Core logic |
 |---------|-----------|
 | **status** | Read manifest → display plugins, skill counts by status, modified/skipped lists, backup info, health |
-| **repair** | Integrity check (exists + hash) → download + reinstall only damaged managed skills |
+| **repair** | Integrity check (exists + hash) → download + reinstall only damaged managed skills. Use `--prune` to also remove orphan managed skills (see below). |
 | **rollback** | List snapshots → user picks version → confirm → restore skills + manifest → regenerate CLAUDE.md |
 | **restore [skill]** | Find `replaced` skill in manifest → copy from `.leopoldo-backup/skills/` → remove Leopoldo version |
 | **remove [slug]** | Identify unique vs shared skills → remove unique only → restore backups if applicable → regenerate CLAUDE.md |
 | **uninstall** | Confirm → restore all `replaced` skills → remove all managed → remove CLAUDE.md markers → delete manifest + backups. `.leopoldo/` user data: ask separately (default: keep) |
+
+### /leopoldo repair --prune
+
+In addition to reinstalling missing/corrupted managed skills, removes orphan managed skills (those in the manifest but no longer shipped in the current plugin version).
+
+Same scope as update-time prune: operates only on `managed` entries. `modified`, `preserved`, and `replaced` entries are never removed.
+
+Interactive prompt identical to the update orphan prompt. Default: keep. User must explicitly type `y` to prune.
+
+Idempotent: no-op if no orphans.
 
 ## CLAUDE.md Management
 
@@ -101,24 +111,29 @@ Section contains: plugin table, agent table, workflow summary, conventions, comm
 
 ## Hook Management
 
-Hooks ship with every install. System-managed, not user-customizable.
+Hook composition is **profile-aware** (since 2026-04-22 build-profiles ADR). Different client profiles ship different subsets of hooks. System-managed, not user-customizable. Source of truth: `api/builder/profiles.py` and `.claude/rules/hooks.md`.
 
-| Script | Hook Event | Purpose |
-|--------|-----------|---------|
-| `core.sh` | (shared lib) | Root discovery, gate state, journal helpers |
-| `session-start.sh` | SessionStart | Init session, check evolution |
-| `compact-reinject.sh` | SessionStart (compact) | Re-inject gate state |
-| `correction-detector.sh` | UserPromptSubmit | Detect corrections, set postmortem gate |
-| `gate-enforcer.sh` | Stop | Enforce pending gates |
-| `human-in-the-loop.sh` | PreToolUse | Block irreversible actions (deploy, email, db destructive, git push, pr merge) |
-| `pre-edit-validator.sh` | PreToolUse | Protect .state/ and .leopoldo/ |
-| `code-safety.sh` | PreToolUse | Scan for unsafe code patterns |
-| `tool-logger.sh` | PostToolUse | Log tool usage, checkpoint counter |
-| `pii-scanner.sh` | PostToolUse | Scan for PII and secrets |
-| `rate-limiter.sh` | PostToolUse | Check rate limits |
-| `subagent-tracker.sh` | SubagentStart/Stop | Track subagent lifecycle |
-| `activate-license.sh` | (called by session-start) | Activate license on first run |
-| `verify-license.py` | (called by session-start) | Verify Ed25519 license signature |
+The full hook inventory (14 .sh files + 1 .py helper, verified 2026-04-28 in `.leopoldo/hooks/`):
+
+| Script | Hook Event | Purpose | Content | Dev | Studio |
+|--------|-----------|---------|:-:|:-:|:-:|
+| `core.sh` | (shared lib) | Root discovery, gate state, journal helpers | ✅ | ✅ | ✅ |
+| `session-start.sh` | SessionStart | Init session, check evolution | ✅ | ✅ | ✅ |
+| `compact-reinject.sh` | SessionStart (compact) | Re-inject gate state | ✅ | ✅ | ✅ |
+| `activate-license.sh` | UserPromptSubmit (called by session-start) | Activate license on first run | ✅ | ✅ | ✅ |
+| `verify-license.py` | (called by activate-license.sh) | Verify Ed25519 license signature | ✅ | ✅ | ✅ |
+| `session-end.sh` | Stop | Journal session.end, suggest system.md updates | ✅ | ✅ | ✅ |
+| `pre-edit-validator.sh` | PreToolUse Edit\|Write | Protect .state/ and .leopoldo/ | ❌ | ✅ | ✅ |
+| `code-safety.sh` | PreToolUse Edit\|Write | Scan for unsafe code patterns | ❌ | ✅ | ✅ |
+| `human-in-the-loop.sh` | PreToolUse | Block irreversible actions (deploy, email, db destructive, git push, pr merge) | ❌ | ✅ | ✅ |
+| `pii-scanner.sh` | PostToolUse | Scan for PII and secrets | ❌ | ❌ | ✅ |
+| `correction-detector.sh` | UserPromptSubmit | Detect corrections, set postmortem gate | ❌ | ❌ | ✅ |
+| `gate-enforcer.sh` | Stop | Enforce pending gates | ❌ | ❌ | ✅ |
+| `tool-logger.sh` | PostToolUse Edit\|Write\|Bash\|Agent | Log tool usage, checkpoint counter | ❌ | ❌ | ✅ |
+| `rate-limiter.sh` | PostToolUse | Check rate limits | ❌ | ❌ | ✅ |
+| `subagent-tracker.sh` | SubagentStart/Stop | Track subagent lifecycle | ❌ | ❌ | ✅ |
+
+**Profile detection** (auto, build-time): full-stack plugin → DEV, anything else → CONTENT. STUDIO is internal only, never auto-detected, blocked from `/licenses/download` public endpoint. DEV+Cowork is architecturally blocked (HTTP 400) since 2026-04-23.
 
 **Install:** copy scripts → chmod +x → merge into settings.json (detect Leopoldo hooks by `.leopoldo/hooks/` in command, preserve user hooks).
 **Update:** snapshot → overwrite scripts → verify executability → update manifest hash.

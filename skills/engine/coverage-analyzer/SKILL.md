@@ -2,6 +2,9 @@
 name: coverage-analyzer
 description: Use before production deploy, during audit preparation, when checking which areas of the codebase are covered by which skills, identifying uncovered areas, or requesting a coverage matrix mapping skills to files/directories. Scans skills/ and the project codebase.
 type: discipline
+applies_to: [DEV, STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Coverage Analyzer — Skill-to-Code Coverage Matrix

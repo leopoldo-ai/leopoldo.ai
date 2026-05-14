@@ -6,6 +6,8 @@ license: MIT
 metadata:
   author: obra
   source: https://github.com/obra/superpowers
+tier: essentials
+status: deprecated
 ---
 
 # Verification Before Completion

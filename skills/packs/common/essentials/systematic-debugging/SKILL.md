@@ -6,6 +6,9 @@ license: MIT
 metadata:
   author: obra
   source: https://github.com/obra/superpowers
+applies_to: [DEV, STUDIO]
+tier: essentials
+status: ga
 ---
 
 # Systematic Debugging

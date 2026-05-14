@@ -22,6 +22,8 @@ metadata:
   output-format: pptx
   related-skills: brand-kit,investor-deck,pptx,client-proposal-builder
 license: proprietary
+tier: essentials
+status: ga
 ---
 
 # Pitch Deck — Investor-Ready Branded Presentations

@@ -12,7 +12,7 @@ argument-hint: ""
 
 ---
 
-**Scope:** local build of all 11 plugin packages for both platforms.
+**Scope:** local build of all 13 plugin packages for both platforms.
 **NOT for:** publishing to GitHub (use `/release`). Not for client delivery builds (use `distribution/scripts/build-leopoldo-full.sh`).
 
 ## What I Need From You
@@ -37,7 +37,7 @@ Output dir: distribution/output/
 ## The Tests
 
 - **The pre-flight test**: `distribution/scripts/build-public-repos.sh` exists and is executable. If not, report what is missing and STOP.
-- **The coverage test**: All 11 plugins present in output. If any missing, flag 🔴 with reason.
+- **The coverage test**: All 13 plugins present in output (investment-core, deal-engine, fund-suite, advisory-desk, markets-pro, senior-consultant, competitive-intelligence, marketing, medical-research, full-stack, legal-suite, hr-recruitment, hr-business-dev). If any missing, flag 🔴 with reason.
 - **The no-push test**: This command MUST NOT push to any remote. If the script has a push step, confirm with user before invoking.
 
 ## Flow

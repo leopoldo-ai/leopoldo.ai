@@ -11,6 +11,8 @@ metadata:
   forge_sources:
     - "Inspired by NeoLabHQ/context-engineering-kit kaizen methodology (license unclear — BUILD, not ADAPT)"
   created: 2026-03-13
+tier: essentials
+status: ga
 ---
 
 # Kaizen
